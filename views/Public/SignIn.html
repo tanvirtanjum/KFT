@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignIn | KFT</title>
+    
+
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="../../assets/jQueryTyper/jquery.typer.js"></script>
+
+
+     <!-- Controller -->
+     <script type="text/javascript" src="../../controllers/Public/SignInController.js"></script>
+</head>
+
+<body class="bg-secondary bg-opacity-75">
+    <div id="topLayout"><!-- Added Through Controller (./controllers/Public/SignInController.js) --></div>
+    
+    <div class="container" style="background-image: url(../../assets/image/signin_illustration.svg); 
+                                height: 80vh;
+                                background-repeat: no-repeat;
+                                image-rendering: optimizeQuality;
+                                background-size: contain;
+                                background-position: center;"
+                                align="center">
+
+        <div class="container-fluid" style="padding-top: 18vh;">
+            <div class="card text-center bg-black bg-opacity-50 text-white" style="width: 25rem;">
+                <div class="card-body">
+                  <h5 class="card-title"><i class="fas fa-user-lock"></i> Office Login</h5>
+                  <div class="form-floating text-black mb-2">
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                    <label for="email"><i class="fas fa-at"></i> Email Address</label>
+                  </div>
+                  <div class="form-floating text-black mb-4">
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <label for="password"><i class="fas fa-key"></i> Password</label>
+                  </div>
+                  <button type="button" class="btn btn-primary" style="width: calc(100%);"><i class="fas fa-sign-in-alt"></i> Login</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

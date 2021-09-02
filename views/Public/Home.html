@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME | KFT</title>
+    
+
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="../../assets/jQueryTyper/jquery.typer.js"></script>
+
+
+     <!-- Controller -->
+     <script type="text/javascript" src="../../controllers/Public/HomeController.js"></script>
+</head>
+
+<body class="bg-secondary bg-opacity-75">
+    <div id="topLayout"><!-- Added Through Controller (./controllers/Public/HomeController.js) --></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-6" id="backgroudSVG" 
+                 style="background-image: url(../../assets/image/home_illustration.svg); 
+                        height: 80vh;
+                        background-repeat: no-repeat;
+                        image-rendering: optimizeQuality;
+                        background-size: contain;
+                        background-position: left center;">
+            </div>
+            <div class="col-6 text-center" style="height: 80vh; padding-top: 20%;">
+                <p class="h1" id="schoolName"></p>
+                <i>"School Motto School Motto"</i>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
