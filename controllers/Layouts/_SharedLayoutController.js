@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('#kftTrustTab').attr("href", base_URL+"/views/Public/AboutKFTTrust.html");
     $('#kftSchoolTab').attr("href", base_URL+"/views/Public/AboutKFTCollegiateSchool.html");
 
+    $('#admissionTab').attr("href", base_URL+"/views/Public/Admission.html");
     $('#conatctTab').attr("href", base_URL+"/views/Public/ContactUs.html");
     $('#loginTab').attr("href", base_URL+"/views/Public/SignIn.html");
 });
