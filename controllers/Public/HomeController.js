@@ -7,6 +7,7 @@ $(document).ready(function () {
     var fourth = '<p class="h1" id="tittleName">কেএফটি কলেজিয়েট স্কুল</p> <i id="mottoText">"বিশ্বাস | আত্মবিশ্বাস | অখণ্ডতা | সৃজনশীলতা"</i>';
 
     $('#topLayout').load("../Layouts/_SharedLayout.html");
+    $('#bottomLayout').load("../Layouts/_BottomLayout.html");
 
     // $("#tittleName").typer(['KFT-Hazi Abdul Kader Molla-Fatema Begum Trust', 'KFT Collegiate School', 'কেএফটি কলেজিয়েট স্কুল']);
     // $("#mottoText").typer(['"Dream for a better society"', '"Faith | Confidence | Integrity | Creativity"', '"বিশ্বাস | আত্মবিশ্বাস | অখণ্ডতা | সৃজনশীলতা"']);
