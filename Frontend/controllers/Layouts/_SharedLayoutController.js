@@ -47,7 +47,7 @@ $(document).ready(function () {
             $('#loginTab').removeClass("active");
         }
 
-        if(window.location.href == base_URL+"/views/Public/Login.html")
+        if(window.location.href == base_URL+"/views/Public/SignIn.html")
         {
             $('#loginTab').addClass("active");
             $('#kftOptionTab').removeClass("active");
