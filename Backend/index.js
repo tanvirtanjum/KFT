@@ -1,14 +1,18 @@
+// Importing System Library Modules
 const express = require("express");
-const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
 
+// Importing Created Modules
 const rolesRoutes = require("./routes/roles.route");
 
-const app = express();
+// <---> 
+dotenv.config();
 
-app.use(bodyParser.json());
+const app = express();
+app.use(express.json());
 
 app.use("/api/roles", rolesRoutes);
 
-app.listen(3000, () => {
+app.listen(process.env.SERVER_PORT_NO, () => {
   console.log("Server Started at Port: 3000.");
 });
