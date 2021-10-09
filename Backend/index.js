@@ -1,5 +1,6 @@
 // Importing System Library Modules
 const express = require("express");
+var exSession = require('express-session');
 const dotenv = require("dotenv");
 const cors = require('cors')
 
@@ -11,6 +12,13 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(exSession({secret: ' ', saveUninitialized: true, resave: false}));
+// app.use(function(req, res, next){
+//   res.locals.uid = req.session.uid;
+//   res.locals.type = req.session.type;
+//   next();
+// });
 app.use(cors());
 
 app.use("/api/roles", rolesRoutes);
