@@ -2,7 +2,7 @@ const rolesService = require("../services/roles.service");
 
 exports.getAllRoles = (req, res, next) => {
     const data = {};
-    // Validation Code here... (if required)
+    // Validation Code here
     if(req.session.user != null){
         rolesService.getAllRoles(data, (error, results) => {
             if (error) {
