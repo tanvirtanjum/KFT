@@ -2,3 +2,4 @@ bootstrap 5.1.0
 fontawesome 5.15.4 (Web)
 jQuery 3.6.0
 jQuery Typer 0.0.4
+CryptoJS v3.1.2

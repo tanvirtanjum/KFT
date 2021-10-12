@@ -9,9 +9,6 @@ $(document).ready(function () {
         $.ajax({
             url: api_base_URL+"/api/roles/get-all-roles",
             method: "GET",
-            // headers: {
-            //     'Authorization': 'Basic ' + localStorage.authUser,
-            // },
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
                     var data = xhr.responseJSON;

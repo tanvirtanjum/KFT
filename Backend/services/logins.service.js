@@ -1,13 +1,14 @@
 const db = require("../config/db.config");
 
-exports.getAllRoles = (data, callback) => {
+exports.getUser = (data, callback) => {
     db.query(
-        `SELECT * FROM roles ORDER BY id;`,
-        [],
+        `SELECT * FROM logins WHERE email = ? AND password = ?;`,
+        [data.email, data.password],
         (error, results, fields) => {
             if (error) {
                 return callback(error);
             }
+
             return callback(null, results);
         }
     );

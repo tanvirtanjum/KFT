@@ -1,9 +1,14 @@
+// Importing System Library Modules
+const validator = require('validator');
+
+// Importing Created Modules
 const rolesService = require("../services/roles.service");
 
 exports.getAllRoles = (req, res, next) => {
+    var validated = true;
     const data = {};
-    // Validation Code here
-    if(req.session.user != null){
+
+    if(validated){
         rolesService.getAllRoles(data, (error, results) => {
             if (error) {
                 console.log(error);
@@ -11,7 +16,7 @@ exports.getAllRoles = (req, res, next) => {
             }
             else {
                 if (results.length > 0) {
-                    return res.status(200).send({ success: true, data: results });
+                    return res.status(200).send(results);
                 }
     
                 else {
