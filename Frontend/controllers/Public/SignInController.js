@@ -7,6 +7,8 @@ $(document).ready(function () {
         
     $('#msg').attr('hidden', true);
 
+    $('#recoverLink').attr("href", base_URL+"/views/Public/RecoverPassword.html");
+
     var redirect = function(role) {
         if(role == null)
         {
