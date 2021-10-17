@@ -40,7 +40,5 @@ exports.getUser = (req, res, next) => {
 };
 
 exports.getUserLogout = (req, res, next) => {
-    req.header("role") = null;
-
     return res.status(200).send({ success: true, data: "User Logged Out." });
 };
