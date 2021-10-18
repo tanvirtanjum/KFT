@@ -14,15 +14,50 @@
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="#" id="dashboardTab"><i class="fas fa-chart-line"></i>&nbsp;Dashboard</a>
           </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="academicTab" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-school"></i>&nbsp;Academic Management
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-sm-start" aria-labelledby="academicTab">
+              <li><a class="dropdown-item" href="#" id="subjectTab"><i class="fas fa-circle"></i>&nbsp;Academic Subject</a></li>
+              <li><a class="dropdown-item" href="#" id="sessionTab"><i class="fas fa-circle"></i>&nbsp;Academic Session & Section</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="detailsTab" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-sliders-h"></i>&nbsp;Details Management
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-sm-start" aria-labelledby="detailsTab">
+              <li><a class="dropdown-item" href="#" id="employeeTab"><i class="fas fa-user-tie"></i>&nbsp;Employees</a></li>
+              <li><a class="dropdown-item" href="#" id="teacherTab"><i class="fas fa-user-tie"></i>&nbsp;Teachers</a></li>
+              <li><a class="dropdown-item" href="#" id="studentTab"><i class="fas fa-user-graduate"></i>&nbsp;Students</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" id="contactTab"><i class="fas fa-address-book"></i>&nbsp;Contacts</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="annoucementTab" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bullhorn"></i>&nbsp;Announcement Management
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-sm-start" aria-labelledby="annoucementTab">
+              <li><a class="dropdown-item" href="#" id="noticeTab"><i class="fas fa-bell"></i>&nbsp;Notice</a></li>
+              <li><a class="dropdown-item" href="#" id="admissionTab"><i class="fas fa-bell"></i>&nbsp;Admission Circular</a></li>
+            </ul>
+          </li>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="settingTab" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-user-cog"></i>&nbsp;Setting
             </a>
-            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-sm-start" aria-labelledby="academicOptionTab">
+            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-sm-start" aria-labelledby="settingTab">
               <li><a class="dropdown-item" href="#" id="profileTab"><i class="fas fa-user"></i>&nbsp;Profile</a></li>
               <li><a class="dropdown-item" href="#" id="changepassTab"><i class="fas fa-key"></i>&nbsp;Change Password</a></li>
             </ul>
           </li>
+
           <li class="nav-item">
             <button class="btn btn-dark text-danger" id="logoutTab"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</button>
           </li>
