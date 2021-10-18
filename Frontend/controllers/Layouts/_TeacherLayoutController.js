@@ -4,6 +4,7 @@ $(document).ready(function () {
 
     $('#homeTab').attr("href", base_URL+"/views/Public/Home.html");
     $('#dashboardTab').attr("href", base_URL+"/views/Teacher/Dashboard.html");
+    $('#changepassTab').attr("href", base_URL+"/views/Common/ChangePassword.html");
     
 
     function activeSection()
@@ -11,7 +12,17 @@ $(document).ready(function () {
         if(window.location.href == base_URL+"/views/Teacher/Dashboard.html")
         {
             $('#dashboardTab').addClass("active");
-            // $('#kftOptionTab').removeClass("active");
+            $('#settingTab').removeClass("active");
+            // $('#academicOptionTab').removeClass("active");
+            // $('#admissionTab').removeClass("active");
+            // $('#conatctTab').removeClass("active");
+            // $('#noticeTab').removeClass("active");
+            // $('#loginTab').removeClass("active");
+        }
+        if(window.location.href == base_URL+"/views/Common/ChangePassword.html")
+        {
+            $('#settingTab').addClass("active");
+            $('#dashboardTab').removeClass("active");
             // $('#academicOptionTab').removeClass("active");
             // $('#admissionTab').removeClass("active");
             // $('#conatctTab').removeClass("active");

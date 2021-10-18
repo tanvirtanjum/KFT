@@ -101,7 +101,6 @@ $(document).ready(function () {
                 else {
                     var data = xhr.responseJSON;
                     $('#msg').removeAttr('hidden');
-                    alert(data['data']);
                 }
             }
         });

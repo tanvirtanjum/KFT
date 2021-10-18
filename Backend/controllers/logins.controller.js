@@ -99,6 +99,38 @@ exports.getUserPassword = (req, res, next) => {
 
 };
 
+exports.updateUserPassword = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'id' : req.body.id,
+        'password' : req.body.password,
+    };
+    // Validation Code here
+    if(validator.isEmpty(data.password , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validated) {
+        loginsService.updateUserPassword(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                if (results.length > 0) {
+                    return res.status(200).send(results);
+
+                } else {
+                    return res.status(204).send({ success: false, data: "No User Found." });
+                }
+            }
+        });
+    } else{
+        return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
+    }
+
+};
+
 exports.getUserLogout = (req, res, next) => {
     return res.status(200).send({ success: true, data: "User Logged Out." });
 };
