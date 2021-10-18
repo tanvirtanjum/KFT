@@ -1,0 +1,37 @@
+KFT Collegiate School
+
+System Users:
+1. Admin
+2. Teacher
+3. Student
+
+Features:
+
+Public:
+1. View Home Page
+2. View about KFT (Trust/Collegiate School)
+3. View Notice
+4. View Academic's
+5. View Admission Circular
+
+Common:
+1. SignIn/SignOut
+2. Change Password
+3. View Own Profile
+
+Admin:
+1. Create/Update/Expire Academic Session
+2. Create/Update Sections
+3. Create/Update Employees
+4. Give Admin Role to employees
+5. Create/Update Teachers
+6. Create/Update Students
+7. Create/Update/Delete Students
+8. Create/Update/Delete Contacts
+9. Create/Update/Delete Notice/Admission Announcement
+
+Teacher:
+1. View Own Section (If Class Teacher)
+2. Create/Update/Delete Subjects on section (If Class Teacher)
+3. Add/Delete Students to section (If Class Teacher)
+4. Publish/Update Result of my course
