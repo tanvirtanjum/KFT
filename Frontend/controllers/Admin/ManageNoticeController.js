@@ -62,7 +62,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].subject +"</td>"+
                                         "<td>"+ data[i].created_at +"</td>"+
                                         "<td>"+ data[i].updated_at +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-id="+data[i].id+" class='btn btn-success rounded-pill'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-id="+data[i].id+" class='btn btn-primary rounded-pill'><i class='fas fa-edit'></i></button></td>"+
                                 "</tr>";
                             sl++;
                         }
