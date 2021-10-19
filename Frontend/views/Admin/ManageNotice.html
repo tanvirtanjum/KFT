@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Notice | KFT</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/image/logo/KFT_Trust_Logo.ico">
+    
+
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <link href="../../assets/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="../../assets/jQueryTyper/jquery.typer.js"></script>
+    <script src="../../assets/crypto-js/crypto.js"></script>
+
+
+     <!-- Controller -->
+     <script type="text/javascript" src="../../controllers/Admin/ManageNoticeController.js"></script>
+</head>
+
+<body class="bg-secondary bg-opacity-75">
+    <div class="container-fluid" id="topLayout"><!-- Added Through Controller (./controllers/Public/SignInController.js) --></div>
+    
+    <div class="container-fluid">
+
+        <div align="center">
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addNoticeModal">
+                Post New Notice
+            </button>
+        </div>
+          
+        <!-- Modal -->
+        <div class="modal fade" id="addNoticeModal" tabindex="-1" aria-labelledby="addNoticeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addNoticeModalLabel"><i class="fas fa-pen"></i>&nbsp;Post New Notice</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-floating mb-2">
+                            <textarea class="form-control" placeholder="Write Subject" id="subjectP" style="resize: none;"></textarea>
+                            <label for="subjectP">Notice Subject</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <textarea class="form-control" placeholder="Write Content" id="contentP" style="height: 40vh; resize: none;"></textarea>
+                            <label for="contentP">Notice Content</label>
+                        </div>
+                        <div class="mb-2">
+                            <label for="fileP" class="form-label">Add File</label>
+                            <input class="form-control" type="file" id="fileP" multiple>
+                        </div>
+                        <div align="center">
+                            <span id="filelistP"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="postBTN" class="btn btn-success">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding-top: 2vh;">
+            <table class="table" id="noticeTable">
+                <thead class="table-dark">
+                  <th>#</th>
+                  <th>Subject</th>
+                  <th>Posted At</th>
+                  <th>Last Update</th>
+                  <th></th>
+                </thead>
+                <tbody class="table-light">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="updateNoticeModal" tabindex="-1" aria-labelledby="updateNoticeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateNoticeModalLabel"><i class='fas fa-edit'></i>&nbsp;Update Notice</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id">
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="Write Subject" id="subjectU" style="resize: none;"></textarea>
+                        <label for="subjectU">Notice Subject</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="Write Content" id="contentU" style="height: 40vh; resize: none;"></textarea>
+                        <label for="contentU">Notice Content</label>
+                    </div>
+                    <div class="mb-2">
+                        <label for="fileU" class="form-label">Add File</label>
+                        <input class="form-control" type="file" id="fileU" multiple>
+                    </div>
+                    <div align="center">
+                        <span id="filelistU"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="deleteBTN" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                    <button type="button" id="updateBTN" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center" id="bottomLayout"></div>
+</body>
+
+</html>
