@@ -29,9 +29,9 @@
     
     <div class="container-fluid">
 
-        <div align="center">
-            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addNoticeModal">
-                Post New Notice
+        <div class="d-grid gap-2 col-6 mx-auto" align="center">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNoticeModal">
+                <i class="fas fa-pen"></i>&nbsp; Post New Notice
             </button>
         </div>
           
@@ -40,7 +40,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addNoticeModalLabel"><i class="fas fa-pen"></i>&nbsp;Post New Notice</h5>
+                        <h5 class="modal-title" id="addNoticeModalLabel"><i class="fas fa-pen"></i>&nbsp;Post Notice</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -68,8 +68,8 @@
             </div>
         </div>
 
-        <div style="padding-top: 2vh;">
-            <table class="table" id="noticeTable">
+        <div class="table-responsive" style="padding-top: 2vh;">
+            <table class="table table-sm table-striped" id="noticeTable">
                 <thead class="table-dark">
                   <th>#</th>
                   <th>Subject</th>
