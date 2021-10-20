@@ -118,3 +118,40 @@ exports.deleteNotice = (req, res, next) => {
     }
 
 };
+
+exports.updateNotice = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'id' : req.params.id,
+        'subject' : req.body.subject,
+        'content' : req.body.content,
+    };
+
+    if(data.id <= 0) {
+        validated = false;
+    }
+
+    if(validator.isEmpty(data.subject , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validator.isEmpty(data.content , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validated){
+        noticesService.updateNotice(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                return res.status(200).send(results);
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};

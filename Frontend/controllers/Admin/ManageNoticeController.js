@@ -4,6 +4,8 @@ $(document).ready(function () {
 
     $('#topLayout').load("../Layouts/_AdminLayout.html");
     $('#bottomLayout').load("../Layouts/_BottomLayout.html");
+
+    $('#msg').attr('hidden', true);
         
     var redirect = function(role) {
         if(role == null)
@@ -47,8 +49,6 @@ $(document).ready(function () {
             method: "GET",
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
-                    console.log(xhr.responseJSON);
-
                     var data = xhr.responseJSON;
 
                     var str = '';
@@ -62,7 +62,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].subject +"</td>"+
                                         "<td>"+ data[i].created_at +"</td>"+
                                         "<td>"+ data[i].updated_at +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-id="+data[i].id+" class='btn btn-primary rounded-pill'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-primary rounded-pill'><i class='fas fa-edit'></i></button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -93,8 +93,8 @@ $(document).ready(function () {
                     
                     var data = xhr.responseJSON;
 
-                   $('#subjectU').html(data.subject);
-                   $('#contentU').html(data.content);
+                   $('#subjectU').val(data.subject);
+                   $('#contentU').val(data.content);
                    $('#id').val(data.id);
                 }
                 else 
@@ -107,7 +107,8 @@ $(document).ready(function () {
     }
 
     $('#updateNoticeModal').on('show.bs.modal', function(e) {
-        var id = $(e.relatedTarget).data('id');
+        $('#msg').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
         LoadNotice(id);
     });
     
@@ -140,6 +141,87 @@ $(document).ready(function () {
         if(confirm("Are you sure you want to delete?"))
         {
             DeleteNotice($('#id').val());
+        }
+    });
+
+    var validateNoticeUpdate= function() {
+        var validate = true;
+        if($.trim($("#subjectU").val()).length <= 0)
+        {
+            validate = false;
+            $("#subjectU").addClass("is-invalid");
+        }
+        else
+        {
+            $("#subjectU").removeClass("is-invalid");
+        }
+        if($.trim($("#contentU").val()).length <= 0)
+        {
+            validate = false;
+            $("#contentU").addClass("is-invalid");
+        }
+        else
+        {
+            $("#contentU").removeClass("is-invalid");
+        }
+        if(!validate)
+        {
+            $('#msg').attr('hidden', true);
+        }
+
+        return validate;
+    }
+
+    var UpdateNotice = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/notices/update-notice/"+id,
+            method: "PUT",
+            data : {
+                subject : $('#subjectU').val(),
+                content : $('#contentU').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        $("#msg").removeClass("alert-danger");
+                        $("#msg").addClass("alert-success");
+                        $('#msg').html('<small>Notice Updated.</small>');
+                        $('#msg').removeAttr('hidden');
+                    }
+                    else 
+                    {
+                        $("#msg").removeClass("alert-success");
+                        $("#msg").addClass("alert-danger");
+                        $('#msg').html('<small>Something Went Wrong.</small>');
+                        $('#msg').removeAttr('hidden');
+                    }
+                }
+                else 
+                {
+                    $("#msg").removeClass("alert-success");
+                    $("#msg").addClass("alert-danger");
+                    $('#msg').html('<small>Something Went Wrong.</small>');
+                    $('#msg').removeAttr('hidden');
+                }
+                LoadAllNotice();
+            }
+        });
+    }
+
+    $("#updateBTN").click(function () {
+        if(validateNoticeUpdate())
+        {
+            UpdateNotice($('#id').val());
         }
     });
 
