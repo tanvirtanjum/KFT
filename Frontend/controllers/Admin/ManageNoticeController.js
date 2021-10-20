@@ -6,6 +6,7 @@ $(document).ready(function () {
     $('#bottomLayout').load("../Layouts/_BottomLayout.html");
 
     $('#msg').attr('hidden', true);
+    $('#msgP').attr('hidden', true);
         
     var redirect = function(role) {
         if(role == null)
@@ -222,6 +223,87 @@ $(document).ready(function () {
         if(validateNoticeUpdate())
         {
             UpdateNotice($('#id').val());
+        }
+    });
+
+    var validateNoticePost= function() {
+        var validate = true;
+        if($.trim($("#subjectP").val()).length <= 0)
+        {
+            validate = false;
+            $("#subjectP").addClass("is-invalid");
+        }
+        else
+        {
+            $("#subjectP").removeClass("is-invalid");
+        }
+        if($.trim($("#contentP").val()).length <= 0)
+        {
+            validate = false;
+            $("#contentP").addClass("is-invalid");
+        }
+        else
+        {
+            $("#contentP").removeClass("is-invalid");
+        }
+        if(!validate)
+        {
+            $('#msgP').attr('hidden', true);
+        }
+
+        return validate;
+    }
+
+    var PostNotice = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/notices/post-notice",
+            method: "POST",
+            data : {
+                subject : $('#subjectP').val(),
+                content : $('#contentP').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        $("#msgP").removeClass("alert-danger");
+                        $("#msgP").addClass("alert-success");
+                        $('#msgP').html('<small>Notice Posted.</small>');
+                        $('#msgP').removeAttr('hidden');
+                    }
+                    else 
+                    {
+                        $("#msgP").removeClass("alert-success");
+                        $("#msgP").addClass("alert-danger");
+                        $('#msgP').html('<small>Something Went Wrong.</small>');
+                        $('#msgP').removeAttr('hidden');
+                    }
+                }
+                else 
+                {
+                    $("#msgP").removeClass("alert-success");
+                    $("#msgP").addClass("alert-danger");
+                    $('#msgP').html('<small>Something Went Wrong.</small>');
+                    $('#msgP').removeAttr('hidden');
+                }
+                LoadAllNotice();
+            }
+        });
+    }
+
+    $("#postBTN").click(function () {
+        if(validateNoticePost())
+        {
+            PostNotice();
         }
     });
 
