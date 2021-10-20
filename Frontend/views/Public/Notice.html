@@ -35,6 +35,54 @@
                                         background-position:right center;"
                                         align="center">
 
+        <div id="notices">
+            <div class="card text-center">
+                <div class="card-header" id="postTime">
+                  sdsd
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title" id="subject">Special title treatment</h5>
+                  <div id="view">Go somewhere</div>
+                </div>
+                <div class="card-footer text-muted" id="lastUpdate">
+                  2 days ago
+                </div>
+              </div>
+        </div>
+
+         <!-- Modal -->
+    <div class="modal fade" id="updateNoticeModal" tabindex="-1" aria-labelledby="updateNoticeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateNoticeModalLabel"><i class='fas fa-eye'></i>&nbsp;Full Notice</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id">
+                    <div class="alert mb-2" id="msg" role="alert"></div>
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control bg-light" placeholder="Write Subject" id="subjectU" style="resize: none;" readonly></textarea>
+                        <label for="subjectU">Notice Subject</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control bg-light" placeholder="Write Content" id="contentU" style="height: 40vh; resize: none;" readonly></textarea>
+                        <label for="contentU">Notice Content</label>
+                    </div>
+                    <div class="mb-2">
+                        <div align="center">
+                            Attachments
+                            <P id="filelistU"></P>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </div>
 
     <div class="container-fluid text-center" id="bottomLayout"></div>

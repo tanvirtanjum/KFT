@@ -58,11 +58,14 @@ $(document).ready(function () {
                     {
                         for (var i = 0; i < data.length; i++) 
                         {
+                            var Post_Date = new Date(data[i].created_at);
+                            var Update_Date = new Date(data[i].updated_at);
+
                             str += "<tr>"+
                                         "<th>"+ sl + "</th>"+
                                         "<td>"+ data[i].subject +"</td>"+
-                                        "<td>"+ data[i].created_at +"</td>"+
-                                        "<td>"+ data[i].updated_at +"</td>"+
+                                        "<td>"+ Post_Date.toDateString() +"</td>"+
+                                        "<td>"+ Update_Date.toUTCString() +"</td>"+
                                         "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-primary rounded-pill'><i class='fas fa-edit'></i></button></td>"+
                                 "</tr>";
                             sl++;
@@ -258,6 +261,15 @@ $(document).ready(function () {
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+
+        // var fileToUpload = $('#fileP').prop('files');
+
+        // var form = new FormData();
+        // for (i = 0; i < fileToUpload.length; ++i) {
+        //     form.append("file", fileToUpload[0]);
+        // } 
+        // console.log(form);
 
         $.ajax({
             url: api_base_URL+"/api/notices/post-notice",
