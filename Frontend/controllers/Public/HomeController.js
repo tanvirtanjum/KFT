@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    var base_URL = "http://127.0.0.1:5500";
-    var api_base_URL = "http://localhost:3000";
+    // var base_URL = "http://127.0.0.1:5500";
+    // var api_base_URL = "http://localhost:3000";
 
     var first = '<p class="h2" id="tittleName">KFT-Hazi Abdul Kader Molla-Fatema Begum Trust</p> <i id="mottoText">"Dream for a better society"</i>';
     var second = '<p class="h2" id="tittleName">KFT Collegiate School</p> <i id="mottoText">"Faith | Confidence | Integrity | Creativity"</i>';
