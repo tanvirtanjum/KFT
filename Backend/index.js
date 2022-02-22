@@ -7,12 +7,13 @@ const cors = require('cors')
 const rolesRoutes = require("./routes/roles.route");
 const loginsRoutes = require("./routes/logins.route");
 const noticesRoutes = require("./routes/notices.route");
-const notice_filesRoutes = require("./routes/notices.route");
+const notice_filesRoutes = require("./routes/notice_files.route");
 
 // <---> 
 dotenv.config();
 
 const app = express();
+app.use('/uploads', express.static('uploads'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.set('trust proxy', 1);

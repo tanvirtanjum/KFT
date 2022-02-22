@@ -61,16 +61,55 @@ $(document).ready(function () {
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
                     
-                    var data = xhr.responseJSON;
+                   var data = xhr.responseJSON;
 
                    $('#subjectU').val(data.subject);
                    $('#contentU').val(data.content);
                    $('#id').val(data.id);
+
+                   LoadNoticeFiles(id);
                 }
                 else 
                 {
                     str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
                     $("#noticeTable tbody").html(str);
+                }
+            }
+        });
+    }
+
+    var LoadNoticeFiles = function(id){
+        $.ajax({
+            url: api_base_URL+"/api/notice_files/get-all-files/notice/"+id,
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0 && data[0].file_path != '')
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].file_name +"</td>"+
+                                        "<td>"+ '<a class="btn btn-primary btn-sm" href="'+data[i].file_path+'" target="_blank" role="button" download><i class="fas fa-download"></i></a>' +"</td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='3' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                   $("#filelistU tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='3' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#filelistU tbody").html(str);
                 }
             }
         });

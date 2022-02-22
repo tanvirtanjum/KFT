@@ -70,7 +70,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].subject +"</td>"+
                                         "<td>"+ Post_Date.toDateString() +"</td>"+
                                         "<td>"+ Update_Date.toUTCString() +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary rounded-0'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -104,6 +104,8 @@ $(document).ready(function () {
                    $('#subjectU').val(data.subject);
                    $('#contentU').val(data.content);
                    $('#id').val(data.id);
+
+                   LoadNoticeFiles(id);
                 }
                 else 
                 {
@@ -114,10 +116,107 @@ $(document).ready(function () {
         });
     }
 
+    var LoadNoticeFiles = function(id){
+        $.ajax({
+            url: api_base_URL+"/api/notice_files/get-all-files/notice/"+id,
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0 && data[0].file_path != '')
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].file_name +"</td>"+
+                                        "<td>"+ '<a class="btn btn-primary btn-sm" href="'+data[i].file_path+'" target="_blank" role="button" download><i class="fas fa-download"></i></a>' +"</td>"+
+                                        "<td>"+ "<button type='button' data-bs-toggle='modal' data-bs-target='#deleteNoticeFileModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-danger'><i class='fas fa-trash-alt'></i></button>" +"</td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                   $("#filelistU tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='3' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#filelistU tbody").html(str);
+                }
+            }
+        });
+    }
+
     $('#updateNoticeModal').on('show.bs.modal', function(e) {
         $('#msg').attr('hidden', true);
         var id = $(e.relatedTarget).data('bs-id');
         LoadNotice(id);
+    });
+
+    $('#deleteNoticeFileModal').on('show.bs.modal', function(e) {
+        $('#msg').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        $('#fileid').val(id);
+    });
+
+    var DeleteNoticeFile = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/notice_files/delete/"+id,
+            method: "DELETE",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                $('#deleteNoticeFileModal').modal('toggle');
+                LoadNoticeFiles($('#id').val());
+            }
+        });
+    }
+    $("#deletefileBTN").click(function () {
+        DeleteNoticeFile($('#fileid').val());
+    });
+    
+
+    var DeleteNotice = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/notices/delete-notice/"+id,
+            method: "DELETE",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 204) {
+                    $('#updateNoticeModal').modal('toggle');
+                    alert("Notice Deleted.");
+                }
+                else 
+                {
+                    alert("Something Went Wrong.");
+                }
+                LoadAllNotice();
+            }
+        });
+    }
+    $("#deleteBTN").click(function () {
+        if(confirm("Are you sure you want to delete?"))
+        {
+            DeleteNotice($('#id').val());
+        }
     });
     
 
@@ -327,6 +426,73 @@ $(document).ready(function () {
         {
             PostNotice();
         }
+    });
+
+    var PostNoticeFile = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var data = new FormData($('#uploadForm')[0]);
+
+        $.ajax({
+            url: api_base_URL+"/api/notice_files/post-files/notice/"+id,
+            method: "POST",
+            contentType: false,
+            processData: false,
+            cache: false,
+            data: data,
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        $("#msgP").removeClass("alert-danger");
+                        $("#msgP").addClass("alert-success");
+                        $('#msgP').html('<small>Notice Posted.</small>');
+                        $('#msgP').removeAttr('hidden');
+
+                        $("#msgI").removeClass("alert-info");
+                        $("#msgI").addClass("alert-success");
+                        $('#msgI').html('<small>Now you can add files. For adding- <br>Go to "EDIT" of this notice.</small>');
+                        $('#msgI').removeAttr('hidden');
+                    }
+                    else 
+                    {
+                        $("#msgP").removeClass("alert-success");
+                        $("#msgP").addClass("alert-danger");
+                        $('#msgP').html('<small>Something Went Wrong.</small>');
+                        $('#msgP').removeAttr('hidden');
+
+                        $("#msgI").removeClass("alert-success");
+                        $("#msgI").addClass("alert-info");
+                        $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+                        $('#msgI').removeAttr('hidden');
+                    }
+                }
+                else 
+                {
+                    $("#msgP").removeClass("alert-success");
+                    $("#msgP").addClass("alert-danger");
+                    $('#msgP').html('<small>Something Went Wrong.</small>');
+                    $('#msgP').removeAttr('hidden');
+
+                    $("#msgI").removeClass("alert-success");
+                    $("#msgI").addClass("alert-info");
+                    $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+                    $('#msgI').removeAttr('hidden');
+                }
+                LoadNoticeFiles(id);
+             }
+        });
+    }
+
+    $("#attachBTN").click(function () {
+        PostNoticeFile($('#id').val());
     });
 
 });
