@@ -12,7 +12,7 @@ $(document).ready(function () {
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
                     var data = xhr.responseJSON;
-
+                    
                     var str = '';
                     var sl = 1;
                     if(data.length > 0)
@@ -28,7 +28,7 @@ $(document).ready(function () {
                                         "</div>"+
                                         '<div class="card-body">'+
                                             '<h5 class="card-title" id="subject">'+data[i].subject+'</h5>'+
-                                            '<div id="view">'+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-primary'><i class='fas fa-eye'></i>&nbsp;View</button>"+'</div>'+
+                                            '<div id="view">'+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-dark'><i class='fas fa-eye'></i>&nbsp;View</button>"+'</div>'+
                                         '</div>'+
                                         '<div class="card-footer text-muted" id="lastUpdate">'+
                                             "Last Update: <span style='color: blue;'>"+Update_Date.toUTCString()+"</span>"+
@@ -39,14 +39,14 @@ $(document).ready(function () {
                     }
                     else
                     {
-                        str += "<div align='middle'>NO DATA FOUND</div>";
+                        str += "<div align='middle' style='color: #9B0505;'><b>NO DATA FOUND</b></div>";
                     }
 
                     $("#notices").html(str);
                 }
                 else 
                 {
-                    str += "<div align='middle'>NO DATA FOUND</div>";
+                    str = "<div align='middle' style='color: #9B0505;'><b>NO DATA FOUND</b></div>";
                     $("#notices").html(str);
                 }
             }

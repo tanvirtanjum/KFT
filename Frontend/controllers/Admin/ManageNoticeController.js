@@ -7,7 +7,11 @@ $(document).ready(function () {
 
     $('#msg').attr('hidden', true);
     $('#msgP').attr('hidden', true);
-        
+
+    $("#msgI").addClass("alert-info");
+    $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+    $('#msgI').removeAttr('hidden');
+
     var redirect = function(role) {
         if(role == null)
         {
@@ -66,7 +70,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].subject +"</td>"+
                                         "<td>"+ Post_Date.toDateString() +"</td>"+
                                         "<td>"+ Update_Date.toUTCString() +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-primary rounded-pill'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary rounded-0'><i class='fas fa-edit'></i></button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -262,15 +266,6 @@ $(document).ready(function () {
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
-
-        // var fileToUpload = $('#fileP').prop('files');
-
-        // var form = new FormData();
-        // for (i = 0; i < fileToUpload.length; ++i) {
-        //     form.append("file", fileToUpload[0]);
-        // } 
-        // console.log(form);
-
         $.ajax({
             url: api_base_URL+"/api/notices/post-notice",
             method: "POST",
@@ -291,6 +286,11 @@ $(document).ready(function () {
                         $("#msgP").addClass("alert-success");
                         $('#msgP').html('<small>Notice Posted.</small>');
                         $('#msgP').removeAttr('hidden');
+
+                        $("#msgI").removeClass("alert-info");
+                        $("#msgI").addClass("alert-success");
+                        $('#msgI').html('<small>Now you can add files. For adding- <br>Go to "EDIT" of this notice.</small>');
+                        $('#msgI').removeAttr('hidden');
                     }
                     else 
                     {
@@ -298,6 +298,11 @@ $(document).ready(function () {
                         $("#msgP").addClass("alert-danger");
                         $('#msgP').html('<small>Something Went Wrong.</small>');
                         $('#msgP').removeAttr('hidden');
+
+                        $("#msgI").removeClass("alert-success");
+                        $("#msgI").addClass("alert-info");
+                        $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+                        $('#msgI').removeAttr('hidden');
                     }
                 }
                 else 
@@ -306,6 +311,11 @@ $(document).ready(function () {
                     $("#msgP").addClass("alert-danger");
                     $('#msgP').html('<small>Something Went Wrong.</small>');
                     $('#msgP').removeAttr('hidden');
+
+                    $("#msgI").removeClass("alert-success");
+                    $("#msgI").addClass("alert-info");
+                    $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+                    $('#msgI').removeAttr('hidden');
                 }
                 LoadAllNotice();
             }
