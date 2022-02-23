@@ -19,6 +19,7 @@ var express = require("express");
 var router = express.Router();
 
 router.get("/get-all-files/notice/:id", notice_filesController.getAllFilesByNotice);
+router.get("/get-files/file_id/:id", auth.authAdmin, notice_filesController.getFileByID);
 router.post("/post-files/notice/:id", auth.authAdmin, upload.single('uploaded_file'), notice_filesController.postNoticeFile);
-router.delete("/delete/:id", auth.authAdmin, notice_filesController.deleteNoticeFileByID);
+router.delete("/delete/id/:id", auth.authAdmin, notice_filesController.deleteNoticeFileByID);
 module.exports = router;

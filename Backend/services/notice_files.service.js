@@ -13,6 +13,19 @@ exports.getAllFilesByNotice = (data, callback) => {
     );
 };
 
+exports.getFileByID = (data, callback) => {
+    db.query(
+        `SELECT * FROM notice_files WHERE id = ? ORDER BY id;`,
+        [data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.postNoticeFile = (data, callback) => {
     db.query(
         `INSERT INTO notice_files(file_name, file_path, notice_id) VALUES (?, ?, ?);`,

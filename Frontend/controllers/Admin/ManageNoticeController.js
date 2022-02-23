@@ -163,19 +163,46 @@ $(document).ready(function () {
     $('#deleteNoticeFileModal').on('show.bs.modal', function(e) {
         $('#msg').attr('hidden', true);
         var id = $(e.relatedTarget).data('bs-id');
-        $('#fileid').val(id);
+        LoadFileByID(id);
     });
 
-    var DeleteNoticeFile = function(id){
+    ////////
+    var LoadFileByID = function LoadFileByID(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var data;
+
+        $.ajax({
+            url: api_base_URL+"/api/notice_files/get-files/file_id/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    data = xhr.responseJSON[0];
+                    //alert(encodeURIComponent(data.file_path.toString()));
+                    $('#fileid').val(data.id);
+                    $('#filepath').val(data.file_path.toString());
+                    $('#filename').html(data.file_name.toString());
+                }
+            }
+        });
+    }
+
+    var DeleteNoticeFileByID = function(id, path){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/notice_files/delete/"+id,
+            url: api_base_URL+"/api/notice_files/delete/id/"+id,
             method: "DELETE",
             headers : {
                 role : decryptLoginInfo.role_id,
+                path: path,
             },
             complete: function (xhr, status) {
                 $('#deleteNoticeFileModal').modal('toggle');
@@ -184,11 +211,46 @@ $(document).ready(function () {
         });
     }
     $("#deletefileBTN").click(function () {
-        DeleteNoticeFile($('#fileid').val());
+        DeleteNoticeFileByID($('#fileid').val(), $('#filepath').val());
     });
     
 
-    var DeleteNotice = function(id){
+    var DeleteNoticeFilesForNoticeDelete = function async(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/notice_files/get-all-files/notice/"+id,
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            $.ajax({
+                                url: api_base_URL+"/api/notice_files/delete/id/"+data[i].id,
+                                method: "DELETE",
+                                headers : {
+                                    role : decryptLoginInfo.role_id,
+                                    path: data[i].file_path,
+                                },
+                                complete: function (xhr, status) {
+                                    console.log("file removed");
+                                }
+                            });
+                        }
+                    }
+                }
+                DeleteNotice(id);
+            }
+        });
+        
+    }
+
+    var DeleteNotice = function async(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -215,41 +277,41 @@ $(document).ready(function () {
     $("#deleteBTN").click(function () {
         if(confirm("Are you sure you want to delete?"))
         {
-            DeleteNotice($('#id').val());
-        }
-    });
+            DeleteNoticeFilesForNoticeDelete($('#id').val());
     
-
-    var DeleteNotice = function(id){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/notices/delete-notice/"+id,
-            method: "DELETE",
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 204) {
-                    $('#updateNoticeModal').modal('toggle');
-                    alert("Notice Deleted.");
-                }
-                else 
-                {
-                    alert("Something Went Wrong.");
-                }
-                LoadAllNotice();
-            }
-        });
-    }
-    $("#deleteBTN").click(function () {
-        if(confirm("Are you sure you want to delete?"))
-        {
-            DeleteNotice($('#id').val());
         }
     });
+  
+
+    // var DeleteNotice = function(id){
+    //     var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+    //     decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+    //     decryptLoginInfo = JSON.parse(decryptLoginInfo);
+    //     $.ajax({
+    //         url: api_base_URL+"/api/notices/delete-notice/"+id,
+    //         method: "DELETE",
+    //         headers : {
+    //             role : decryptLoginInfo.role_id,
+    //         },
+    //         complete: function (xhr, status) {
+    //             if (xhr.status == 204) {
+    //                 $('#updateNoticeModal').modal('toggle');
+    //                 alert("Notice Deleted.");
+    //             }
+    //             else 
+    //             {
+    //                 alert("Something Went Wrong.");
+    //             }
+    //             LoadAllNotice();
+    //         }
+    //     });
+    // }
+    // $("#deleteBTN").click(function () {
+    //     if(confirm("Are you sure you want to delete?"))
+    //     {
+    //         DeleteNotice($('#id').val());
+    //     }
+    // });
 
     var validateNoticeUpdate= function() {
         var validate = true;
@@ -321,6 +383,8 @@ $(document).ready(function () {
                     $('#msg').removeAttr('hidden');
                 }
                 LoadAllNotice();
+                LoadNotice(id);
+                LoadNoticeFiles(id);
             }
         });
     }
@@ -426,6 +490,15 @@ $(document).ready(function () {
         {
             PostNotice();
         }
+    });
+
+    $('#addNoticeModal').on('show.bs.modal', function(e) {
+        $('#msg').attr('hidden', true);
+        $('#msgP').attr('hidden', true);
+    
+        $("#msgI").addClass("alert-info");
+        $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+        $('#msgI').removeAttr('hidden');
     });
 
     var PostNoticeFile = function(id){
