@@ -1,4 +1,4 @@
-const admission_noticesController = require("../controllers/admission_noticesController.controller");
+const admission_noticesController = require("../controllers/admission_notices.controller");
 const auth = require("../middleware/authenticate.middleware");
 
 var express = require("express");

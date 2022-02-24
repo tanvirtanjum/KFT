@@ -220,6 +220,7 @@ $(document).ready(function () {
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
+        var complete = false;
         $.ajax({
             url: api_base_URL+"/api/notice_files/get-all-files/notice/"+id,
             method: "GET",
@@ -241,10 +242,27 @@ $(document).ready(function () {
                                     console.log("file removed");
                                 }
                             });
+                        
+                            if(i == data.length-1)
+                            {
+                                complete = true;
+                            }
+                        }
+
+                        if(complete)
+                        {
+                            DeleteNotice(id);
                         }
                     }
+                    else
+                    {
+                        DeleteNotice(id);
+                    }
                 }
-                DeleteNotice(id);
+                else
+                {
+                    DeleteNotice(id);
+                }
             }
         });
         

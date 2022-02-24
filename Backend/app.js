@@ -8,7 +8,8 @@ const rolesRoutes = require("./routes/roles.route");
 const loginsRoutes = require("./routes/logins.route");
 const noticesRoutes = require("./routes/notices.route");
 const notice_filesRoutes = require("./routes/notice_files.route");
-const admission_notices = require("./routes/admission_notices.route");
+const admission_noticesRoutes = require("./routes/admission_notices.route");
+const admission_notice_filesRoutes = require("./routes/admission_notice_files.route");
 
 // <---> 
 dotenv.config();
@@ -24,7 +25,8 @@ app.use("/api/roles", rolesRoutes);
 app.use("/api/logins", loginsRoutes);
 app.use("/api/notices", noticesRoutes);
 app.use("/api/notice_files", notice_filesRoutes);
-app.use("/api/admission_notices", admission_notices);
+app.use("/api/admission_notices", admission_noticesRoutes);
+app.use("/api/admission_notice_files", admission_notice_filesRoutes);
 
 app.listen(process.env.SERVER_PORT_NO, () => {
   console.log("Server Started at Port: 3000.");

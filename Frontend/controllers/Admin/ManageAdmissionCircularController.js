@@ -125,7 +125,7 @@ $(document).ready(function () {
 
     var LoadNoticeFiles = function(id){
         $.ajax({
-            url: api_base_URL+"/api/notice_files/get-all-files/notice/"+id,
+            url: api_base_URL+"/api/admission_notice_files/get-all-files/notice/"+id,
             method: "GET",
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
@@ -182,7 +182,7 @@ $(document).ready(function () {
         var data;
 
         $.ajax({
-            url: api_base_URL+"/api/notice_files/get-files/file_id/"+id,
+            url: api_base_URL+"/api/admission_notice_files/get-files/file_id/"+id,
             method: "GET",
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -205,7 +205,7 @@ $(document).ready(function () {
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/notice_files/delete/id/"+id,
+            url: api_base_URL+"/api/admission_notice_files/delete/id/"+id,
             method: "DELETE",
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -222,23 +222,26 @@ $(document).ready(function () {
     });
     
 
-    var DeleteNoticeFilesForNoticeDelete = function async(id){
+    var DeleteNoticeFilesForNoticeDelete = function sync(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
+        var complete = false;
+
         $.ajax({
-            url: api_base_URL+"/api/notice_files/get-all-files/notice/"+id,
+            url: api_base_URL+"/api/admission_notice_files/get-all-files/notice/"+id,
             method: "GET",
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
                     var data = xhr.responseJSON;
                     if(data.length > 0)
                     {
+                        
                         for (var i = 0; i < data.length; i++) 
                         {
                             $.ajax({
-                                url: api_base_URL+"/api/notice_files/delete/id/"+data[i].id,
+                                url: api_base_URL+"/api/admission_notice_files/delete/id/"+data[i].id,
                                 method: "DELETE",
                                 headers : {
                                     role : decryptLoginInfo.role_id,
@@ -248,22 +251,41 @@ $(document).ready(function () {
                                     console.log("file removed");
                                 }
                             });
+
+                            if(i == data.length-1)
+                            {
+                                complete = true;
+                            }
                         }
+
+                        if(complete)
+                        {
+                            DeleteNotice(id);
+                        }
+                        
+                    }
+
+                    else
+                    {
+                        DeleteNotice(id);
                     }
                 }
-                DeleteNotice(id);
+                else
+                {
+                    DeleteNotice(id);
+                }
             }
         });
         
     }
 
-    var DeleteNotice = function async(id){
+    var DeleteNotice = function sync(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/notices/delete-notice/"+id,
+            url: api_base_URL+"/api/admission_notices/delete-notice/"+id,
             method: "DELETE",
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -381,7 +403,7 @@ $(document).ready(function () {
                     {
                         $("#msg").removeClass("alert-danger");
                         $("#msg").addClass("alert-success");
-                        $('#msg').html('<small>Notice Updated.</small>');
+                        $('#msg').html('<small>Circular Updated.</small>');
                         $('#msg').removeAttr('hidden');
                     }
                     else 
@@ -474,12 +496,12 @@ $(document).ready(function () {
                     {
                         $("#msgP").removeClass("alert-danger");
                         $("#msgP").addClass("alert-success");
-                        $('#msgP').html('<small>Notice Posted.</small>');
+                        $('#msgP').html('<small>Circular Posted.</small>');
                         $('#msgP').removeAttr('hidden');
 
                         $("#msgI").removeClass("alert-info");
                         $("#msgI").addClass("alert-success");
-                        $('#msgI').html('<small>Now you can add files. For adding- <br>Go to "EDIT" of this notice.</small>');
+                        $('#msgI').html('<small>Now you can add files. For adding- <br>Go to "EDIT" of this circular.</small>');
                         $('#msgI').removeAttr('hidden');
 
                     }
@@ -492,7 +514,7 @@ $(document).ready(function () {
 
                         $("#msgI").removeClass("alert-success");
                         $("#msgI").addClass("alert-info");
-                        $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+                        $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
                         $('#msgI').removeAttr('hidden');
                     }
                 }
@@ -505,7 +527,7 @@ $(document).ready(function () {
 
                     $("#msgI").removeClass("alert-success");
                     $("#msgI").addClass("alert-info");
-                    $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+                    $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
                     $('#msgI').removeAttr('hidden');
                 }
                 LoadAllNotice();
@@ -525,7 +547,7 @@ $(document).ready(function () {
         $('#msgP').attr('hidden', true);
     
         $("#msgI").addClass("alert-info");
-        $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+        $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
         $('#msgI').removeAttr('hidden');
     });
 
@@ -537,7 +559,7 @@ $(document).ready(function () {
         var data = new FormData($('#uploadForm')[0]);
 
         $.ajax({
-            url: api_base_URL+"/api/notice_files/post-files/notice/"+id,
+            url: api_base_URL+"/api/admission_notice_files/post-files/notice/"+id,
             method: "POST",
             contentType: false,
             processData: false,
@@ -554,12 +576,12 @@ $(document).ready(function () {
                     {
                         $("#msgP").removeClass("alert-danger");
                         $("#msgP").addClass("alert-success");
-                        $('#msgP').html('<small>Notice Posted.</small>');
+                        $('#msgP').html('<small>Circular Posted.</small>');
                         $('#msgP').removeAttr('hidden');
 
                         $("#msgI").removeClass("alert-info");
                         $("#msgI").addClass("alert-success");
-                        $('#msgI').html('<small>Now you can add files. For adding- <br>Go to "EDIT" of this notice.</small>');
+                        $('#msgI').html('<small>Now you can add files. For adding- <br>Go to "EDIT" of this circular.</small>');
                         $('#msgI').removeAttr('hidden');
                     }
                     else 
@@ -571,7 +593,7 @@ $(document).ready(function () {
 
                         $("#msgI").removeClass("alert-success");
                         $("#msgI").addClass("alert-info");
-                        $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+                        $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
                         $('#msgI').removeAttr('hidden');
                     }
                 }
@@ -584,7 +606,7 @@ $(document).ready(function () {
 
                     $("#msgI").removeClass("alert-success");
                     $("#msgI").addClass("alert-info");
-                    $('#msgI').html('<small>You will be able to attach files after posting the notice.</small>');
+                    $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
                     $('#msgI').removeAttr('hidden');
                 }
                 LoadNoticeFiles(id);
