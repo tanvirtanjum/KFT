@@ -94,7 +94,7 @@ $(document).ready(function () {
                             str += "<tr>"+
                                         "<th>"+ sl + "</th>"+
                                         "<td>"+ data[i].file_name +"</td>"+
-                                        "<td>"+ '<a class="btn btn-primary btn-sm" href="'+data[i].file_path+'" target="_blank" role="button" download><i class="fas fa-download"></i></a>' +"</td>"+
+                                        "<td>"+ '<a class="btn btn-primary btn-sm" href="'+api_base_URL+'/api/download?path='+data[i].file_path+'" target="_blank" role="button" download><i class="fas fa-download"></i></a>' +"</td>"+
                                 "</tr>";
                             sl++;
                         }

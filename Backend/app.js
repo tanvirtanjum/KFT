@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require('cors')
 
 // Importing Created Modules
+const downloadRoutes = require("./routes/download.route");
 const rolesRoutes = require("./routes/roles.route");
 const loginsRoutes = require("./routes/logins.route");
 const noticesRoutes = require("./routes/notices.route");
@@ -21,6 +22,7 @@ app.use(express.urlencoded({extended: true}));
 app.set('trust proxy', 1);
 app.use(cors());
 
+app.use('/api/download', downloadRoutes);
 app.use("/api/roles", rolesRoutes);
 app.use("/api/logins", loginsRoutes);
 app.use("/api/notices", noticesRoutes);
