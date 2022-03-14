@@ -7,6 +7,7 @@ $(document).ready(function () {
     $('#changepassTab').attr("href", base_URL+"/views/Common/ChangePassword.html");
     $('#noticeTab').attr("href", base_URL+"/views/Admin/ManageNotice.html");
     $('#admissionTab').attr("href", base_URL+"/views/Admin/ManageAdmissionCircular.html")
+    $('#employeeTab').attr("href", base_URL+"/views/Admin/EmployeeManagement.html")
     
 
     function activeSection()
@@ -16,10 +17,19 @@ $(document).ready(function () {
             $('#dashboardTab').addClass("active");
             $('#settingTab').removeClass("active");
             $('#annoucementTab').removeClass("active");
+            $('#detailsTab').removeClass("active");
         }
         if(window.location.href == base_URL+"/views/Common/ChangePassword.html")
         {
             $('#settingTab').addClass("active");
+            $('#dashboardTab').removeClass("active");
+            $('#annoucementTab').removeClass("active");
+            $('#detailsTab').removeClass("active");
+        }
+        if(window.location.href == base_URL+"/views/Admin/EmployeeManagement.html")
+        {
+            $('#detailsTab').addClass("active");
+            $('#settingTab').removeClass("active");
             $('#dashboardTab').removeClass("active");
             $('#annoucementTab').removeClass("active");
         }
@@ -28,6 +38,7 @@ $(document).ready(function () {
             $('#annoucementTab').addClass("active");
             $('#dashboardTab').removeClass("active");
             $('#settingTab').removeClass("active");
+            $('#detailsTab').removeClass("active");
         }
     }
 

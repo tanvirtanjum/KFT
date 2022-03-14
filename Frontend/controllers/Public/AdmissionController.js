@@ -10,11 +10,10 @@ $(document).ready(function () {
             url: api_base_URL+"/api/admission_notices/get-all-notices",
             method: "GET",
             complete: function (xhr, status) {
+                var str = '';
+                var sl = 1;
                 if (xhr.status == 200) {
                     var data = xhr.responseJSON;
-                    
-                    var str = '';
-                    var sl = 1;
                     if(data.length > 0)
                     {
                         for (var i = 0; i < data.length; i++) 
@@ -41,14 +40,28 @@ $(document).ready(function () {
                     }
                     else
                     {
-                        str += "<div align='middle' style='color: #9B0505;'><b>NO DATA FOUND</b></div>";
+                        str += '<div class="card bg-white bg-opacity-75 text-black text-center w-75">'+
+                                    '<div class="card-header">'+
+                                        '<h5 class="card-title"><i class="fas fa-bullhorn"></i>&nbsp;Admission Notification</h5>'+
+                                    '</div>'+
+                                    '<div class="card-body">'+
+                                        '<p class="card-text"><h1 style="color: #9B0505;">NO NOTICE FOUND</h1></p>'+
+                                    '</div>'+
+                                '</div>';
                     }
 
                     $("#notices").html(str);
                 }
                 else 
                 {
-                    str = "<div align='middle' style='color: #9B0505;'><b>NO DATA FOUND</b></div>";
+                    str += '<div class="card bg-white bg-opacity-75 text-black text-center w-75">'+
+                                    '<div class="card-header">'+
+                                        '<h5 class="card-title"><i class="fas fa-bullhorn"></i>&nbsp;Admission Notification</h5>'+
+                                    '</div>'+
+                                    '<div class="card-body">'+
+                                        '<p class="card-text"><h1 style="color: #9B0505;">NO NOTICE FOUND</h1></p>'+
+                                    '</div>'+
+                                '</div>';
                     $("#notices").html(str);
                 }
             }
