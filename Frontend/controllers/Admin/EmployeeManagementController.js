@@ -48,9 +48,87 @@ $(document).ready(function () {
 
     checkLocalStorage();
 
+    var LoadAllDesignationOptions = function(){
+        $.ajax({
+            url: api_base_URL+"/api/designations/get-all-designations",
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].designation_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#designP").html(str);
+                    $("#designU").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#designP").html(str);
+                    $("#designU").html(str);
+                }
+            }
+        });
+    }
+    LoadAllDesignationOptions();
+
+    var LoadAllEmpStatusOptions = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/employment_status/get-all-status",
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].status_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#statusU").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#statusU").html(str);
+                }
+            }
+        });
+    }
+
+    LoadAllEmpStatusOptions();
+
     var LoadAllEmployees = function(){
         $.ajax({
-            url: api_base_URL+"/api/admission_notices/get-all-notices",
+            url: api_base_URL+"/api/employees/get-all-employees",
             method: "GET",
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
@@ -62,335 +140,272 @@ $(document).ready(function () {
                     {
                         for (var i = 0; i < data.length; i++) 
                         {
-                            var Post_Date = new Date(data[i].created_at);
-                            var Update_Date = new Date(data[i].updated_at);
-                            var Deadline = new Date(data[i].dead_line);
-
                             str += "<tr>"+
                                         "<th>"+ sl + "</th>"+
-                                        "<td>"+ data[i].title +"</td>"+
-                                        "<td>"+ Deadline.toDateString()  +"</td>"+
-                                        "<td>"+ Post_Date.toDateString() +"</td>"+
-                                        "<td>"+ Update_Date.toUTCString() +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+ data[i].name +"</td>"+
+                                        "<td>"+ data[i].designation_name  +"</td>"+
+                                        "<td>"+ data[i].status_name  +"</td>"+
+                                        "<td>"+ data[i].contact +"</td>"+
+                                        "<td>"+ data[i].email +"</td>"+
+                                        "<td>"+ data[i].file_no +"</td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
                                 "</tr>";
                             sl++;
                         }
                     }
                     else
                     {
-                        str += "<tr><td colspan='6' align='middle'>NO DATA FOUND</td></tr>";
+                        str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
                     }
 
-                    $("#noticeTable tbody").html(str);
+                    $("#empTable tbody").html(str);
                 }
                 else 
                 {
-                    str += "<tr><td colspan='6' align='middle'>NO DATA FOUND</td></tr>";
-                    $("#noticeTable tbody").html(str);
+                    str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#empTable tbody").html(str);
                 }
             }
         });
     }
-    LoadAllNotice();
+    LoadAllEmployees();
 
-    var LoadNotice = function(id){
+    var LoadEmployee = function(id){
         $.ajax({
-            url: api_base_URL+"/api/admission_notices/get-notice/"+id,
+            url: api_base_URL+"/api/employees/get-employee/"+id,
             method: "GET",
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
                     
-                    var data = xhr.responseJSON;
-
-                   var Deadline = data.dead_line;
-                   var numberTime = Deadline.indexOf('T');
-                   var Deadline = data.dead_line.slice(0,numberTime);
+                   var data = xhr.responseJSON;
                 
-                   $('#subjectU').val(data.title);
-                   $('#contentU').val(data.details);
-                   $('#deadlineU').val(Deadline);
+                   $('#nameU').val(data.name);
+                   $('#sexU').val(data.sex);
+                   $('#relU').val(data.religion);
+                   $('#fatherU').val(data.father_name);
+                   $('#motherU').val(data.mother_name);
+                   $('#contactU').val(data.contact);
+                   $('#emailU').val(data.email);
+                   $('#bgU').val(data.bg);
+                   $('#pradU').val(data.present_address);
+                   $('#peadU').val(data.permanent_address);
+                   $('#designU').val(data.designation_id);
+                   $('#salaryU').val(data.salary);
+                   $('#fileU').val(data.file_no);
+                   $('#statusU').val(data.employment_status_id);
+                   $('#avatarU').attr('src', api_base_URL+"/"+data.img_path);
                    $('#id').val(data.id);
+                   $('#renderUpdate').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeImageModal' data-bs-id='"+data.id+"' class='btn btn-sm btn-danger'>Update Image</button>");
+                }
+                else {}
+            }
+        });
+    }
 
-                   LoadNoticeFiles(id);
+    $('#updateEmployeeModal').on('show.bs.modal', function(e) {
+        $('#msgU').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadEmployee(id);
+    });
+
+
+    var LoadEmployeeImage = function(id){
+        $.ajax({
+            url: api_base_URL+"/api/employees/get-employee/"+id,
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#nameU2').val(data.name);
+                   $('#avatarU2').attr('src', api_base_URL+"/"+data.img_path);
+                   $('#id2').val(data.id);
+                   $('#pathU2').val(data.img_path);
                 }
                 else 
                 {
-                    str += "<tr><td colspan='6' align='middle'>NO DATA FOUND</td></tr>";
-                    $("#noticeTable tbody").html(str);
+                
                 }
             }
         });
     }
 
-    var LoadNoticeFiles = function(id){
+    $('#updateEmployeeImageModal').on('show.bs.modal', function(e) {
+        $('#msgU2').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadEmployeeImage(id);
+    });
+
+    var UpdateEmployeeImage = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var data = new FormData($('#uploadForm')[0]);
+
         $.ajax({
-            url: api_base_URL+"/api/admission_notice_files/get-all-files/notice/"+id,
-            method: "GET",
+            url: api_base_URL+"/api/employees/update-employee-image/"+id,
+            method: "PUT",
+            contentType: false,
+            processData: false,
+            cache: false,
+            data: data,
+            headers : {
+                role : decryptLoginInfo.role_id,
+                path: $('#pathU2').val(),
+            },
             complete: function (xhr, status) {
+                console.log(xhr)
                 if (xhr.status == 200) {
                     var data = xhr.responseJSON;
-                    var str = '';
-                    var sl = 1;
-                    if(data.length > 0 && data[0].file_path != '')
-                    {
-                        for (var i = 0; i < data.length; i++) 
-                        {
-                            str += "<tr>"+
-                                        "<th>"+ sl + "</th>"+
-                                        "<td>"+ data[i].file_name +"</td>"+
-                                        "<td>"+ '<a class="btn btn-primary btn-sm" href="'+api_base_URL+'/api/download?path='+data[i].file_path+'" target="_blank" role="button" download><i class="fas fa-download"></i></a>' +"</td>"+
-                                        "<td>"+ "<button type='button' data-bs-toggle='modal' data-bs-target='#deleteNoticeFileModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-danger'><i class='fas fa-trash-alt'></i></button>" +"</td>"+
-                                "</tr>";
-                            sl++;
-                        }
-                    }
-                    else
-                    {
-                        str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
-                    }
 
-                   $("#filelistU tbody").html(str);
+                    if(data.affectedRows >= 1)
+                    {
+                        $("#msgU2").removeClass("alert-danger");
+                        $("#msgU2").addClass("alert-success");
+                        $('#msgU2').html('<small>Image Updated.</small>');
+                        $('#msgU2').removeAttr('hidden');
+                    }
+                    else 
+                    {
+                        $("#msgU2").removeClass("alert-success");
+                        $("#msgU2").addClass("alert-danger");
+                        $('#msgU2').html('<small>Something Went Wrong.</small>');
+                        $('#msgU2').removeAttr('hidden');
+                    }
                 }
                 else 
                 {
-                    str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
-                    $("#filelistU tbody").html(str);
+                    $("#msgU2").removeClass("alert-success");
+                    $("#msgU2").addClass("alert-danger");
+                    $('#msgU2').html('<small>Something Went Wrong.</small>');
+                    $('#msgU2').removeAttr('hidden');
                 }
+                LoadAllEmployees();
+                LoadEmployee(id);
+                LoadEmployeeImage(id);
             }
         });
     }
 
-    $('#updateNoticeModal').on('show.bs.modal', function(e) {
-        $('#msg').attr('hidden', true);
-        var id = $(e.relatedTarget).data('bs-id');
-        LoadNotice(id);
+    $("#updateImageBTN").click(function () {
+        UpdateEmployeeImage($('#id2').val());
     });
 
-    $('#deleteNoticeFileModal').on('show.bs.modal', function(e) {
-        $('#msg').attr('hidden', true);
-        var id = $(e.relatedTarget).data('bs-id');
-        LoadFileByID(id);
-    });
-
-    ////////
-    var LoadFileByID = function LoadFileByID(id){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        var data;
-
-        $.ajax({
-            url: api_base_URL+"/api/admission_notice_files/get-files/file_id/"+id,
-            method: "GET",
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 200) {
-                    data = xhr.responseJSON[0];
-                    //alert(encodeURIComponent(data.file_path.toString()));
-                    $('#fileid').val(data.id);
-                    $('#filepath').val(data.file_path.toString());
-                    $('#filename').html(data.file_name.toString());
-                }
-            }
-        });
-    }
-
-    var DeleteNoticeFileByID = function(id, path){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/admission_notice_files/delete/id/"+id,
-            method: "DELETE",
-            headers : {
-                role : decryptLoginInfo.role_id,
-                path: path,
-            },
-            complete: function (xhr, status) {
-                $('#deleteNoticeFileModal').modal('toggle');
-                LoadNoticeFiles($('#id').val());
-            }
-        });
-    }
-    $("#deletefileBTN").click(function () {
-        DeleteNoticeFileByID($('#fileid').val(), $('#filepath').val());
-    });
-    
-
-    var DeleteNoticeFilesForNoticeDelete = function sync(id){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        var complete = false;
-
-        $.ajax({
-            url: api_base_URL+"/api/admission_notice_files/get-all-files/notice/"+id,
-            method: "GET",
-            complete: function (xhr, status) {
-                if (xhr.status == 200) {
-                    var data = xhr.responseJSON;
-                    if(data.length > 0)
-                    {
-                        
-                        for (var i = 0; i < data.length; i++) 
-                        {
-                            $.ajax({
-                                url: api_base_URL+"/api/admission_notice_files/delete/id/"+data[i].id,
-                                method: "DELETE",
-                                headers : {
-                                    role : decryptLoginInfo.role_id,
-                                    path: data[i].file_path,
-                                },
-                                complete: function (xhr, status) {
-                                    console.log("file removed");
-                                }
-                            });
-
-                            if(i == data.length-1)
-                            {
-                                complete = true;
-                            }
-                        }
-
-                        if(complete)
-                        {
-                            DeleteNotice(id);
-                        }
-                        
-                    }
-
-                    else
-                    {
-                        DeleteNotice(id);
-                    }
-                }
-                else
-                {
-                    DeleteNotice(id);
-                }
-            }
-        });
-        
-    }
-
-    var DeleteNotice = function sync(id){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/admission_notices/delete-notice/"+id,
-            method: "DELETE",
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 204) {
-                    $('#updateNoticeModal').modal('toggle');
-                    alert("Notice Deleted.");
-                }
-                else 
-                {
-                    alert("Something Went Wrong.");
-                }
-                LoadAllNotice();
-            }
-        });
-    }
-    $("#deleteBTN").click(function () {
-        if(confirm("Are you sure you want to delete?"))
-        {
-            DeleteNoticeFilesForNoticeDelete($('#id').val());
-    
-        }
-    });
-  
-
-    // var DeleteNotice = function(id){
-    //     var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-    //     decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-    //     decryptLoginInfo = JSON.parse(decryptLoginInfo);
-    //     $.ajax({
-    //         url: api_base_URL+"/api/notices/delete-notice/"+id,
-    //         method: "DELETE",
-    //         headers : {
-    //             role : decryptLoginInfo.role_id,
-    //         },
-    //         complete: function (xhr, status) {
-    //             if (xhr.status == 204) {
-    //                 $('#updateNoticeModal').modal('toggle');
-    //                 alert("Notice Deleted.");
-    //             }
-    //             else 
-    //             {
-    //                 alert("Something Went Wrong.");
-    //             }
-    //             LoadAllNotice();
-    //         }
-    //     });
-    // }
-    // $("#deleteBTN").click(function () {
-    //     if(confirm("Are you sure you want to delete?"))
-    //     {
-    //         DeleteNotice($('#id').val());
-    //     }
-    // });
-
-    var validateNoticeUpdate= function() {
+    var validateEmployeeUpdate= function() {
         var validate = true;
-        if($.trim($("#subjectU").val()).length <= 0)
+        if($.trim($('#nameU').val()).length <= 0)
         {
             validate = false;
-            $("#subjectU").addClass("is-invalid");
+            $('#nameU').addClass("is-invalid");
         }
         else
         {
-            $("#subjectU").removeClass("is-invalid");
+            $("#nameU").removeClass("is-invalid");
         }
-        if($.trim($("#contentU").val()).length <= 0)
+
+        if($.trim($("#fatherU").val()).length <= 0)
         {
             validate = false;
-            $("#contentU").addClass("is-invalid");
+            $("#fatherU").addClass("is-invalid");
         }
         else
         {
-            $("#contentU").removeClass("is-invalid");
+            $("#fatherU").removeClass("is-invalid");
         }
-        if($.trim($("#deadlineU").val()).length <= 0)
+
+        if($.trim($("#motherU").val()).length <= 0)
         {
             validate = false;
-            $("#deadlineU").addClass("is-invalid");
+            $("#motherU").addClass("is-invalid");
         }
         else
         {
-            $("#deadlineU").removeClass("is-invalid");
+            $("#motherU").removeClass("is-invalid");
         }
+
+        if($.trim($("#contactU").val()).length <= 10)
+        {
+            validate = false;
+            $("#contactU").addClass("is-invalid");
+        }
+        else
+        {
+            $("#contactU").removeClass("is-invalid");
+        }
+
+        if($.trim($("#pradU").val()).length <= 0)
+        {
+            validate = false;
+            $("#pradU").addClass("is-invalid");
+        }
+        else
+        {
+            $("#pradU").removeClass("is-invalid");
+        }
+
+        if($.trim($("#peadU").val()).length <= 0)
+        {
+            validate = false;
+            $("#peadU").addClass("is-invalid");
+        }
+        else
+        {
+            $("#peadU").removeClass("is-invalid");
+        }
+
+        if($("#salaryU").val() <= 0)
+        {
+            validate = false;
+            $("#salaryU").addClass("is-invalid");
+        }
+        else
+        {
+            $("#salaryU").removeClass("is-invalid");
+        }
+
+        if($.trim($("#fileU").val()).length <= 0)
+        {
+            validate = false;
+            $("#fileU").addClass("is-invalid");
+        }
+        else
+        {
+            $("#fileU").removeClass("is-invalid");
+        }
+
         if(!validate)
         {
-            $('#msg').attr('hidden', true);
+            $('#msgU').attr('hidden', true);
         }
 
         return validate;
     }
 
-    var UpdateNotice = function(id){
+    var UpdateEmployee = function(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/admission_notices/update-notice/"+id,
+            url: api_base_URL+"/api/employees/update-employee/"+id,
             method: "PUT",
             data : {
-                title : $('#subjectU').val(),
-                details : $('#contentU').val(),
-                dead_line : $('#deadlineU').val(),
+                id: $('#id').val(),
+                name: $('#nameU').val(),
+                sex: $('#sexU').val(),
+                religion: $('#relU').val(),
+                father_name: $('#fatherU').val(),
+                mother_name: $('#motherU').val(),
+                contact: $('#contactU').val(),
+                bg: $('#bgU').val(),
+                present_address: $('#pradU').val(),
+                permanent_address: $('#peadU').val(),
+                designation_id: $('#designU').val(),
+                salary: $('#salaryU').val(),
+                file_no: $('#fileU').val(),
+                employment_status_id: $('#statusU').val(),
             },
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -401,37 +416,96 @@ $(document).ready(function () {
 
                     if(data.affectedRows >= 1)
                     {
-                        $("#msg").removeClass("alert-danger");
-                        $("#msg").addClass("alert-success");
-                        $('#msg').html('<small>Circular Updated.</small>');
-                        $('#msg').removeAttr('hidden');
+                        $("#msgU").removeClass("alert-danger");
+                        $("#msgU").addClass("alert-success");
+                        $('#msgU').html('<small>Information Updated.</small>');
+                        $('#msgU').removeAttr('hidden');
                     }
                     else 
                     {
-                        $("#msg").removeClass("alert-success");
-                        $("#msg").addClass("alert-danger");
-                        $('#msg').html('<small>Something Went Wrong.</small>');
-                        $('#msg').removeAttr('hidden');
+                        $("#msgU").removeClass("alert-success");
+                        $("#msgU").addClass("alert-danger");
+                        $('#msgU').html('<small>Something Went Wrong.</small>');
+                        $('#msgU').removeAttr('hidden');
                     }
                 }
                 else 
                 {
-                    $("#msg").removeClass("alert-success");
-                    $("#msg").addClass("alert-danger");
-                    $('#msg').html('<small>Something Went Wrong.</small>');
-                    $('#msg').removeAttr('hidden');
+                    $("#msgU").removeClass("alert-success");
+                    $("#msgU").addClass("alert-danger");
+                    $('#msgU').html('<small>Something Went Wrong.</small>');
+                    $('#msgU').removeAttr('hidden');
                 }
-                LoadAllNotice();
-                LoadNotice(id);
-                LoadNoticeFiles(id);
+                LoadAllEmployees();
+                LoadEmployee(id);
+                LoadEmployeeImage(id);
             }
         });
     }
 
     $("#updateBTN").click(function () {
-        if(validateNoticeUpdate())
+        if(validateEmployeeUpdate())
         {
-            UpdateNotice($('#id').val());
+            UpdateEmployee($('#id').val());
+        }
+    });
+
+    var loadAllEmployeesByName = function (name) {
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+            $.ajax({
+                url: api_base_URL+"/api/employees/name/"+name,
+                method: "GET",
+                headers : {
+                    role : decryptLoginInfo.role_id,
+                },
+                complete: function (xhr, status) {
+                    if (xhr.status == 200) {
+                        var data = xhr.responseJSON;
+    
+                        var str = '';
+                        var sl = 1;
+                        if(data.length > 0)
+                        {
+                            for (var i = 0; i < data.length; i++) 
+                            {
+                                str += "<tr>"+
+                                            "<th>"+ sl + "</th>"+
+                                            "<td>"+ data[i].name +"</td>"+
+                                            "<td>"+ data[i].designation_name  +"</td>"+
+                                            "<td>"+ data[i].status_name  +"</td>"+
+                                            "<td>"+ data[i].contact +"</td>"+
+                                            "<td>"+ data[i].email +"</td>"+
+                                            "<td>"+ data[i].file_no +"</td>"+
+                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                    "</tr>";
+                                sl++;
+                            }
+                        }
+                        else
+                        {
+                            str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
+                        }
+    
+                        $("#empTable tbody").html(str);
+                    }
+                    else {
+                        str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
+                        $("#empTable tbody").html(str);
+                    }
+                }
+            });
+    }
+    $("#search").on("keyup change",function(){
+        if($.trim($("#search").val()).length > 0)
+        {
+            loadAllEmployeesByName($("#search").val());
+        }
+        else
+        {
+            LoadAllEmployees();
         }
     });
 

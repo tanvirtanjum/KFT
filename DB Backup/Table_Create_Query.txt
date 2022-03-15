@@ -316,6 +316,7 @@ INSERT INTO `access` (`id`, `access_name`) VALUES
 (2, 'RESTRICTED');
 
 INSERT INTO `roles` (`id`, `role_name`) VALUES
+(0, 'NO ROLE'),
 (1, 'ADMIN'),
 (3, 'STUDENT'),
 (2, 'TEACHER');

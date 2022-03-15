@@ -33,6 +33,293 @@
     
     <div class="container-fluid">
 
+        <div class="d-grid gap-2 col-6 mx-auto mb-2" align="center">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                <i class="fas fa-pen"></i>&nbsp; Add New Employee
+            </button>
+        </div>
+
+        <div class="mb-2" align="center">
+            <button type="button" class="btn btn-danger  btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                <i class="fas fa-pen"></i>&nbsp; Manage Designations
+            </button>
+        </div>
+
+        <div class="input-group mb-0">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+            <input type="text" id="search" class="form-control" placeholder="Search By Employee Name" aria-label="Search By Employee Name" aria-describedby="basic-addon1">
+          </div>
+          
+        <!-- Add Modal -->
+        <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEmployeeModalLabel"><i class="fas fa-pen"></i>&nbsp;Add Employee</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert mb-2" id="msgP" role="alert" align="center"></div>
+                        <div class="form-floating mb-2">
+                            <!-- <textarea class="form-control" placeholder="Write Subject" id="nameP" style="resize: none;"></textarea> -->
+                            <input type="text" class="form-control" placeholder="Write Subject" id="nameP">
+                            <label for="nameP">Name</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <select class="form-select" id="sexP" aria-label="Floating label select example">
+                              <option value="Male">MALE</option>
+                              <option value="Female">FEMALE</option>
+                              <option value="Other">Other</option>
+                            </select>
+                            <label for="sexP">Sex</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <select class="form-select" id="relP" aria-label="Floating label select example">
+                              <option value="Muslim">MUSLIM</option>
+                              <option value="Hindu">HINDU</option>
+                              <option value="Christian">CHRISTIAN</option>
+                              <option value="Buddha">BUDDHA</option>
+                            </select>
+                            <label for="relP">Religion</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" placeholder="Write Subject" id="fatherP">
+                            <label for="fatherP">Father's Name</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" placeholder="Write Subject" id="motherP">
+                            <label for="motherP">Mother's Name</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" placeholder="Write Subject" id="contactP">
+                            <label for="contactP">Contact No.</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" placeholder="Write Subject" id="emailP">
+                            <label for="emailP">Email</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" placeholder="Write Subject" id="bgP">
+                            <label for="bgP">Blood Group</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="pradP" style="height: 100px"></textarea>
+                            <label for="pradP">Present Address</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="peadP" style="height: 100px"></textarea>
+                            <label for="peadP">Permanent Address</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <select class="form-select" id="designP" aria-label="Floating label select example">
+                              
+                            </select>
+                            <label for="designP">Designation</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="number" class="form-control" placeholder="Write Subject" id="salaryP">
+                            <label for="salaryP">Salary</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" placeholder="Write Subject" id="fileP">
+                            <label for="fileP">File No.</label>
+                        </div>
+
+                        <input class="form-control mb-2" type="file" id="uploaded_file" name="uploaded_file" accept="image/*">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="postBTN" class="btn btn-success">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive" style="padding-top: 2vh;">
+            <table class="table table-sm table-striped" id="empTable">
+                <thead class="table-dark">
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Designation</th>
+                  <th>Status</th>
+                  <th>Contact</th>
+                  <th>Email</th>
+                  <th>File No</th>
+                  <th></th>
+                </thead>
+                <tbody class="table-light">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateEmployeeModal" tabindex="-1" aria-labelledby="updateEmployeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateEmployeeModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Employee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert mb-2" id="msgU" role="alert" align="center"></div>
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="nameU">
+                        <label for="nameU">Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="sexU" aria-label="Floating label select example">
+                          <option value="Male">MALE</option>
+                          <option value="Female">FEMALE</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <label for="sexU">Sex</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="relU" aria-label="Floating label select example">
+                          <option value="Muslim">MUSLIM</option>
+                          <option value="Hindu">HINDU</option>
+                          <option value="Christian">CHRISTIAN</option>
+                          <option value="Buddha">BUDDHA</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <label for="relU">Religion</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="fatherU">
+                        <label for="fatherU">Father's Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="motherU">
+                        <label for="motherU">Mother's Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" placeholder="Write Subject" id="contactU">
+                        <label for="contactU">Contact No.</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="emailU" readonly>
+                        <label for="emailU">Email</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="bgU" aria-label="Floating label select example">
+                          <option value="A+">A+</option>
+                          <option value="A-">A-</option>
+                          <option value="AB+">AB+</option>
+                          <option value="B+">B+</option>
+                          <option value="B-">B-</option>
+                          <option value="O+">O+</option>
+                          <option value="O-">O-</option>
+                        </select>
+                        <label for="bgU">Blood Group</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="pradU" style="height: 100px"></textarea>
+                        <label for="pradU">Present Address</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="peadU" style="height: 100px"></textarea>
+                        <label for="peadU">Permanent Address</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="designU" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="designU">Designation</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" placeholder="Write Subject" id="salaryU">
+                        <label for="salaryU">Salary</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="statusU" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="statusU">Employment Status</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="fileU">
+                        <label for="fileU">File No.</label>
+                    </div>
+
+                    <div class="mb-2" style="width: calc(100%);" align="center">
+                        <img src="" class="img-thumbnail" alt="NO DATA FOUND" id="avatarU" height="200" width="200">
+                    </div>
+
+                    <div class="mb-2" id="renderUpdate" align="center">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="updateBTN" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Update Image Modal -->
+    <div class="modal fade" id="updateEmployeeImageModal" tabindex="-1" aria-labelledby="updateEmployeeImageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateEmployeeImageModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert mb-2" id="msgU2" role="alert" align="center"></div>
+
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id2">
+                        <input type="hidden" id="pathU2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="nameU2" readonly>
+                        <label for="nameU2">Name</label>
+                    </div>
+
+                    <div class="mb-2" style="width: calc(100%);" align="center">
+                        <img src="" class="img-thumbnail" alt="NO DATA FOUND" id="avatarU2" height="200" width="200">
+                    </div>
+
+                    <input class="form-control mb-2" type="file" id="uploaded_update_file" name="uploaded_update_file" accept="image/*">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="updateImageBTN" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     

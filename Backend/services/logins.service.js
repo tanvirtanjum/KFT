@@ -41,3 +41,30 @@ exports.updateUserPassword = (data, callback) => {
         }
     );
 };
+
+exports.postUser = (data, callback) => {
+    db.query(
+        `INSERT INTO employees(email, password, role_id, access_id) VALUES (?, ?, ?, ?);`,
+        [data.email, data.password, data.role_id, data.access_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
+exports.getEmail = (data, callback) => {
+    db.query(
+        `SELECT email FROM logins WHERE email = ?;`,
+        [data.email, data.password],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};
