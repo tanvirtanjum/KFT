@@ -20,9 +20,9 @@ var router = express.Router();
 router.get("/get-all-employees", employeesController.getAllEmployees);
 router.get("/get-employee/:id", employeesController.getEmployee);
 router.get("/name/:name", employeesController.getEmployeeByName);
-router.post("/post-notice", auth.authAdmin, employeesController.postNotice);
-router.delete("/delete-notice/:id", auth.authAdmin, employeesController.deleteNotice);
+router.post("/insert-employee", auth.authAdmin, employeesController.postEmployee);
 router.put("/update-employee/:id", auth.authAdmin, employeesController.updateEmployee);
 router.put("/update-employee-image/:id", auth.authAdmin, upload.single('uploaded_update_file'), employeesController.updateEmployeeImage);
+router.put("/insert-employee-image/:id", auth.authAdmin, upload.single('uploaded_file'), employeesController.insertEmployeeImage);
 
 module.exports = router;

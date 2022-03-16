@@ -44,7 +44,7 @@ exports.updateUserPassword = (data, callback) => {
 
 exports.postUser = (data, callback) => {
     db.query(
-        `INSERT INTO employees(email, password, role_id, access_id) VALUES (?, ?, ?, ?);`,
+        `INSERT INTO logins(email, password, role_id, access_id) VALUES (?, ?, ?, ?);`,
         [data.email, data.password, data.role_id, data.access_id],
         (error, results, fields) => {
             if (error) {
@@ -71,7 +71,7 @@ exports.getEmail = (data, callback) => {
 
 exports.getLogin = (data, callback) => {
     db.query(
-        `SELECT id, email FROM logins WHERE id = ?;`,
+        `SELECT id, email, role_id FROM logins WHERE id = ?;`,
         [data.id],
         (error, results, fields) => {
             if (error) {
@@ -87,6 +87,20 @@ exports.updateUserEmail = (data, callback) => {
     db.query(
         `UPDATE logins SET email = ?, updated_at = current_timestamp WHERE id = ?;`,
         [data.email, data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};
+
+exports.updateUserRole = (data, callback) => {
+    db.query(
+        `UPDATE logins SET role_id = ?, access_id = ?, updated_at = current_timestamp WHERE id = ?;`,
+        [data.role_id, data.access_id, data.id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);

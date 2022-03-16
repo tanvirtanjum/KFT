@@ -2,8 +2,9 @@ const db = require("../config/db.config");
 
 exports.getAllEmployees = (data, callback) => {
     db.query(
-        `SELECT employees.*, logins.email, designations.designation_name, employment_status.status_name FROM employees `+ 
+        `SELECT employees.*, logins.email, logins.role_id, roles.role_name, designations.designation_name, employment_status.status_name FROM employees `+ 
         `INNER JOIN logins ON employees.login_id = logins.id `+
+        `INNER JOIN roles ON logins.role_id = roles.id `+
         `INNER JOIN designations ON employees.designation_id = designations.id `+
         `INNER JOIN employment_status ON employees.employment_status_id = employment_status.id `+
         `ORDER BY employees.designation_id ASC; `,
@@ -19,8 +20,9 @@ exports.getAllEmployees = (data, callback) => {
 
 exports.getEmployee = (data, callback) => {
     db.query(
-        `SELECT employees.*, logins.email, designations.designation_name, employment_status.status_name FROM employees `+ 
+        `SELECT employees.*, logins.email, logins.role_id, roles.role_name, designations.designation_name, employment_status.status_name FROM employees `+ 
         `INNER JOIN logins ON employees.login_id = logins.id `+
+        `INNER JOIN roles ON logins.role_id = roles.id `+
         `INNER JOIN designations ON employees.designation_id = designations.id `+
         `INNER JOIN employment_status ON employees.employment_status_id = employment_status.id `+
         `WHERE employees.id = ?; `,
@@ -36,8 +38,9 @@ exports.getEmployee = (data, callback) => {
 
 exports.getEmployeeByName = (data, callback) => {
     db.query(
-        `SELECT employees.*, logins.email, designations.designation_name, employment_status.status_name FROM employees `+ 
+        `SELECT employees.*, logins.email, logins.role_id, roles.role_name, designations.designation_name, employment_status.status_name FROM employees `+ 
         `INNER JOIN logins ON employees.login_id = logins.id `+
+        `INNER JOIN roles ON logins.role_id = roles.id `+
         `INNER JOIN designations ON employees.designation_id = designations.id `+
         `INNER JOIN employment_status ON employees.employment_status_id = employment_status.id `+
         `WHERE employees.name LIKE ?; `,
@@ -51,14 +54,16 @@ exports.getEmployeeByName = (data, callback) => {
     );
 };
 
-exports.postNotice = (data, callback) => {
+exports.postEmployee = (data, callback) => {
     db.query(
-        `INSERT INTO admission_notices(title, details, dead_line) VALUES (?, ?, ?);`,
-        [data.title, data.details, data.dead_line],
+        `INSERT INTO employees(name, father_name, mother_name, contact, sex, bg, religion, present_address, permanent_address, salary, designation_id, img_path, file_no, login_id, employment_status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+        [data.name, data.father_name, data.mother_name, data.contact, data.sex, data.bg, data.religion, data.present_address, data.permanent_address, data.salary, data.designation_id, data.img_path, data.file_no, data.login_id, data.employment_status_id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);
             }
+
+            console.log(data);
             return callback(null, results);
         }
     );

@@ -145,6 +145,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].name +"</td>"+
                                         "<td>"+ data[i].designation_name  +"</td>"+
                                         "<td>"+ data[i].status_name  +"</td>"+
+                                        "<td>"+ data[i].role_name  +"</td>"+
                                         "<td>"+ data[i].contact +"</td>"+
                                         "<td>"+ data[i].email +"</td>"+
                                         "<td>"+ data[i].file_no +"</td>"+
@@ -155,14 +156,14 @@ $(document).ready(function () {
                     }
                     else
                     {
-                        str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
+                        str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
                     }
 
                     $("#empTable tbody").html(str);
                 }
                 else 
                 {
-                    str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
+                    str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
                     $("#empTable tbody").html(str);
                 }
             }
@@ -196,7 +197,16 @@ $(document).ready(function () {
                    $('#avatarU').attr('src', api_base_URL+"/"+data.img_path);
                    $('#id').val(data.id);
                    $('#renderUpdate').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeImageModal' data-bs-id='"+data.id+"' class='btn btn-sm btn-danger'>Update Image</button>");
-                   $('#renderEmBtn').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeEmailModal' data-bs-id='"+data.login_id+"' class='btn btn-danger'>Update Email</button>")
+                   $('#renderEmBtn').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeEmailModal' data-bs-id='"+data.login_id+"' class='btn btn-dark'>Update Email</button>");
+
+                   if(data.role_id == 0)
+                   {
+                        $('#renderRole').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeRoleModal' data-bs-id='"+data.login_id+"' class='btn btn-primary'>Give Admin Privilege</button>")
+                   }
+                   else
+                   {
+                    $('#renderRole').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeRoleModal' data-bs-id='"+data.login_id+"' class='btn btn-danger'>Remove Admin Privilege</button>")
+                   }
                 }
                 else {}
             }
@@ -234,9 +244,17 @@ $(document).ready(function () {
 
     $('#updateEmployeeImageModal').on('show.bs.modal', function(e) {
         $('#msgU2').attr('hidden', true);
+        $('#uploaded_file').val(null);
         var id = $(e.relatedTarget).data('bs-id');
         LoadEmployeeImage(id);
     });
+
+
+    $('#addEmployeeModal').on('show.bs.modal', function(e) {
+        $('#msgP').attr('hidden', true);
+        $('#uploaded_update_file').val(null);
+    });
+
 
 
     var LoadEmployeeLoginDetails = function(id){
@@ -269,6 +287,106 @@ $(document).ready(function () {
         LoadEmployeeLoginDetails(id);
     });
 
+
+    var LoadEmployeeLoginDetails2 = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/logins/get-login/id/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#idU4').val(data.id);
+                   $('#roleU4').val(data.role_id);
+                }
+                else {}
+            }
+        });
+    }
+
+    $('#updateEmployeeRoleModal').on('show.bs.modal', function(e) {
+        $('#msgU4').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadEmployeeLoginDetails2(id);
+    });
+
+    var UpdateEmployeeRole = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var role = 0;
+        var access_id = 1;
+        if($('#roleU4').val() == 1)
+        {
+            role = 0;
+            access_id = 2;
+        }
+        else
+        {
+            role = 1;
+            access_id = 1;
+        }
+
+        $.ajax({
+            url: api_base_URL+"/api/logins/update-user-authentication-role",
+            method: "PUT",
+            data: {
+                id: $('#idU4').val(),
+                role_id: role,
+                access_id: access_id,
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                console.log($('#nemailU2').val()+"   "+ $('#idu3').val())
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        $("#msgU4").removeClass("alert-danger");
+                        $("#msgU4").addClass("alert-success");
+                        $('#msgU4').html('<small>Role Updated.</small>');
+                        $('#msgU4').removeAttr('hidden');
+                    }
+                    else 
+                    {
+                        $("#msgU4").removeClass("alert-success");
+                        $("#msgU4").addClass("alert-danger");
+                        $('#msgU4').html('<small>Something Went Wrong.</small>');
+                        $('#msgU4').removeAttr('hidden');
+                    }
+                }
+                else 
+                {
+                    $("#msgU4").removeClass("alert-success");
+                    $("#msgU4").addClass("alert-danger");
+                    $('#msgU4').html('<small>Something Went Wrong.</small>');
+                    $('#msgU4').removeAttr('hidden');
+                }
+                LoadAllEmployees();
+                LoadEmployee($('#id').val());
+                LoadEmployeeImage($('#id').val());
+                LoadEmployeeLoginDetails($('#idu3').val());
+                LoadEmployeeLoginDetails2($('#idU4').val());
+            }
+        });
+    }
+
+    $("#updateRoleBTN").click(function () {
+        UpdateEmployeeRole();
+    });
+
     var loadAllEmployeesByEmail = function (email) {
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
             decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
@@ -286,6 +404,7 @@ $(document).ready(function () {
 
                         $('#nemailU2').addClass("is-invalid");
                     }
+                    
                     else {
                         $('#nemailU2').removeClass("is-invalid");
                     }
@@ -606,6 +725,7 @@ $(document).ready(function () {
                                             "<td>"+ data[i].name +"</td>"+
                                             "<td>"+ data[i].designation_name  +"</td>"+
                                             "<td>"+ data[i].status_name  +"</td>"+
+                                            "<td>"+ data[i].role_name  +"</td>"+
                                             "<td>"+ data[i].contact +"</td>"+
                                             "<td>"+ data[i].email +"</td>"+
                                             "<td>"+ data[i].file_no +"</td>"+
@@ -616,13 +736,13 @@ $(document).ready(function () {
                         }
                         else
                         {
-                            str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
+                            str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
                         }
     
                         $("#empTable tbody").html(str);
                     }
                     else {
-                        str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
+                        str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
                         $("#empTable tbody").html(str);
                     }
                 }
@@ -639,6 +759,177 @@ $(document).ready(function () {
         }
     });
 
-    
+    var loadAllEmployeesByEmail2 = function (email) {
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+            $.ajax({
+                url: api_base_URL+"/api/logins/checkemail/"+email,
+                method: "GET",
+                headers : {
+                    role : decryptLoginInfo.role_id,
+                },
+                complete: function (xhr, status) {
+                    if (xhr.status == 200) {
+                        var data = xhr.responseJSON;
+
+                        $('#emailP').addClass("is-invalid");
+                    }
+                    
+                    else {
+                        $('#emailP').removeClass("is-invalid");
+                    }
+                }
+            });
+    }
+    $("#emailP").on("keyup change",function(){
+        if($.trim($("#emailP").val()).length > 0)
+        {
+            $('#emailP').removeClass("is-invalid");
+            loadAllEmployeesByEmail2($("#emailP").val());
+        }
+        else
+        {
+            $('#emailP').addClass("is-invalid");
+        }
+    });
+
+    var InsertEmployeeImage = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var data = new FormData($('#uploadForm')[0]);
+
+        $.ajax({
+            url: api_base_URL+"/api/employees/insert-employee-image/"+id,
+            method: "PUT",
+            contentType: false,
+            processData: false,
+            cache: false,
+            data: data,
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                console.log(xhr)
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1){}
+                    else 
+                    {
+                        alert("Something Went Wrong.");
+                    }
+                }
+                else 
+                {
+                    alert("Something Went Wrong.");
+                }
+            }
+        });
+    }
+
+    var InsertEmployee = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        // console.log(login_id);
+        $.ajax({
+            url: api_base_URL+"/api/employees/insert-employee",
+            method: "POST",
+            data : {
+                login_id: id,
+                name: $('#nameP').val(),
+                sex: $('#sexP').val(),
+                religion: $('#relP').val(),
+                father_name: $('#fatherP').val(),
+                mother_name: $('#motherP').val(),
+                contact: $('#contactP').val(),
+                bg: $('#bgP').val(),
+                present_address: $('#pradP').val(),
+                permanent_address: $('#peadP').val(),
+                designation_id: $('#designP').val(),
+                salary: $('#salaryP').val(),
+                img_path: '',
+                file_no: $('#fileP').val(),
+                employment_status_id: 1,
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    if(data.insertId >= 1)
+                    {
+                        $("#msgP").removeClass("alert-danger");
+                        $("#msgP").addClass("alert-success");
+                        $('#msgP').html('<small>Employee Added.</small>');
+                        $('#msgP').removeAttr('hidden');
+
+                        InsertEmployeeImage(data.insertId);
+                    }
+                    else 
+                    {
+                        $("#msgP").removeClass("alert-success");
+                        $("#msgP").addClass("alert-danger");
+                        $('#msgP').html('<small>Something Went Wrong.</small>');
+                        $('#msgP').removeAttr('hidden');
+                    }
+                }
+                else 
+                {
+                    $("#msgP").removeClass("alert-success");
+                    $("#msgP").addClass("alert-danger");
+                    $('#msgP').html('<small>Something Went Wrong.</small>');
+                    $('#msgP').removeAttr('hidden');
+                }
+                LoadAllEmployees();
+            }
+        });
+    }
+
+    var InsertLogin = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/logins/insert-user",
+            method: "POST",
+            data : {
+                email: $('#emailP').val(),
+                password: Math.floor(100000 + Math.random() * 900000),
+                role_id: 0,
+                access_id: 2,
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    // console.log(data.insertId);
+                    InsertEmployee(data.insertId);
+                }
+                else 
+                {
+                    // $("#msgP").removeClass("alert-success");
+                    // $("#msgP").addClass("alert-danger");
+                    // $('#msgP').html('<small>Something Went Wrong.</small>');
+                    // $('#msgP').removeAttr('hidden');
+                }
+            }
+        });
+    }
+
+    $("#postBTN").click(function () {
+        InsertLogin();
+    });
 
 });

@@ -221,6 +221,8 @@ exports.postUser = (req, res, next) => {
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
             }
             else {
+
+                // console.log(results);
                 return res.status(201).send(results);
             }
         });
@@ -249,17 +251,17 @@ exports.getEmail = (req, res, next) => {
             }
             else {
                 if (results.length > 0) {
-                    console.log("1");
+                    // console.log("1");
                     return res.status(200).send(results[0]);
 
                 } else {
-                    console.log("2");
+                    // console.log("2");
                     return res.status(204).send({ success: false, data: "No User Found." });
                 }
             }
         });
     } else{
-        console.log("3");
+        // console.log("3");
         return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
     }
 
@@ -324,6 +326,40 @@ exports.updateUserEmail = (req, res, next) => {
 
     if(validated) {
         loginsService.updateUserEmail(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                // console.log(13);
+                return res.status(200).send(results);
+            }
+        });
+    } else{
+        // console.log(11);
+        return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
+    }
+
+};
+
+exports.updateUserRole = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'id' : req.body.id,
+        'role_id' : req.body.role_id,
+        'access_id': req.body.access_id
+    };
+    // Validation Code here
+    if(validator.isEmpty(data.role_id , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validator.isEmpty(data.access_id , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validated) {
+        loginsService.updateUserRole(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
