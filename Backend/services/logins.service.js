@@ -57,8 +57,36 @@ exports.postUser = (data, callback) => {
 
 exports.getEmail = (data, callback) => {
     db.query(
-        `SELECT email FROM logins WHERE email = ?;`,
-        [data.email, data.password],
+        `SELECT email FROM logins WHERE email LIKE ?;`,
+        [data.email],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};
+
+exports.getLogin = (data, callback) => {
+    db.query(
+        `SELECT id, email FROM logins WHERE id = ?;`,
+        [data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};
+
+exports.updateUserEmail = (data, callback) => {
+    db.query(
+        `UPDATE logins SET email = ?, updated_at = current_timestamp WHERE id = ?;`,
+        [data.email, data.id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);

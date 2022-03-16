@@ -196,6 +196,7 @@ $(document).ready(function () {
                    $('#avatarU').attr('src', api_base_URL+"/"+data.img_path);
                    $('#id').val(data.id);
                    $('#renderUpdate').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeImageModal' data-bs-id='"+data.id+"' class='btn btn-sm btn-danger'>Update Image</button>");
+                   $('#renderEmBtn').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeEmailModal' data-bs-id='"+data.login_id+"' class='btn btn-danger'>Update Email</button>")
                 }
                 else {}
             }
@@ -235,6 +236,135 @@ $(document).ready(function () {
         $('#msgU2').attr('hidden', true);
         var id = $(e.relatedTarget).data('bs-id');
         LoadEmployeeImage(id);
+    });
+
+
+    var LoadEmployeeLoginDetails = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/logins/get-login/id/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#emailU2').val(data.email);
+                   $('#idu3').val(data.id);
+                }
+                else {}
+            }
+        });
+    }
+
+    $('#updateEmployeeEmailModal').on('show.bs.modal', function(e) {
+        $('#msgU3').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadEmployeeLoginDetails(id);
+    });
+
+    var loadAllEmployeesByEmail = function (email) {
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+            $.ajax({
+                url: api_base_URL+"/api/logins/checkemail/"+email,
+                method: "GET",
+                headers : {
+                    role : decryptLoginInfo.role_id,
+                },
+                complete: function (xhr, status) {
+                    if (xhr.status == 200) {
+                        var data = xhr.responseJSON;
+
+                        $('#nemailU2').addClass("is-invalid");
+                    }
+                    else {
+                        $('#nemailU2').removeClass("is-invalid");
+                    }
+                }
+            });
+    }
+    $("#nemailU2").on("keyup change",function(){
+        if($.trim($("#nemailU2").val()).length > 0)
+        {
+            $('#nemailU2').removeClass("is-invalid");
+            loadAllEmployeesByEmail($("#nemailU2").val());
+        }
+        else
+        {
+            $('#nemailU2').addClass("is-invalid");
+        }
+    });
+
+    var UpdateEmployeeEmail = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+
+        $.ajax({
+            url: api_base_URL+"/api/logins/update-user-authentication-email",
+            method: "PUT",
+            data: {
+                id: $('#idu3').val(),
+                email: $('#nemailU2').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                console.log($('#nemailU2').val()+"   "+ $('#idu3').val())
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        $("#msgU3").removeClass("alert-danger");
+                        $("#msgU3").addClass("alert-success");
+                        $('#msgU3').html('<small>Email Updated.</small>');
+                        $('#msgU3').removeAttr('hidden');
+                    }
+                    else 
+                    {
+                        alert("this")
+                        $("#msgU3").removeClass("alert-success");
+                        $("#msgU3").addClass("alert-danger");
+                        $('#msgU3').html('<small>Something Went Wrong.</small>');
+                        $('#msgU3').removeAttr('hidden');
+                    }
+                }
+                else 
+                {
+                    $("#msgU3").removeClass("alert-success");
+                    $("#msgU3").addClass("alert-danger");
+                    $('#msgU3').html('<small>Something Went Wrong.</small>');
+                    $('#msgU3').removeAttr('hidden');
+                }
+                LoadAllEmployees();
+                LoadEmployee($('#id').val());
+                LoadEmployeeImage($('#id').val());
+                LoadEmployeeLoginDetails($('#idu3').val());
+            }
+        });
+    }
+
+    $("#updateEmailBTN").click(function () {
+        if($('#nemailU2').hasClass("is-invalid"))
+        {
+            $('#nemailU2').addClass("is-invalid");
+        }
+        else
+        {
+            UpdateEmployeeEmail();
+        }
     });
 
     var UpdateEmployeeImage = function(id){
@@ -509,187 +639,6 @@ $(document).ready(function () {
         }
     });
 
-    var validateNoticePost= function() {
-        var validate = true;
-        if($.trim($("#subjectP").val()).length <= 0)
-        {
-            validate = false;
-            $("#subjectP").addClass("is-invalid");
-        }
-        else
-        {
-            $("#subjectP").removeClass("is-invalid");
-        }
-        if($.trim($("#contentP").val()).length <= 0)
-        {
-            validate = false;
-            $("#contentP").addClass("is-invalid");
-        }
-        else
-        {
-            $("#contentP").removeClass("is-invalid");
-        }
-        if($.trim($("#deadlineP").val()).length <= 0)
-        {
-            validate = false;
-            $("#deadlineP").addClass("is-invalid");
-        }
-        else
-        {
-            $("#deadlineP").removeClass("is-invalid");
-        }
-        if(!validate)
-        {
-            $('#msgP').attr('hidden', true);
-        }
-
-        return validate;
-    }
-
-    var PostNotice = function(){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/admission_notices/post-notice",
-            method: "POST",
-            data : {
-                title : $('#subjectP').val(),
-                details : $('#contentP').val(),
-                dead_line: $('#deadlineP').val(),
-            },
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 201) {
-                    var data = xhr.responseJSON;
-                    console.log(xhr.responseJSON);
-                    if(data.affectedRows >= 1)
-                    {
-                        $("#msgP").removeClass("alert-danger");
-                        $("#msgP").addClass("alert-success");
-                        $('#msgP').html('<small>Circular Posted.</small>');
-                        $('#msgP').removeAttr('hidden');
-
-                        $("#msgI").removeClass("alert-info");
-                        $("#msgI").addClass("alert-success");
-                        $('#msgI').html('<small>Now you can add files. For adding- <br>Go to "EDIT" of this circular.</small>');
-                        $('#msgI').removeAttr('hidden');
-
-                    }
-                    else 
-                    {
-                        $("#msgP").removeClass("alert-success");
-                        $("#msgP").addClass("alert-danger");
-                        $('#msgP').html('<small>Something Went Wrong.</small>');
-                        $('#msgP').removeAttr('hidden');
-
-                        $("#msgI").removeClass("alert-success");
-                        $("#msgI").addClass("alert-info");
-                        $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
-                        $('#msgI').removeAttr('hidden');
-                    }
-                }
-                else 
-                {
-                    $("#msgP").removeClass("alert-success");
-                    $("#msgP").addClass("alert-danger");
-                    $('#msgP').html('<small>Something Went Wrong.</small>');
-                    $('#msgP').removeAttr('hidden');
-
-                    $("#msgI").removeClass("alert-success");
-                    $("#msgI").addClass("alert-info");
-                    $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
-                    $('#msgI').removeAttr('hidden');
-                }
-                LoadAllNotice();
-            }
-        });
-    }
-
-    $("#postBTN").click(function () {
-        if(validateNoticePost())
-        {
-            PostNotice();
-        }
-    });
-
-    $('#addNoticeModal').on('show.bs.modal', function(e) {
-        $('#msg').attr('hidden', true);
-        $('#msgP').attr('hidden', true);
     
-        $("#msgI").addClass("alert-info");
-        $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
-        $('#msgI').removeAttr('hidden');
-    });
-
-    var PostNoticeFile = function(id){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        var data = new FormData($('#uploadForm')[0]);
-
-        $.ajax({
-            url: api_base_URL+"/api/admission_notice_files/post-files/notice/"+id,
-            method: "POST",
-            contentType: false,
-            processData: false,
-            cache: false,
-            data: data,
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 201) {
-                    var data = xhr.responseJSON;
-
-                    if(data.affectedRows >= 1)
-                    {
-                        $("#msgP").removeClass("alert-danger");
-                        $("#msgP").addClass("alert-success");
-                        $('#msgP').html('<small>Circular Posted.</small>');
-                        $('#msgP').removeAttr('hidden');
-
-                        $("#msgI").removeClass("alert-info");
-                        $("#msgI").addClass("alert-success");
-                        $('#msgI').html('<small>Now you can add files. For adding- <br>Go to "EDIT" of this circular.</small>');
-                        $('#msgI').removeAttr('hidden');
-                    }
-                    else 
-                    {
-                        $("#msgP").removeClass("alert-success");
-                        $("#msgP").addClass("alert-danger");
-                        $('#msgP').html('<small>Something Went Wrong.</small>');
-                        $('#msgP').removeAttr('hidden');
-
-                        $("#msgI").removeClass("alert-success");
-                        $("#msgI").addClass("alert-info");
-                        $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
-                        $('#msgI').removeAttr('hidden');
-                    }
-                }
-                else 
-                {
-                    $("#msgP").removeClass("alert-success");
-                    $("#msgP").addClass("alert-danger");
-                    $('#msgP').html('<small>Something Went Wrong.</small>');
-                    $('#msgP').removeAttr('hidden');
-
-                    $("#msgI").removeClass("alert-success");
-                    $("#msgI").addClass("alert-info");
-                    $('#msgI').html('<small>You will be able to attach files after posting the circular.</small>');
-                    $('#msgI').removeAttr('hidden');
-                }
-                LoadNoticeFiles(id);
-             }
-        });
-    }
-
-    $("#attachBTN").click(function () {
-        PostNoticeFile($('#id').val());
-    });
 
 });

@@ -282,6 +282,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <div id="renderEmBtn">
+                        
+                    </div>
                     <button type="button" id="updateBTN" class="btn btn-success">Update</button>
                 </div>
             </div>
@@ -317,6 +320,36 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" id="updateImageBTN" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Email Modal -->
+    <div class="modal fade" id="updateEmployeeEmailModal" tabindex="-1" aria-labelledby="updateEmployeeEmailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateEmployeeEmailModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Email</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert mb-2" id="msgU3" role="alert" align="center"></div>
+
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="idu3">
+                        <input type="email" class="form-control" placeholder="Write Subject" id="emailU2">
+                        <label for="emailU2">Current Email</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="email" class="form-control" placeholder="Write Subject" id="nemailU2">
+                        <label for="nemailU2">New Email</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="updateEmailBTN" class="btn btn-success">Update</button>
                 </div>
             </div>
         </div>

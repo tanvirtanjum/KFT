@@ -10,6 +10,8 @@ router.post("/get-user-authentication-password", loginsController.getUserPasswor
 router.put("/update-user-authentication-password", auth.authLogin, loginsController.updateUserPassword);
 router.post("/post-user", auth.authAdmin, loginsController.postUser);
 router.get("/authenticated-user/logout", auth.authLogin, loginsController.getUserLogout);
-router.get("/checkemail/:email", loginsController.getEmail);
+router.get("/checkemail/:email", auth.authAdmin, loginsController.getEmail);
+router.get("/get-login/id/:id", auth.authAdmin, loginsController.getLogin);
+router.put("/update-user-authentication-email", auth.authAdmin, loginsController.updateUserEmail);
 
 module.exports = router;
