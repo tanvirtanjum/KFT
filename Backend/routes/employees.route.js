@@ -24,5 +24,7 @@ router.post("/insert-employee", auth.authAdmin, employeesController.postEmployee
 router.put("/update-employee/:id", auth.authAdmin, employeesController.updateEmployee);
 router.put("/update-employee-image/:id", auth.authAdmin, upload.single('uploaded_update_file'), employeesController.updateEmployeeImage);
 router.put("/insert-employee-image/:id", auth.authAdmin, upload.single('uploaded_file'), employeesController.insertEmployeeImage);
+router.get("/checkcontact/:contact", auth.authAdmin, employeesController.getContact);
+router.get("/checkfileno/:fileno", auth.authAdmin, employeesController.getFileNo);
 
 module.exports = router;

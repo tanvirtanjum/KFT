@@ -358,3 +358,71 @@ exports.insertEmployeeImage = (req, res, next) => {
     }
 
 };
+
+exports.getContact = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'contact' : "%"+req.params.contact+"%",
+    };
+    // Validation Code here
+    // if(!validator.isEmail(data.email)) {
+    //     validated = false;
+    // }
+
+    if(validated) {
+        employeesService.getContact(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                if (results.length > 0) {
+                    // console.log("1");
+                    return res.status(200).send(results[0]);
+
+                } else {
+                    // console.log("2");
+                    return res.status(204).send({ success: false, data: "No User Found." });
+                }
+            }
+        });
+    } else{
+        // console.log("3");
+        return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
+    }
+
+};
+
+exports.getFileNo = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'file_no' : "%"+req.params.fileno+"%",
+    };
+    // Validation Code here
+    // if(!validator.isEmail(data.email)) {
+    //     validated = false;
+    // }
+
+    if(validated) {
+        employeesService.getFileNo(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                if (results.length > 0) {
+                    // console.log("1");
+                    return res.status(200).send(results[0]);
+
+                } else {
+                    // console.log("2");
+                    return res.status(204).send({ success: false, data: "No User Found." });
+                }
+            }
+        });
+    } else{
+        // console.log("3");
+        return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
+    }
+
+};

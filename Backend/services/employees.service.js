@@ -107,3 +107,31 @@ exports.updateEmployeeImage = (data, callback) => {
         }
     );
 };
+
+exports.getContact = (data, callback) => {
+    db.query(
+        `SELECT contact FROM employees WHERE contact LIKE ?;`,
+        [data.contact],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};
+
+exports.getFileNo = (data, callback) => {
+    db.query(
+        `SELECT file_no FROM employees WHERE file_no LIKE ?;`,
+        [data.file_no],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};

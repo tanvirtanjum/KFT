@@ -760,6 +760,7 @@ $(document).ready(function () {
     });
 
     var loadAllEmployeesByEmail2 = function (email) {
+        var result = true;
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
             decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
             decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -774,14 +775,20 @@ $(document).ready(function () {
                     if (xhr.status == 200) {
                         var data = xhr.responseJSON;
 
+                        result = true;
+
                         $('#emailP').addClass("is-invalid");
                     }
                     
                     else {
+
+                        result = false;
                         $('#emailP').removeClass("is-invalid");
                     }
                 }
             });
+
+            return result;
     }
     $("#emailP").on("keyup change",function(){
         if($.trim($("#emailP").val()).length > 0)
@@ -794,6 +801,227 @@ $(document).ready(function () {
             $('#emailP').addClass("is-invalid");
         }
     });
+
+    var loadAllEmployeesByContact2 = function (contact) {
+        var result = true;
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+            $.ajax({
+                url: api_base_URL+"/api/employees/checkcontact/"+contact,
+                method: "GET",
+                headers : {
+                    role : decryptLoginInfo.role_id,
+                },
+                complete: function (xhr, status) {
+                    if (xhr.status == 200) {
+                        var data = xhr.responseJSON;
+
+                        $('#contactP').addClass("is-invalid");
+                        result = true;
+                    }
+                    
+                    else {
+                        $('#contactP').removeClass("is-invalid");
+                        result = false;
+                    }
+                }
+            });
+
+            return result;
+    }
+    $("#contactP").on("keyup change",function(){
+        if($.trim($("#contactP").val()).length > 0)
+        {
+            $('#emailP').removeClass("is-invalid");
+            loadAllEmployeesByContact2($("#contactP").val());
+        }
+        else
+        {
+            $('#contactP').addClass("is-invalid");
+        }
+    });
+
+    var loadAllEmployeesByFileNo2 = function (fileno) {
+        var result = true;
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+            $.ajax({
+                url: api_base_URL+"/api/employees/checkfileno/"+fileno,
+                method: "GET",
+                headers : {
+                    role : decryptLoginInfo.role_id,
+                },
+                complete: function (xhr, status) {
+                    if (xhr.status == 200) {
+                        var data = xhr.responseJSON;
+
+                        $('#fileP').addClass("is-invalid");
+                        result = true;
+                    }
+                    
+                    else {
+                        $('#fileP').removeClass("is-invalid");
+                        result = false;
+                    }
+                }
+            });
+
+            return result;
+    }
+    $("#fileP").on("keyup change",function(){
+        if($.trim($("#fileP").val()).length > 0)
+        {
+            $('#fileP').removeClass("is-invalid");
+            loadAllEmployeesByFileNo2($("#fileP").val());
+        }
+        else
+        {
+            $('#fileP').addClass("is-invalid");
+        }
+    });
+
+    var validateEmployeeInsert= function() {
+        var validate = true;
+        if($.trim($('#nameP').val()).length <= 0)
+        {
+            validate = false;
+            $('#nameP').addClass("is-invalid");
+        }
+        else
+        {
+            $("#nameP").removeClass("is-invalid");
+        }
+
+        if($.trim($('#emailP').val()).length <= 0)
+        {
+            validate = false;
+            $('#emailP').addClass("is-invalid");
+        }
+        else
+        {
+            if(loadAllEmployeesByEmail2($('#emailP').val()))
+            {
+                validate = false;
+                $('#emailP').addClass("is-invalid");
+            }
+            else
+            {
+                $("#emailP").removeClass("is-invalid");
+            }
+        }
+
+        if($.trim($("#fatherP").val()).length <= 0)
+        {
+            validate = false;
+            $("#fatherP").addClass("is-invalid");
+        }
+        else
+        {
+            $("#fatherP").removeClass("is-invalid");
+        }
+
+        if($.trim($("#motherP").val()).length <= 0)
+        {
+            validate = false;
+            $("#motherP").addClass("is-invalid");
+        }
+        else
+        {
+            $("#motherP").removeClass("is-invalid");
+        }
+
+        if($.trim($("#contactP").val()).length <= 10)
+        {
+            validate = false;
+            $("#contactP").addClass("is-invalid");
+        }
+        else
+        {
+            if(loadAllEmployeesByContact2($("#contactP").val()))
+            {
+                validate = false;
+                $("#contactP").addClass("is-invalid");
+            }
+            else
+            {
+                $("#contactP").removeClass("is-invalid");
+            }
+        }
+
+
+        if($.trim($("#pradP").val()).length <= 0)
+        {
+            validate = false;
+            $("#pradP").addClass("is-invalid");
+        }
+        else
+        {
+            $("#pradP").removeClass("is-invalid");
+        }
+
+        if($.trim($("#peadP").val()).length <= 0)
+        {
+            validate = false;
+            $("#peadP").addClass("is-invalid");
+        }
+        else
+        {
+            $("#peadP").removeClass("is-invalid");
+        }
+
+        if($("#salaryP").val() <= 0)
+        {
+            validate = false;
+            $("#salaryP").addClass("is-invalid");
+        }
+        else
+        {
+            $("#salaryP").removeClass("is-invalid");
+        }
+
+        if($.trim($("#fileP").val()).length <= 0)
+        {
+            validate = false;
+            $("#fileP").addClass("is-invalid");
+        }
+        else
+        {
+            if(loadAllEmployeesByFileNo2($('#fileP').val()))
+            {
+                validate = false;
+                $('#fileP').addClass("is-invalid");
+            }
+            else
+            {
+                $("#fileP").removeClass("is-invalid");
+            }
+        }
+
+        if($('#emailP').hasClass("is-invalid"))
+        {
+            validate = false;
+        }
+        if($('#contactP').hasClass("is-invalid"))
+        {
+            validate = false;
+        }
+        if($('#fileP').hasClass("is-invalid"))
+        {
+            validate = false;
+        }
+        
+
+        if(!validate)
+        {
+            $('#msgP').attr('hidden', true);
+        }
+
+        return validate;
+    }
 
     var InsertEmployeeImage = function(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
@@ -929,7 +1157,14 @@ $(document).ready(function () {
     }
 
     $("#postBTN").click(function () {
-        InsertLogin();
+        if(validateEmployeeInsert())
+        {
+            InsertLogin();
+        }
+        else
+        {
+
+        }
     });
 
 });
