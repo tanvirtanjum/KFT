@@ -71,7 +71,7 @@ exports.getEmail = (data, callback) => {
 
 exports.getLogin = (data, callback) => {
     db.query(
-        `SELECT id, email, role_id FROM logins WHERE id = ?;`,
+        `SELECT id, email, role_id, access_id FROM logins WHERE id = ?;`,
         [data.id],
         (error, results, fields) => {
             if (error) {

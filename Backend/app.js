@@ -14,6 +14,8 @@ const admission_notice_filesRoutes = require("./routes/admission_notice_files.ro
 const employeesRoutes = require("./routes/employees.route");
 const designationsRoutes = require("./routes/designations.route");
 const employment_statusRoutes = require("./routes/employment_status.route");
+const teachersRoutes = require("./routes/teachers.route");
+const subjectsRoutes = require("./routes/subjects.route");
 
 // <---> 
 dotenv.config();
@@ -36,6 +38,8 @@ app.use("/api/admission_notice_files", admission_notice_filesRoutes);
 app.use("/api/employees", employeesRoutes);
 app.use("/api/designations", designationsRoutes);
 app.use("/api/employment_status", employment_statusRoutes);
+app.use("/api/teachers", teachersRoutes);
+app.use("/api/subjects", subjectsRoutes);
 
 // <-- -->
 app.listen(process.env.SERVER_PORT_NO, () => {
