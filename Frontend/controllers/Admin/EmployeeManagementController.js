@@ -1125,6 +1125,28 @@ $(document).ready(function () {
         });
     }
 
+    var sendPassword = function (id) {
+        $.ajax({
+            url: api_base_URL+"/api/logins/send-user-authentication-password",
+            method: "POST",
+            data: {
+                id : id,
+            },
+            
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+                   
+                    InsertEmployee(id);
+                }
+                else {
+                    var data = xhr.responseJSON;
+                    alert("...");
+                }
+            }
+        });
+    }
+
     var InsertLogin = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
@@ -1147,7 +1169,7 @@ $(document).ready(function () {
                     var data = xhr.responseJSON;
 
                     // console.log(data.insertId);
-                    InsertEmployee(data.insertId);
+                    sendPassword(data.insertId);
                 }
                 else 
                 {

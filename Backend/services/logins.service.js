@@ -110,3 +110,18 @@ exports.updateUserRole = (data, callback) => {
         }
     );
 };
+
+
+exports.sendUserPassword = (data, callback) => {
+    db.query(
+        `SELECT logins.*, access.access_name FROM logins INNER JOIN access ON logins.access_id = access.id WHERE logins.id = ?;`,
+        [data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};
