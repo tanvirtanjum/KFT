@@ -1193,4 +1193,223 @@ $(document).ready(function () {
         }
     });
 
+
+    var LoadAllDesignations = function(){
+        $.ajax({
+            url: api_base_URL+"/api/designations/get-all-designations",
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].designation_name +"</td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateDesignationModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='3' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                    $("#designTable tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='3' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#designTable tbody").html(str);
+                }
+            }
+        });
+    }
+    LoadAllDesignations();
+
+    $('#manageDesignationModal').on('show.bs.modal', function(e) {
+        $('#msgp5').attr('hidden', true);
+    });
+
+    var InsertDesignation = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/designations/post-designation",
+            method: "POST",
+            data: {
+                designation_name : $('#designTB').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                console.log(xhr)
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    if(data.insertId >= 1)
+                    {
+                        $("#msgp5").removeClass("alert-danger");
+                        $("#msgp5").addClass("alert-success");
+                        $('#msgp5').html('<small>Designation Added.</small>');
+                        $('#msgp5').removeAttr('hidden');
+                    }
+                    else 
+                    {
+                        $("#msgp5").removeClass("alert-success");
+                        $("#msgp5").addClass("alert-danger");
+                        $('#msgp5').html('<small>Something Went Wrong.</small>');
+                        $('#msgp5').removeAttr('hidden');
+                    }
+                }
+                else 
+                {
+                    $("#msgp5").removeClass("alert-success");
+                    $("#msgp5").addClass("alert-danger");
+                    $('#msgp5').html('<small>Something Went Wrong.</small>');
+                    $('#msgp5').removeAttr('hidden');
+                }
+                LoadAllDesignations();
+            }
+        });
+    }
+
+    var validateDesignationInsert= function() {
+        var validate = true;
+        if($.trim($('#designTB').val()).length <= 0)
+        {
+            validate = false;
+            $('#designTB').addClass("is-invalid");
+        }
+        else
+        {
+            $("#designTB").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#addDesignBTN").click(function () {
+        if(validateDesignationInsert())
+        {
+            InsertDesignation();
+        }
+        else
+        {
+
+        }
+    });
+
+    var LoadDesignation = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/designations/get-designation/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#idU6').val(data.id);
+                   $('#prenDesign').val(data.designation_name);
+                }
+                else {}
+            }
+        });
+    }
+
+    $('#updateDesignationModal').on('show.bs.modal', function(e) {
+        $('#msgU6').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadDesignation(id);
+    });
+
+    var UpdateDesignation = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/designations/update-designation/"+id,
+            method: "PUT",
+            data: {
+                designation_name : $('#newDesign').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                console.log(xhr)
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        $("#msgU6").removeClass("alert-danger");
+                        $("#msgU6").addClass("alert-success");
+                        $('#msgU6').html('<small>Designation Updated.</small>');
+                        $('#msgU6').removeAttr('hidden');
+                    }
+                    else 
+                    {
+                        $("#msgU6").removeClass("alert-success");
+                        $("#msgU6").addClass("alert-danger");
+                        $('#msgU6').html('<small>Something Went Wrong.</small>');
+                        $('#msgU6').removeAttr('hidden');
+                    }
+                }
+                else 
+                {
+                    $("#msgU6").removeClass("alert-success");
+                    $("#msgU6").addClass("alert-danger");
+                    $('#msgU6').html('<small>Something Went Wrong.</small>');
+                    $('#msgU6').removeAttr('hidden');
+                }
+                LoadAllDesignations();
+                LoadDesignation(id);
+            }
+        });
+    }
+
+    var validateDesignationUpdate= function() {
+        var validate = true;
+        if($.trim($('#newDesign').val()).length <= 0)
+        {
+            validate = false;
+            $('#newDesign').addClass("is-invalid");
+        }
+        else
+        {
+            $("#newDesign").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#updateDesignationBTN").click(function () {
+        if(validateDesignationUpdate())
+        {
+            UpdateDesignation($('#idU6').val());
+        }
+        else
+        {
+
+        }
+    });
+
 });

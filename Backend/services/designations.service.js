@@ -13,22 +13,9 @@ exports.getAllDesignation = (data, callback) => {
     );
 };
 
-exports.postNotice = (data, callback) => {
+exports.getDesignation = (data, callback) => {
     db.query(
-        `INSERT INTO admission_notices(title, details, dead_line) VALUES (?, ?, ?);`,
-        [data.title, data.details, data.dead_line],
-        (error, results, fields) => {
-            if (error) {
-                return callback(error);
-            }
-            return callback(null, results);
-        }
-    );
-};
-
-exports.deleteNotice = (data, callback) => {
-    db.query(
-        `DELETE FROM admission_notices WHERE id = ?;`,
+        `SELECT * FROM designations WHERE id = ?;`,
         [data.id],
         (error, results, fields) => {
             if (error) {
@@ -39,10 +26,24 @@ exports.deleteNotice = (data, callback) => {
     );
 };
 
-exports.updateNotice = (data, callback) => {
+exports.postDesignation = (data, callback) => {
     db.query(
-        `UPDATE admission_notices SET title = ?, details = ?, dead_line = ?, updated_at = current_timestamp WHERE id = ?;`,
-        [data.title, data.details, data.dead_line, data.id],
+        `INSERT INTO designations(designation_name) VALUES (?);`,
+        [data.designation_name],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
+
+exports.updateDesignation = (data, callback) => {
+    db.query(
+        `UPDATE designations SET designation_name = ? WHERE id = ?;`,
+        [data.designation_name, data.id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);

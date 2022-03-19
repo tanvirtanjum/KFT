@@ -40,7 +40,7 @@
         </div>
 
         <div class="mb-2" align="center">
-            <button type="button" class="btn btn-danger  btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+            <button type="button" class="btn btn-danger  btn-sm" data-bs-toggle="modal" data-bs-target="#manageDesignationModal">
                 <i class="fas fa-pen"></i>&nbsp; Manage Designations
             </button>
         </div>
@@ -386,6 +386,75 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" id="updateRoleBTN" class="btn btn-success">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Update Designation Modal -->
+    <div class="modal fade" id="manageDesignationModal" tabindex="-1" aria-labelledby="manageDesignationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="manageDesignationModalLabel"><i class="fas fa-pen"></i>&nbsp;Manage Designation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid" align="center">
+                        <div class="alert mb-2" role="alert" id="msgp5">
+                            A simple primary alert—check it out!
+                        </div>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" placeholder="Designation Name" aria-label="Designation Name" aria-describedby="addDesignBTN" id="designTB">
+                            <button class="btn btn-primary" type="button" id="addDesignBTN">Add</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="padding-top: 2vh;">
+                        <table class="table table-sm table-striped" id="designTable">
+                            <thead class="table-dark">
+                              <th>#</th>
+                              <th> Designation Name</th>
+                              <th></th>
+                            </thead>
+                            <tbody class="table-light">
+            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Designation Modal -->
+    <div class="modal fade" id="updateDesignationModal" tabindex="-1" aria-labelledby="updateDesignationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateDesignationModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Designation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-2">
+                        <div class="alert mb-2" id="msgU6" role="alert" align="center"></div>
+                        <input type="hidden" id="idU6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="prenDesign" placeholder="" readonly>
+                            <label for="floatingInput">Previous Designation Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="newDesign" placeholder="">
+                            <label for="floatingInput">New Designation Name</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="updateDesignationBTN" class="btn btn-success">Update</button>
                 </div>
             </div>
         </div>
