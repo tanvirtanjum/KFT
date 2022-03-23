@@ -329,6 +329,46 @@ $(document).ready(function () {
     });
 
 
-    
+    //________________________________________-
+    var LoadAllSubjects = function(){
+        $.ajax({
+            url: api_base_URL+"/api/subjects/get-all-subjects",
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].subject_code  +"</td>"+
+                                        "<td>"+ data[i].subject_name  +"</td>"+
+                                        "<td>"+ data[i].group_name  +"</td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                    $("#subjectTable tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#subjectTable tbody").html(str);
+                }
+            }
+        });
+    }
+    LoadAllSubjects(); 
 
 });

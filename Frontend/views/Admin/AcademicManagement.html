@@ -80,10 +80,48 @@
                     </table>
                 </div>
             </div>
-
-            <h4 id="scrollspyHeading2">Second heading</h4>
+            <br>
+            <br>
+            <h4 id="scrollspyHeading2">Academic Subjects</h4>
             <div class="container-fluid">
-
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="form-floating form-control">
+                            <input type="text" class="form-control" placeholder="Write Subject Code" id="subject_codeP">
+                            <label for="subject_codeP">Subject Code</label>
+                        </div>
+                        <div class="form-floating form-control">
+                            <input type="text" class="form-control" placeholder="Write Subject Name" id="subject_nameP">
+                            <label for="subject_nameP">Subject Name</label>
+                        </div>
+                        <div class="form-floating form-control">
+                            <select class="form-select" id="groupP" aria-label="Floating label select example">
+                              
+                            </select>
+                            <label for="groupP">Group</label>
+                        </div>
+                        <button class="btn btn-success" id="addSessionBTN"><i class="fas fa-plus"></i> ADD</button>
+                      </div>
+                </div>
+                <div class="input-group mb-0">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                    <input type="text" id="search" class="form-control" placeholder="Search By Subject Name" aria-label="Search By Session Name" aria-describedby="basic-addon1">
+                </div>
+        
+                <div class="table-responsive" style="padding-top: 2vh;">
+                    <table class="table table-sm table-striped" id="subjectTable">
+                        <thead class="table-dark">
+                          <th>#</th>
+                          <th>Subject Code</th>
+                          <th>Subject Name</th>
+                          <th>Group</th>
+                          <th></th>
+                        </thead>
+                        <tbody class="table-light">
+        
+                        </tbody>
+                    </table>
+                </div>
             </div>
           </div>
 

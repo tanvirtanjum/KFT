@@ -2,7 +2,9 @@ const db = require("../config/db.config");
 
 exports.getAllSubjects = (data, callback) => {
     db.query(
-        `SELECT * FROM subjects ORDER BY subject_name ASC;`,
+        `SELECT subjects.*, groups.group_name FROM subjects `+
+        `INNER JOIN groups ON subjects.group_id = groups.id `+
+        `ORDER BY subject_name ASC;`,
         [],
         (error, results, fields) => {
             if (error) {

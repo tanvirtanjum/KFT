@@ -44,6 +44,7 @@ app.use("/api/designations", designationsRoutes);
 app.use("/api/employment_status", employment_statusRoutes);
 app.use("/api/teachers", teachersRoutes);
 app.use("/api/subjects", subjectsRoutes);
+
 app.use("/api/students", studentsRoutes);
 
 app.use("/api/academic_sessions", academic_sessionsRoutes);
