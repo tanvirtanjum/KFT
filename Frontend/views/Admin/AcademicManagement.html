@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Management | KFT</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/image/logo/KFT_Trust_Logo.ico">
+    
+
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <link href="../../assets/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="../../assets/jQueryTyper/jquery.typer.js"></script>
+    <script src="../../assets/crypto-js/crypto.js"></script>
+
+
+    <!-- URL Controller -->
+    <script type="text/javascript" src="../../controllers/urlController.js"></script>
+
+    <!-- Controller -->
+    <script type="text/javascript" src="../../controllers/Admin/AcademicManagementController.js"></script>
+</head>
+
+<body class="bg-secondary bg-opacity-75">
+    <div class="container-fluid" id="topLayout"><!-- Added Through Controller (./controllers/Public/SignInController.js) --></div>
+    
+    <div class="container-fluid">
+
+        <nav id="navbar-example2" class="navbar navbar-dark bg-dark px-3">
+            <a class="navbar-brand" href="#">Academic Management</a>
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link" href="#scrollspyHeading1">Manage Academic Sessions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#scrollspyHeading2">Manage Academic Subjects</a>
+              </li>
+            </ul>
+          </nav>
+          <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+            <h4 id="scrollspyHeading1">Academic Sessions</h4>
+            <div class="container-fluid">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="form-floating form-control">
+                            <input type="text" class="form-control" placeholder="Write Session Name" id="year_nameP">
+                            <label for="year_nameP">Session Name</label>
+                        </div>
+                        <div class="form-floating form-control">
+                            <select class="form-select" id="session_statusP" aria-label="Floating label select example">
+                              
+                            </select>
+                            <label for="session_statusP">Session Status</label>
+                        </div>
+                        <button class="btn btn-success" id="addSessionBTN"><i class="fas fa-plus"></i> ADD</button>
+                      </div>
+                </div>
+                <div class="input-group mb-0">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                    <input type="text" id="search" class="form-control" placeholder="Search By Session Name" aria-label="Search By Session Name" aria-describedby="basic-addon1">
+                </div>
+        
+                <div class="table-responsive" style="padding-top: 2vh;">
+                    <table class="table table-sm table-striped" id="sesssionTable">
+                        <thead class="table-dark">
+                          <th>#</th>
+                          <th>Session Name</th>
+                          <th>Status</th>
+                          <th></th>
+                        </thead>
+                        <tbody class="table-light">
+        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h4 id="scrollspyHeading2">Second heading</h4>
+            <div class="container-fluid">
+
+            </div>
+          </div>
+
+    </div>
+
+
+    <!-- Update Academic Session -->
+    <div class="modal fade" id="updateAcademicSessionModal" tabindex="-1" aria-labelledby="updateAcademicSessionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateAcademicSessionModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id_u">
+                        <input type="text" class="form-control" placeholder="Write Session Name" id="year_nameU">
+                        <label for="year_nameU">Session Name</label>
+                    </div>
+
+                    <div class="form-floating form-control">
+                        <select class="form-select" id="session_statusU" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="session_statusU">Session Status</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="updateSessionBTN" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid text-center" id="bottomLayout"></div>
+</body>
+
+</html>

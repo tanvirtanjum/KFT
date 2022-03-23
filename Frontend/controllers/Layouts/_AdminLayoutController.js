@@ -9,6 +9,8 @@ $(document).ready(function () {
     $('#admissionTab').attr("href", base_URL+"/views/Admin/ManageAdmissionCircular.html");
     $('#employeeTab').attr("href", base_URL+"/views/Admin/EmployeeManagement.html");
     $('#teacherTab').attr("href", base_URL+"/views/Admin/TeacherManagement.html");
+    $('#studentTab').attr("href", base_URL+"/views/Admin/StudentManagement.html");
+    $('#academicTab').attr("href", base_URL+"/views/Admin/AcademicManagement.html");
     
 
     function activeSection()
@@ -19,6 +21,15 @@ $(document).ready(function () {
             $('#settingTab').removeClass("active");
             $('#annoucementTab').removeClass("active");
             $('#detailsTab').removeClass("active");
+            $('#academicTab').removeClass("active");
+        }
+        if(window.location.href == base_URL+"/views/Admin/AcademicManagement.html")
+        {
+            $('#academicTab').addClass("active");
+            $('#dashboardTab').removeClass("active");
+            $('#settingTab').removeClass("active");
+            $('#annoucementTab').removeClass("active");
+            $('#detailsTab').removeClass("active");
         }
         if(window.location.href == base_URL+"/views/Common/ChangePassword.html")
         {
@@ -26,13 +37,15 @@ $(document).ready(function () {
             $('#dashboardTab').removeClass("active");
             $('#annoucementTab').removeClass("active");
             $('#detailsTab').removeClass("active");
+            $('#academicTab').removeClass("active");
         }
-        if(window.location.href == base_URL+"/views/Admin/EmployeeManagement.html" || window.location.href == base_URL+"/views/Admin/TeacherManagement.html")
+        if(window.location.href == base_URL+"/views/Admin/EmployeeManagement.html" || window.location.href == base_URL+"/views/Admin/TeacherManagement.html" || window.location.href == base_URL+"/views/Admin/StudentManagement.html")
         {
             $('#detailsTab').addClass("active");
             $('#settingTab').removeClass("active");
             $('#dashboardTab').removeClass("active");
             $('#annoucementTab').removeClass("active");
+            $('#academicTab').removeClass("active");
         }
         if(window.location.href == base_URL+"/views/Admin/ManageNotice.html" || window.location.href == base_URL+"/views/Admin/ManageAdmissionCircular.html")
         {
@@ -40,6 +53,7 @@ $(document).ready(function () {
             $('#dashboardTab').removeClass("active");
             $('#settingTab').removeClass("active");
             $('#detailsTab').removeClass("active");
+            $('#academicTab').removeClass("active");
         }
     }
 
