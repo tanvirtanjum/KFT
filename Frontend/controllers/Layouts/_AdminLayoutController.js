@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('#homeTab').attr("href", base_URL+"/views/Public/Home.html");
     $('#dashboardTab').attr("href", base_URL+"/views/Admin/Dashboard.html");
     $('#changepassTab').attr("href", base_URL+"/views/Common/ChangePassword.html");
+    $('#profileTab').attr("href", base_URL+"/views/Admin/Profile.html");
     $('#noticeTab').attr("href", base_URL+"/views/Admin/ManageNotice.html");
     $('#admissionTab').attr("href", base_URL+"/views/Admin/ManageAdmissionCircular.html");
     $('#employeeTab').attr("href", base_URL+"/views/Admin/EmployeeManagement.html");
@@ -31,7 +32,7 @@ $(document).ready(function () {
             $('#annoucementTab').removeClass("active");
             $('#detailsTab').removeClass("active");
         }
-        if(window.location.href == base_URL+"/views/Common/ChangePassword.html")
+        if(window.location.href == base_URL+"/views/Common/ChangePassword.html" || window.location.href == base_URL+"/views/Admin/Profile.html")
         {
             $('#settingTab').addClass("active");
             $('#dashboardTab').removeClass("active");

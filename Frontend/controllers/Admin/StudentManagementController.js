@@ -250,7 +250,7 @@ $(document).ready(function () {
     });
 
 
-    $('#addEmployeeModal').on('show.bs.modal', function(e) {
+    $('#addStudentModal').on('show.bs.modal', function(e) {
         $('#msgP').attr('hidden', true);
         $('#uploaded_update_file').val(null);
     });

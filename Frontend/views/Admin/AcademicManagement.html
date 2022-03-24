@@ -32,19 +32,54 @@
     
     <div class="container-fluid">
 
-        <nav id="navbar-example2" class="navbar navbar-dark bg-dark px-3">
+        <nav id="navbar-option" class="navbar navbar-dark bg-dark px-3">
             <a class="navbar-brand" href="#">Academic Management</a>
             <ul class="nav nav-pills">
               <li class="nav-item">
-                <a class="nav-link" href="#scrollspyHeading1">Manage Academic Sessions</a>
+                <a class="nav-link" href="#acadenic_classes">Manage Academic Classes</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#scrollspyHeading2">Manage Academic Subjects</a>
+                <a class="nav-link" href="#acadenic_sessions">Manage Academic Sessions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#acadenic_subjects">Manage Academic Subjects</a>
               </li>
             </ul>
-          </nav>
-          <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
-            <h4 id="scrollspyHeading1">Academic Sessions</h4>
+        </nav>
+        <br>
+        <br>
+
+          <div data-bs-spy="scroll" data-bs-target="#navbar-option" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+            <h4 id="acadenic_classes">Academic Classes</h4>
+            <div class="container-fluid">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="form-floating form-control">
+                            <input type="text" class="form-control" placeholder="Write Session Name" id="class_nameP">
+                            <label for="class_nameP">Class Name</label>
+                        </div>
+                        <button class="btn btn-success" id="addClassBTN"><i class="fas fa-plus"></i> ADD</button>
+                      </div>
+                </div>
+        
+                <div class="table-responsive" style="padding-top: 2vh;">
+                    <table class="table table-sm table-striped" id="classTable">
+                        <thead class="table-dark">
+                          <th>#</th>
+                          <th>Class Name</th>
+                          <th></th>
+                        </thead>
+                        <tbody class="table-light">
+        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <br>
+
+
+            <h4 id="acadenic_sessions">Academic Sessions</h4>
             <div class="container-fluid">
                 <div class="mb-3">
                     <div class="input-group">
@@ -82,7 +117,9 @@
             </div>
             <br>
             <br>
-            <h4 id="scrollspyHeading2">Academic Subjects</h4>
+
+
+            <h4 id="acadenic_subjects">Academic Subjects</h4>
             <div class="container-fluid">
                 <div class="mb-3">
                     <div class="input-group">
@@ -127,6 +164,29 @@
 
     </div>
 
+
+    <!-- Update Academic Class -->
+    <div class="modal fade" id="updateClassModal" tabindex="-1" aria-labelledby="updateClassModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateClassModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Class</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id_u3">
+                        <input type="text" class="form-control" placeholder="Write Class Name" id="class_nameU">
+                        <label for="class_nameU">Class Name</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="updateClassBTN" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Update Academic Session -->
     <div class="modal fade" id="updateAcademicSessionModal" tabindex="-1" aria-labelledby="updateAcademicSessionModalLabel" aria-hidden="true">

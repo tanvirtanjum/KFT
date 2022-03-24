@@ -270,11 +270,13 @@ CREATE TABLE my_academic_sessions(
     id int AUTO_INCREMENT,
     academic_session_id int NOT NULL,
     student_id int NOT NULL,
+    section_id int NOT NULL,
     created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (academic_session_id) REFERENCES academic_sessions(id),
-    FOREIGN KEY (student_id) REFERENCES students(id)
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (section_id) REFERENCES academic_session_sections(id)
 );
 
 
@@ -316,15 +318,16 @@ INSERT INTO `access` (`id`, `access_name`) VALUES
 (2, 'RESTRICTED');
 
 INSERT INTO `roles` (`id`, `role_name`) VALUES
-(0, 'NO ROLE'),
 (1, 'ADMIN'),
 (3, 'STUDENT'),
-(2, 'TEACHER');
+(2, 'TEACHER'),
+(0, 'NO ROLE');
 
 INSERT INTO `designations` (`id`, `designation_name`) VALUES
 (1, 'Administrative Officer'),
 (2, 'Clarke'),
-(3, 'Principal');
+(3, 'Principal'),
+(4, 'IT Engineer');
 
 INSERT INTO `employment_status` (`id`, `status_name`) VALUES
 (1, 'ACTIVE'),
@@ -333,13 +336,10 @@ INSERT INTO `employment_status` (`id`, `status_name`) VALUES
 (4, 'RETIRED');
 
 INSERT INTO `groups` (`id`, `group_name`) VALUES
-(3, 'COMMERCE'),
+(3, 'BUSINESS STUDIES'),
 (4, 'HUMANITIES'),
 (1, 'N/A'),
 (2, 'SCIENCE');
-
-INSERT INTO `logins` (`id`, `email`, `password`, `role_id`, `access_id`, `created_at`, `updated_at`) VALUES
-(1, 'tanjumtanvir@gmail.com', '12345', 1, 1, '2021-10-11 15:15:34', '2021-10-11 15:15:34');
 
 INSERT INTO `remarks` (`id`, `remark_name`) VALUES
 (2, 'FAILED'),
@@ -363,3 +363,14 @@ INSERT INTO `terms` (`id`, `term_name`) VALUES
 INSERT INTO `wings` (`id`, `wing_name`) VALUES
 (1, 'BOY\'S WING'),
 (2, 'GIRL\'S WING');
+
+INSERT INTO `classes` (`id`, `class_name`) VALUES 
+(NULL, 'SIX'), 
+(NULL, 'SEVEN'), 
+(NULL, 'EIGHT');
+
+INSERT INTO `logins` (`id`, `email`, `password`, `role_id`, `access_id`, `created_at`, `updated_at`) VALUES
+(1, 'tanjumtanvir@gmail.com', '12345', 1, 1, '2021-10-11 15:15:34', '2021-10-11 15:15:34');
+
+INSERT INTO `employees`(`name`, `father_name`, `mother_name`, `contact`, `sex`, `bg`, `religion`, `present_address`, `permanent_address`, `salary`, `designation_id`, `img_path`, `file_no`, `login_id`, `employment_status_id`) 
+VALUES ('TANVIR TANJUM SHOURAV','ZAKIR HOSSAIN KAMAL','SHAHANA FERDOUS ETTY','01515217821','Male','O+','Muslim','Dhaka','Chandpur','1','4','','1','1','1');

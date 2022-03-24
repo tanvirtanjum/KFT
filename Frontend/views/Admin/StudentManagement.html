@@ -34,7 +34,7 @@
     <div class="container-fluid">
 
         <div class="d-grid gap-2 col-6 mx-auto mb-2" align="center">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudentModal">
                 <i class="fas fa-pen"></i>&nbsp; Add New Student
             </button>
         </div>
@@ -45,11 +45,11 @@
           </div>
           
         <!-- Add Modal -->
-        <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addEmployeeModalLabel"><i class="fas fa-pen"></i>&nbsp;Add Student</h5>
+                        <h5 class="modal-title" id="addStudentModalLabel"><i class="fas fa-pen"></i>&nbsp;Add Student</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -275,7 +275,7 @@
                     </div>
 
                     <div class="mb-2" style="width: calc(100%);" align="center">
-                        <img src="" class="img-thumbnail" alt="NO DATA FOUND" id="avatarU" height="200" width="200">
+                        <img src="" class="img-fluid img-thumbnail rounded-circle" alt="NO DATA FOUND" id="avatarU" height="200" width="200">
                     </div>
 
                     <div class="mb-2" id="renderUpdate" align="center">
@@ -317,7 +317,7 @@
                     </div>
 
                     <div class="mb-2" style="width: calc(100%);" align="center">
-                        <img src="" class="img-thumbnail" alt="NO DATA FOUND" id="avatarU2" height="200" width="200">
+                        <img src="" class="img-fluid img-thumbnail rounded-circle" alt="NO DATA FOUND" id="avatarU2" height="200" width="200">
                     </div>
 
                     <input class="form-control mb-2" type="file" id="uploaded_update_file" name="uploaded_update_file" accept="image/*">

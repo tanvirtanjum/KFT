@@ -41,6 +41,193 @@ $(document).ready(function () {
 
     checkLocalStorage();
 
+    var LoadAllClasses = function(){
+        $.ajax({
+            url: api_base_URL+"/api/classes/get-all-classes",
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].class_name  +"</td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateClassModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='3' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                    $("#classTable tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='3' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#classTable tbody").html(str);
+                }
+            }
+        });
+    }
+    LoadAllClasses();
+
+    var InsertClass = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/classes/insert-class",
+            method: "POST",
+            data : {
+                class_name: $('#class_nameP').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    LoadAllClasses();
+
+                    alert("Class Inserted");
+                }
+                else 
+                {
+                    alert("Something Went Wrong");
+                }
+            }
+        });
+    }
+
+    var validateClassInsert= function() {
+        var validate = true;
+        if($.trim($('#class_nameP').val()).length <= 0)
+        {
+            validate = false;
+            $('#class_nameP').addClass("is-invalid");
+        }
+        else
+        {
+            $("#class_nameP").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#addClassBTN").click(function () {
+        if(validateClassInsert())
+        {
+            InsertClass();
+        }
+        else
+        {
+
+        }
+    });
+
+
+    var LoadClass = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/classes/get-class/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#id_u3').val(data.id);
+                   $('#class_nameU').val(data.class_name);
+                }
+                else {}
+            }
+        });
+    }
+
+    $('#updateClassModal').on('show.bs.modal', function(e) {
+        $('#msgU').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadClass(id);
+    });
+
+    var UpdateClass = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/classes/update-class/"+id,
+            method: "PUT",
+            data : {
+                class_name: $('#class_nameU').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    LoadAllClasses();
+                    LoadClass($('#id_u3').val());
+
+                    alert("Class Updated");
+                }
+                else 
+                {
+                    LoadAllClasses();
+                    LoadClass($('#id_u3').val());
+                    alert("Something Went Wrong");
+                }
+            }
+        });
+    }
+
+    var validateClassUpdate= function() {
+        var validate = true;
+        if($.trim($('#class_nameU').val()).length <= 0)
+        {
+            validate = false;
+            $('#class_nameU').addClass("is-invalid");
+        }
+        else
+        {
+            $("#class_nameU").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#updateClassBTN").click(function () {
+        if(validateClassUpdate())
+        {
+            UpdateClass($('#id_u3').val());
+        }
+        else
+        {
+
+        }
+    });
+
+
+// ________________________________________
     var LoadAllSessionStatusOptions = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
