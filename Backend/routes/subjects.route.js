@@ -6,8 +6,9 @@ var express = require("express");
 var router = express.Router();
 
 router.get("/get-all-subjects", subjectsController.getAllSubjects);
-router.post("/post-designation", auth.authAdmin, subjectsController.postNotice);
-router.delete("/delete-designation/:id", auth.authAdmin, subjectsController.deleteNotice);
-router.put("/update-designation/:id", auth.authAdmin, subjectsController.updateNotice);
+router.get("/get-all-subjects/:name", subjectsController.getAllSubjectsByName);
+router.get("/get-subject/:id", subjectsController.getSubject);
+router.post("/insert-subject", auth.authAdmin, subjectsController.postSubject);
+router.put("/update-subject/:id", auth.authAdmin, subjectsController.updateSubject);
 
 module.exports = router;

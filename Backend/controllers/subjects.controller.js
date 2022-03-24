@@ -31,28 +31,82 @@ exports.getAllSubjects = (req, res, next) => {
 
 };
 
-exports.postNotice = (req, res, next) => {
+exports.getSubject = (req, res, next) => {
     var validated = true;
     const data = {
-        'title' : req.body.title,
-        'details' : req.body.details,
-        'dead_line' : req.body.dead_line,
+        'id' : req.params.id,
     };
 
-    if(validator.isEmpty(data.title , {ignore_whitespace: true})) {
+    if(validated){
+        subjectsService.getSubject(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                if (results.length > 0) {
+                    return res.status(200).send(results[0]);
+                }
+    
+                else {
+                    return res.status(204).send({ success: false, data: "No Data Found." });
+                }
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
+exports.getAllSubjectsByName = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'subject_name' : "%"+req.params.name+"%",
+    };
+
+    if(validated){
+        subjectsService.getAllSubjectsByName(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                if (results.length > 0) {
+                    return res.status(200).send(results);
+                }
+    
+                else {
+                    return res.status(204).send({ success: false, data: "No Data Found." });
+                }
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
+exports.postSubject = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'subject_code' : req.body.subject_code,
+        'subject_name' : req.body.subject_name,
+        'group_id' : req.body.group_id,
+    };
+
+    if(validator.isEmpty(data.subject_code , {ignore_whitespace: true})) {
         validated = false;
     }
 
-    if(validator.isEmpty(data.details , {ignore_whitespace: true})) {
-        validated = false;
-    }
-
-    if(validator.isDate(data.dead_line, {format: 'MM/DD/YYYY'})) {
+    if(validator.isEmpty(data.subject_name , {ignore_whitespace: true})) {
         validated = false;
     }
 
     if(validated){
-        designationsService.postNotice(data, (error, results) => {
+        subjectsService.postSubject(data, (error, results) => {
             if (error) {
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
             }
@@ -67,60 +121,29 @@ exports.postNotice = (req, res, next) => {
 
 };
 
-exports.deleteNotice = (req, res, next) => {
+exports.updateSubject = (req, res, next) => {
     var validated = true;
     const data = {
         'id' : req.params.id,
+        'subject_code' : req.body.subject_code,
+        'subject_name' : req.body.subject_name,
+        'group_id' : req.body.group_id,
     };
 
     if(data.id <= 0) {
         validated = false;
     }
 
-    if(validated){
-        designationsService.deleteNotice(data, (error, results) => {
-            if (error) {
-                console.log(error);
-                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
-            }
-            else {
-                return res.status(204).send(results);
-            }
-        });
-    }
-    else{
-        return res.status(401).send({ success: false, data: "Unauthorized Request." })
-    }
-
-};
-
-exports.updateNotice = (req, res, next) => {
-    var validated = true;
-    const data = {
-        'id' : req.params.id,
-        'title' : req.body.title,
-        'details' : req.body.details,
-        'dead_line' : req.body.dead_line,
-    };
-
-    if(data.id <= 0) {
+    if(validator.isEmpty(data.subject_code , {ignore_whitespace: true})) {
         validated = false;
     }
 
-    if(validator.isEmpty(data.title , {ignore_whitespace: true})) {
-        validated = false;
-    }
-
-    if(validator.isEmpty(data.details , {ignore_whitespace: true})) {
-        validated = false;
-    }
-    
-    if(validator.isDate(data.dead_line, {format: 'MM/DD/YYYY'})) {
+    if(validator.isEmpty(data.subject_name , {ignore_whitespace: true})) {
         validated = false;
     }
 
     if(validated){
-        designationsService.updateNotice(data, (error, results) => {
+        subjectsService.updateSubject(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });

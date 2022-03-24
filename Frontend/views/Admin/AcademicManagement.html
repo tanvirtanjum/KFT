@@ -100,12 +100,12 @@
                             </select>
                             <label for="groupP">Group</label>
                         </div>
-                        <button class="btn btn-success" id="addSessionBTN"><i class="fas fa-plus"></i> ADD</button>
+                        <button class="btn btn-success" id="addSubjectBTN"><i class="fas fa-plus"></i> ADD</button>
                       </div>
                 </div>
                 <div class="input-group mb-0">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                    <input type="text" id="search" class="form-control" placeholder="Search By Subject Name" aria-label="Search By Session Name" aria-describedby="basic-addon1">
+                    <input type="text" id="search2" class="form-control" placeholder="Search By Subject Name" aria-label="Search By Session Name" aria-describedby="basic-addon1">
                 </div>
         
                 <div class="table-responsive" style="padding-top: 2vh;">
@@ -158,6 +158,42 @@
         </div>
     </div>
     
+    <!-- Update Academic Subject -->
+    <div class="modal fade" id="updateAcademicSubjectModal" tabindex="-1" aria-labelledby="updateAcademicSubjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateAcademicSubjectModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Subject</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id_u2">
+                        <input type="text" class="form-control" placeholder="Write Subject Code" id="subject_codeU">
+                        <label for="subject_codeU">Subject Code</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject Name" id="subject_nameU">
+                        <label for="subject_nameU">Subject Name</label>
+                    </div>
+
+                    <div class="form-floating form-control">
+                        <select class="form-select" id="groupU" aria-label="Floating label select example">
+                        
+                        </select>
+                        <label for="groupU">Groups</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="updateSubjectBTN" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container-fluid text-center" id="bottomLayout"></div>
 </body>
 

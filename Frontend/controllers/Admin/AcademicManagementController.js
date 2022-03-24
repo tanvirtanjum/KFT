@@ -329,7 +329,50 @@ $(document).ready(function () {
     });
 
 
-    //________________________________________-
+    //________________________________________
+    var LoadAllGroupsOptions = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/groups/get-all-groups",
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].group_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#groupP").html(str);
+                    $("#groupU").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#groupP").html(str);
+                    $("#groupU").html(str);
+                }
+            }
+        });
+    }
+    LoadAllGroupsOptions();
+
     var LoadAllSubjects = function(){
         $.ajax({
             url: api_base_URL+"/api/subjects/get-all-subjects",
@@ -349,7 +392,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].subject_code  +"</td>"+
                                         "<td>"+ data[i].subject_name  +"</td>"+
                                         "<td>"+ data[i].group_name  +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSubjectModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -370,5 +413,233 @@ $(document).ready(function () {
         });
     }
     LoadAllSubjects(); 
+
+    var InsertSubject = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/subjects/insert-subject",
+            method: "POST",
+            data : {
+                subject_code: $('#subject_codeP').val(),
+                subject_name: $('#subject_nameP').val(),
+                group_id: $('#groupP').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    LoadAllSubjects();
+
+                    alert("Subject Inserted");
+                }
+                else 
+                {
+                    alert("Something Went Wrong");
+                }
+            }
+        });
+    }
+
+    var validateSubjectInsert= function() {
+        var validate = true;
+        if($.trim($('#subject_codeP').val()).length <= 0)
+        {
+            validate = false;
+            $('#subject_codeP').addClass("is-invalid");
+        }
+        else
+        {
+            $("#subject_codeP").removeClass("is-invalid");
+        }
+
+        if($.trim($('#subject_nameP').val()).length <= 0)
+        {
+            validate = false;
+            $('#subject_nameP').addClass("is-invalid");
+        }
+        else
+        {
+            $("#subject_nameP").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#addSubjectBTN").click(function () {
+        if(validateSubjectInsert())
+        {
+            InsertSubject();
+        }
+        else
+        {
+
+        }
+    });
+
+    var LoadAllSubjectsByName = function (name) {
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+            $.ajax({
+                url: api_base_URL+"/api/subjects/get-all-subjects/"+name,
+                method: "GET",
+                headers : {
+                    role : decryptLoginInfo.role_id,
+                },
+                complete: function (xhr, status) {
+                    if (xhr.status == 200) {
+                        var data = xhr.responseJSON;
+
+                        var str = '';
+                        var sl = 1;
+                        if(data.length > 0)
+                        {
+                            for (var i = 0; i < data.length; i++) 
+                            {
+                                str += "<tr>"+
+                                            "<th>"+ sl + "</th>"+
+                                            "<td>"+ data[i].subject_code  +"</td>"+
+                                            "<td>"+ data[i].subject_name  +"</td>"+
+                                            "<td>"+ data[i].group_name  +"</td>"+
+                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSubjectModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                    "</tr>";
+                                sl++;
+                            }
+                        }
+                        else
+                        {
+                            str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
+                        }
+
+                        $("#subjectTable tbody").html(str);
+                    }
+                    else 
+                    {
+                        str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
+                        $("#subjectTable tbody").html(str);
+                    }
+                }
+            });
+    }
+    $("#search2").on("keyup change",function(){
+        if($.trim($("#search2").val()).length > 0)
+        {
+            LoadAllSubjectsByName($("#search2").val());
+        }
+        else
+        {
+            LoadAllSubjects();
+        }
+    });
+
+    var LoadSubject = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/subjects/get-subject/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#id_u2').val(data.id);
+                   $('#subject_codeU').val(data.subject_code);
+                   $('#subject_nameU').val(data.subject_name);
+                   $('#groupU').val(data.group_id);
+                }
+                else {}
+            }
+        });
+    }
+
+    $('#updateAcademicSubjectModal').on('show.bs.modal', function(e) {
+        $('#msgU').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadSubject(id);
+    });
+
+    var UpdateSubject = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/subjects/update-subject/"+id,
+            method: "PUT",
+            data : {
+                subject_code: $('#subject_codeU').val(),
+                subject_name: $('#subject_nameU').val(),
+                group_id: $('#groupU').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    LoadAllSubjects();
+                    LoadSubject($('#id_u2').val());
+
+                    alert("Subject Updated");
+                }
+                else 
+                {
+                    LoadAllSubjects();
+                    LoadSubject($('#id_u2').val());
+                    alert("Something Went Wrong");
+                }
+            }
+        });
+    }
+
+    var validateSubjectUpdate= function() {
+        var validate = true;
+        if($.trim($('#subject_codeU').val()).length <= 0)
+        {
+            validate = false;
+            $('#subject_codeU').addClass("is-invalid");
+        }
+        else
+        {
+            $("#subject_codeU").removeClass("is-invalid");
+        }
+
+        if($.trim($('#subject_nameU').val()).length <= 0)
+        {
+            validate = false;
+            $('#subject_nameU').addClass("is-invalid");
+        }
+        else
+        {
+            $("#subject_nameU").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#updateSubjectBTN").click(function () {
+        if(validateSubjectUpdate())
+        {
+            UpdateSubject($('#id_u2').val());
+        }
+        else
+        {
+
+        }
+    });
 
 });

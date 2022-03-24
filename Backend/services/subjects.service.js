@@ -15,22 +15,11 @@ exports.getAllSubjects = (data, callback) => {
     );
 };
 
-exports.postNotice = (data, callback) => {
+exports.getSubject = (data, callback) => {
     db.query(
-        `INSERT INTO admission_notices(title, details, dead_line) VALUES (?, ?, ?);`,
-        [data.title, data.details, data.dead_line],
-        (error, results, fields) => {
-            if (error) {
-                return callback(error);
-            }
-            return callback(null, results);
-        }
-    );
-};
-
-exports.deleteNotice = (data, callback) => {
-    db.query(
-        `DELETE FROM admission_notices WHERE id = ?;`,
+        `SELECT subjects.*, groups.group_name FROM subjects `+
+        `INNER JOIN groups ON subjects.group_id = groups.id `+
+        `WHERE subjects.id = ?;`,
         [data.id],
         (error, results, fields) => {
             if (error) {
@@ -41,10 +30,40 @@ exports.deleteNotice = (data, callback) => {
     );
 };
 
-exports.updateNotice = (data, callback) => {
+exports.getAllSubjectsByName = (data, callback) => {
     db.query(
-        `UPDATE admission_notices SET title = ?, details = ?, dead_line = ?, updated_at = current_timestamp WHERE id = ?;`,
-        [data.title, data.details, data.dead_line, data.id],
+        `SELECT subjects.*, groups.group_name FROM subjects `+
+        `INNER JOIN groups ON subjects.group_id = groups.id `+
+        `WHERE subjects.subject_name LIKE ? `+
+        `ORDER BY subject_name ASC;`,
+        [data.subject_name],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
+exports.postSubject = (data, callback) => {
+    db.query(
+        `INSERT INTO subjects(subject_code, subject_name, group_id) VALUES (?, ?, ?);`,
+        [data.subject_code, data.subject_name, data.group_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
+
+exports.updateSubject = (data, callback) => {
+    db.query(
+        `UPDATE subjects SET subject_code = ?, subject_name = ?, group_id = ? WHERE id = ?;`,
+        [data.subject_code, data.subject_name, data.group_id, data.id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);

@@ -16,6 +16,8 @@ const designationsRoutes = require("./routes/designations.route");
 const employment_statusRoutes = require("./routes/employment_status.route");
 const teachersRoutes = require("./routes/teachers.route");
 const subjectsRoutes = require("./routes/subjects.route");
+const groupsRoutes = require("./routes/groups.route");
+
 const studentsRoutes = require("./routes/students.route");
 
 const session_statusRoutes = require("./routes/session_status.route");
@@ -44,6 +46,7 @@ app.use("/api/designations", designationsRoutes);
 app.use("/api/employment_status", employment_statusRoutes);
 app.use("/api/teachers", teachersRoutes);
 app.use("/api/subjects", subjectsRoutes);
+app.use("/api/groups", groupsRoutes);
 
 app.use("/api/students", studentsRoutes);
 
