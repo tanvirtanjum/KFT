@@ -1,13 +1,14 @@
 const db = require("../config/db.config");
 
-exports.getAllEmployees = (data, callback) => {
+exports.getAllStudent = (data, callback) => {
     db.query(
-        `SELECT employees.*, logins.email, logins.role_id, roles.role_name, designations.designation_name, employment_status.status_name FROM employees `+ 
-        `INNER JOIN logins ON employees.login_id = logins.id `+
-        `INNER JOIN roles ON logins.role_id = roles.id `+
-        `INNER JOIN designations ON employees.designation_id = designations.id `+
-        `INNER JOIN employment_status ON employees.employment_status_id = employment_status.id `+
-        `ORDER BY employees.designation_id ASC; `,
+        `SELECT students.*, logins.email, classes.class_name, groups.group_name, wings.wing_name, student_status.status_name FROM students `+ 
+        `INNER JOIN logins ON students.login_id = logins.id `+
+        `INNER JOIN classes ON students.cur_class_id = classes.id `+
+        `INNER JOIN groups ON students.cur_group_id = groups.id `+
+        `INNER JOIN wings ON students.wing_id = wings.id `+
+        `INNER JOIN student_status ON students.studentship_id = student_status.id `+
+        `ORDER BY students.student_id ASC;`,
         [],
         (error, results, fields) => {
             if (error) {

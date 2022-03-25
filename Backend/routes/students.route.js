@@ -17,7 +17,7 @@ var express = require("express");
 
 var router = express.Router();
 
-router.get("/get-all-students", studentsController.getAllEmployees);
+router.get("/get-all-students", studentsController.getAllStudent);
 router.get("/get-employee/:id", studentsController.getEmployee);
 router.get("/name/:name", studentsController.getEmployeeByName);
 router.post("/insert-employee", auth.authAdmin, studentsController.postEmployee);

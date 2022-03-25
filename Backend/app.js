@@ -18,6 +18,8 @@ const teachersRoutes = require("./routes/teachers.route");
 const subjectsRoutes = require("./routes/subjects.route");
 const groupsRoutes = require("./routes/groups.route");
 const classesRoutes = require("./routes/classes.route");
+const wingsRoutes = require("./routes/wings.route");
+const student_statusRoutes = require("./routes/student_status.route");
 
 const studentsRoutes = require("./routes/students.route");
 
@@ -49,6 +51,8 @@ app.use("/api/teachers", teachersRoutes);
 app.use("/api/subjects", subjectsRoutes);
 app.use("/api/groups", groupsRoutes);
 app.use("/api/classes", classesRoutes);
+app.use("/api/wings", wingsRoutes);
+app.use("/api/student_status", student_statusRoutes);
 
 app.use("/api/students", studentsRoutes);
 

@@ -3,14 +3,14 @@ const validator = require('validator');
 var fs = require('fs');
 
 // Importing Created Modules
-const employeesService = require("../services/employees.service");
+const studentService = require("../services/students.service");
 
-exports.getAllEmployees = (req, res, next) => {
+exports.getAllStudent = (req, res, next) => {
     var validated = true;
     const data = {};
 
     if(validated){
-        employeesService.getAllEmployees(data, (error, results) => {
+        studentService.getAllStudent(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });

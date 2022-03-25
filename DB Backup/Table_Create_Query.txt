@@ -365,9 +365,9 @@ INSERT INTO `wings` (`id`, `wing_name`) VALUES
 (2, 'GIRL\'S WING');
 
 INSERT INTO `classes` (`id`, `class_name`) VALUES 
-(NULL, 'SIX'), 
-(NULL, 'SEVEN'), 
-(NULL, 'EIGHT');
+(1, 'SIX'), 
+(2, 'SEVEN'), 
+(3, 'EIGHT');
 
 INSERT INTO `logins` (`id`, `email`, `password`, `role_id`, `access_id`, `created_at`, `updated_at`) VALUES
 (1, 'tanjumtanvir@gmail.com', '12345', 1, 1, '2021-10-11 15:15:34', '2021-10-11 15:15:34');
