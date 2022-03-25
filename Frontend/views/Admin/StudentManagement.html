@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../controllers/urlController.js"></script>
 
     <!-- Controller -->
-    <script type="text/javascript" src="../../controllers/Admin/TeachersManagementController.js"></script>
+    <script type="text/javascript" src="../../controllers/Admin/StudentManagementController.js"></script>
 </head>
 
 <body class="bg-secondary bg-opacity-75">
@@ -41,7 +41,7 @@
 
         <div class="input-group mb-0">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-            <input type="text" id="search" class="form-control" placeholder="Search By Teacher Name" aria-label="Search By Employee Name" aria-describedby="basic-addon1">
+            <input type="text" id="search" class="form-control" placeholder="Search By Student Name" aria-label="Search By Employee Name" aria-describedby="basic-addon1">
           </div>
           
         <!-- Add Modal -->
@@ -55,9 +55,13 @@
                     <div class="modal-body">
                         <div class="alert mb-2" id="msgP" role="alert" align="center"></div>
                         <div class="form-floating mb-2">
-                            <!-- <textarea class="form-control" placeholder="Write Subject" id="nameP" style="resize: none;"></textarea> -->
                             <input type="text" class="form-control" placeholder="Write Subject" id="nameP">
                             <label for="nameP">Name</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" placeholder="Write ID" id="idP">
+                            <label for="idP">ID</label>
                         </div>
 
                         <div class="form-floating mb-2">
@@ -100,19 +104,6 @@
                         </div>
 
                         <div class="form-floating mb-2">
-                            <select class="form-select" id="bgP" aria-label="Floating label select example">
-                                <option value="A+">A+</option>
-                                <option value="A-">A-</option>
-                                <option value="AB+">AB+</option>
-                                <option value="B+">B+</option>
-                                <option value="B-">B-</option>
-                                <option value="O+">O+</option>
-                                <option value="O-">O-</option>
-                              </select>
-                              <label for="bgP">Blood Group</label>
-                        </div>
-
-                        <div class="form-floating mb-2">
                             <textarea class="form-control" placeholder="Leave a comment here" id="pradP" style="height: 100px"></textarea>
                             <label for="pradP">Present Address</label>
                         </div>
@@ -123,20 +114,45 @@
                         </div>
 
                         <div class="form-floating mb-2">
-                            <select class="form-select" id="designP" aria-label="Floating label select example">
+                            <select class="form-select" id="acP" aria-label="Floating label select example">
                               
                             </select>
-                            <label for="designP">Subject</label>
+                            <label for="acP">Admission Class</label>
                         </div>
 
                         <div class="form-floating mb-2">
-                            <input type="number" class="form-control" placeholder="Write Subject" id="salaryP">
-                            <label for="salaryP">Salary</label>
+                            <select class="form-select" id="agP" aria-label="Floating label select example">
+                              
+                            </select>
+                            <label for="agP">Admission Group</label>
                         </div>
 
                         <div class="form-floating mb-2">
-                            <input type="text" class="form-control" placeholder="Write Subject" id="fileP">
-                            <label for="fileP">File No.</label>
+                            <select class="form-select" id="wingP" aria-label="Floating label select example">
+                              
+                            </select>
+                            <label for="wingP">Wing</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <select class="form-select" id="ccP" aria-label="Floating label select example">
+                              
+                            </select>
+                            <label for="ccP">Current Class</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <select class="form-select" id="cgP" aria-label="Floating label select example">
+                              
+                            </select>
+                            <label for="cgP">Current Group</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <select class="form-select" id="statusP" aria-label="Floating label select example">
+                              
+                            </select>
+                            <label for="statusP">Student Status</label>
                         </div>
 
                         <input class="form-control mb-2" type="file" id="uploaded_file" name="uploaded_file" accept="image/*">
@@ -151,16 +167,16 @@
         </div>
 
         <div class="table-responsive" style="padding-top: 2vh;">
-            <table class="table table-sm table-striped" id="empTable">
+            <table class="table table-sm table-striped" id="studentTable">
                 <thead class="table-dark">
                   <th>#</th>
                   <th>Name</th>
-                  <th>Subject</th>
-                  <th>Status</th>
-                  <th>System Role</th>
+                  <th>ID</th>
                   <th>Contact</th>
-                  <th>Email</th>
-                  <th>File No</th>
+                  <th>Status</th>
+                  <th>Class</th>
+                  <th>Group</th>
+                  <th>Wing</th>
                   <th></th>
                 </thead>
                 <tbody class="table-light">
@@ -172,11 +188,11 @@
 
 
     <!-- Update Modal -->
-    <div class="modal fade" id="updateEmployeeModal" tabindex="-1" aria-labelledby="updateEmployeeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateStudentModal" tabindex="-1" aria-labelledby="updateStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateEmployeeModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Teacher</h5>
+                    <h5 class="modal-title" id="updateStudentModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Teacher</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -185,6 +201,11 @@
                         <input type="hidden" id="id">
                         <input type="text" class="form-control" placeholder="Write Subject" id="nameU">
                         <label for="nameU">Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write ID" id="idU">
+                        <label for="idU">ID</label>
                     </div>
 
                     <div class="form-floating mb-2">
@@ -202,7 +223,6 @@
                           <option value="Hindu">HINDU</option>
                           <option value="Christian">CHRISTIAN</option>
                           <option value="Buddha">BUDDHA</option>
-                          <option value="Other">Other</option>
                         </select>
                         <label for="relU">Religion</label>
                     </div>
@@ -218,26 +238,13 @@
                     </div>
 
                     <div class="form-floating mb-2">
-                        <input type="number" class="form-control" placeholder="Write Subject" id="contactU">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="contactU">
                         <label for="contactU">Contact No.</label>
                     </div>
 
                     <div class="form-floating mb-2">
-                        <input type="text" class="form-control" placeholder="Write Subject" id="emailU" readonly>
+                        <input type="text" class="form-control" placeholder="Write Subject" id="emailU">
                         <label for="emailU">Email</label>
-                    </div>
-
-                    <div class="form-floating mb-2">
-                        <select class="form-select" id="bgU" aria-label="Floating label select example">
-                          <option value="A+">A+</option>
-                          <option value="A-">A-</option>
-                          <option value="AB+">AB+</option>
-                          <option value="B+">B+</option>
-                          <option value="B-">B-</option>
-                          <option value="O+">O+</option>
-                          <option value="O-">O-</option>
-                        </select>
-                        <label for="bgU">Blood Group</label>
                     </div>
 
                     <div class="form-floating mb-2">
@@ -251,27 +258,45 @@
                     </div>
 
                     <div class="form-floating mb-2">
-                        <select class="form-select" id="designU" aria-label="Floating label select example">
+                        <select class="form-select" id="acU" aria-label="Floating label select example">
                           
                         </select>
-                        <label for="designU">Subject</label>
+                        <label for="acU">Admission Class</label>
                     </div>
 
                     <div class="form-floating mb-2">
-                        <input type="number" class="form-control" placeholder="Write Subject" id="salaryU">
-                        <label for="salaryU">Salary</label>
+                        <select class="form-select" id="agU" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="agU">Admission Group</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="wingU" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="wingU">Wing</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="ccU" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="ccU">Current Class</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="cgU" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="cgU">Current Group</label>
                     </div>
 
                     <div class="form-floating mb-2">
                         <select class="form-select" id="statusU" aria-label="Floating label select example">
                           
                         </select>
-                        <label for="statusU">Employment Status</label>
-                    </div>
-
-                    <div class="form-floating mb-2">
-                        <input type="text" class="form-control" placeholder="Write Subject" id="fileU">
-                        <label for="fileU">File No.</label>
+                        <label for="statusU">Student Status</label>
                     </div>
 
                     <div class="mb-2" style="width: calc(100%);" align="center">
@@ -287,9 +312,6 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <div id="renderEmBtn">
                         
-                    </div>
-                    <div id="renderRole">
-
                     </div>
                     <button type="button" id="updateBTN" class="btn btn-success">Update</button>
                 </div>

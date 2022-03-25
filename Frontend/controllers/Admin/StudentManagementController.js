@@ -48,9 +48,9 @@ $(document).ready(function () {
 
     checkLocalStorage();
 
-    var LoadAllSubjectOptions = function(){
+    var LoadAllClassOptions = function(){
         $.ajax({
-            url: api_base_URL+"/api/subjects/get-all-subjects",
+            url: api_base_URL+"/api/classes/get-all-classes",
             method: "GET",
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
@@ -62,7 +62,7 @@ $(document).ready(function () {
                     {
                         for (var i = 0; i < data.length; i++) 
                         {
-                            str += '<option value="'+data[i].id+'">'+data[i].subject_code+'-'+data[i].subject_name+'</option>';
+                            str += '<option value="'+data[i].id+'">'+data[i].class_name+'</option>';
                         }
                     }
                     else
@@ -70,27 +70,129 @@ $(document).ready(function () {
                         str += "";
                     }
 
-                    $("#designP").html(str);
-                    $("#designU").html(str);
+                    $("#acP").html(str);
+                    $("#ccP").html(str);
+
+                    $("#acU").html(str);
+                    $("#ccU").html(str);
                 }
                 else 
                 {
                     str += "";
-                    $("#designP").html(str);
-                    $("#designU").html(str);
+                    $("#acP").html(str);
+                    $("#ccP").html(str);
+
+                    $("#acU").html(str);
+                    $("#ccU").html(str);
                 }
             }
         });
     }
-    LoadAllSubjectOptions();
+    LoadAllClassOptions();
 
-    var LoadAllEmpStatusOptions = function(){
+    var LoadWingsOptions = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/employment_status/get-all-status",
+            url: api_base_URL+"/api/wings/get-all-wings",
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].wing_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#wingP").html(str);
+
+                    $("#wingU").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#wingP").html(str);
+
+                    $("#wingU").html(str);
+                }
+            }
+        });
+    }
+
+    LoadWingsOptions();
+
+    var LoadGroupsOptions = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/groups/get-all-groups",
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].group_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#agP").html(str);
+                    $("#cgP").html(str);
+
+                    $("#agU").html(str);
+                    $("#cgU").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#agP").html(str);
+                    $("#cgP").html(str);
+
+                    $("#agU").html(str);
+                    $("#cgU").html(str);
+                }
+            }
+        });
+    }
+
+    LoadGroupsOptions();
+
+    var LoadStudentStatusOptions = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/student_status/get-all-status",
             method: "GET",
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -113,22 +215,26 @@ $(document).ready(function () {
                         str += "";
                     }
 
+                    $("#statusP").html(str);
+
                     $("#statusU").html(str);
                 }
                 else 
                 {
                     str += "";
+                    $("#statusP").html(str);
+
                     $("#statusU").html(str);
                 }
             }
         });
     }
 
-    LoadAllEmpStatusOptions();
+    LoadStudentStatusOptions();
 
-    var LoadAllTeachers = function(){
+    var LoadAllStudents = function(){
         $.ajax({
-            url: api_base_URL+"/api/teachers/get-all-teachers",
+            url: api_base_URL+"/api/students/get-all-students",
             method: "GET",
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
@@ -143,13 +249,13 @@ $(document).ready(function () {
                             str += "<tr>"+
                                         "<th>"+ sl + "</th>"+
                                         "<td>"+ data[i].name +"</td>"+
-                                        "<td>"+ data[i].subject_name  +"</td>"+
+                                        "<td>"+ data[i].student_id  +"</td>"+
+                                        "<td>"+ data[i].contact  +"</td>"+
                                         "<td>"+ data[i].status_name  +"</td>"+
-                                        "<td>"+ data[i].role_name  +"</td>"+
-                                        "<td>"+ data[i].contact +"</td>"+
-                                        "<td>"+ data[i].email +"</td>"+
-                                        "<td>"+ data[i].file_no +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+ data[i].class_name +"</td>"+
+                                        "<td>"+ data[i].group_name +"</td>"+
+                                        "<td>"+ data[i].wing_name +"</td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -159,21 +265,21 @@ $(document).ready(function () {
                         str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
                     }
 
-                    $("#empTable tbody").html(str);
+                    $("#studentTable tbody").html(str);
                 }
                 else 
                 {
                     str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
-                    $("#empTable tbody").html(str);
+                    $("#studentTable tbody").html(str);
                 }
             }
         });
     }
-    LoadAllTeachers();
+    LoadAllStudents();
 
-    var LoadTeacher = function(id){
+    var LoadStudent = function(id){
         $.ajax({
-            url: api_base_URL+"/api/teachers/get-teacher/"+id,
+            url: api_base_URL+"/api/students/get-student/"+id,
             method: "GET",
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
@@ -193,7 +299,7 @@ $(document).ready(function () {
                    $('#designU').val(data.subject_id);
                    $('#salaryU').val(data.salary);
                    $('#fileU').val(data.file_no);
-                   $('#statusU').val(data.employment_status_id);
+                   $('#statusU').val(data.studentship_id);
                    $('#avatarU').attr('src', api_base_URL+"/"+data.img_path);
                    $('#id').val(data.id);
                    $('#renderUpdate').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeImageModal' data-bs-id='"+data.id+"' class='btn btn-sm btn-danger'>Update Image</button>");
@@ -213,16 +319,16 @@ $(document).ready(function () {
         });
     }
 
-    $('#updateEmployeeModal').on('show.bs.modal', function(e) {
+    $('#updateStudentModal').on('show.bs.modal', function(e) {
         $('#msgU').attr('hidden', true);
         var id = $(e.relatedTarget).data('bs-id');
-        LoadTeacher(id);
+        LoadStudent(id);
     });
 
 
     var LoadTeacherImage = function(id){
         $.ajax({
-            url: api_base_URL+"/api/teachers/get-teacher/"+id,
+            url: api_base_URL+"/api/students/get-student/"+id,
             method: "GET",
             complete: function (xhr, status) {
                 if (xhr.status == 200) {

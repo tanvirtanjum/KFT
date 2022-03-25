@@ -32,14 +32,14 @@ exports.getAllStudent = (req, res, next) => {
 
 };
 
-exports.getEmployee = (req, res, next) => {
+exports.getStudent = (req, res, next) => {
     var validated = true;
     const data = {
         'id' : req.params.id,
     };
 
     if(validated){
-        employeesService.getEmployee(data, (error, results) => {
+        studentService.getStudent(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
