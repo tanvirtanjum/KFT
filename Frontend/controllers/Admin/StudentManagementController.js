@@ -287,23 +287,24 @@ $(document).ready(function () {
                    var data = xhr.responseJSON;
                 
                    $('#nameU').val(data.name);
+                   $('#idU').val(data.student_id);
                    $('#sexU').val(data.sex);
                    $('#relU').val(data.religion);
                    $('#fatherU').val(data.father_name);
                    $('#motherU').val(data.mother_name);
                    $('#contactU').val(data.contact);
                    $('#emailU').val(data.email);
-                   $('#bgU').val(data.bg);
                    $('#pradU').val(data.present_address);
                    $('#peadU').val(data.permanent_address);
-                   $('#designU').val(data.subject_id);
-                   $('#salaryU').val(data.salary);
-                   $('#fileU').val(data.file_no);
+                   $('#acU').val(data.admission_class_id);
+                   $('#agU').val(data.admission_group_id);
+                   $('#ccU').val(data.cur_class_id);
+                   $('#cgU').val(data.cur_group_id);
                    $('#statusU').val(data.studentship_id);
                    $('#avatarU').attr('src', api_base_URL+"/"+data.img_path);
                    $('#id').val(data.id);
-                   $('#renderUpdate').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeImageModal' data-bs-id='"+data.id+"' class='btn btn-sm btn-danger'>Update Image</button>");
-                   $('#renderEmBtn').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeEmailModal' data-bs-id='"+data.login_id+"' class='btn btn-dark'>Update Email</button>");
+                   $('#renderUpdate').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentImageModal' data-bs-id='"+data.id+"' class='btn btn-sm btn-danger'>Update Image</button>");
+                   $('#renderEmBtn').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentEmailModal' data-bs-id='"+data.login_id+"' class='btn btn-dark'>Update Email</button>");
 
                 }
                 else {}
@@ -318,7 +319,7 @@ $(document).ready(function () {
     });
 
 
-    var LoadTeacherImage = function(id){
+    var LoadStudentImage = function(id){
         $.ajax({
             url: api_base_URL+"/api/students/get-student/"+id,
             method: "GET",
@@ -340,11 +341,11 @@ $(document).ready(function () {
         });
     }
 
-    $('#updateEmployeeImageModal').on('show.bs.modal', function(e) {
+    $('#updateStudentImageModal').on('show.bs.modal', function(e) {
         $('#msgU2').attr('hidden', true);
         $('#uploaded_file').val(null);
         var id = $(e.relatedTarget).data('bs-id');
-        LoadTeacherImage(id);
+        LoadStudentImage(id);
     });
 
 
