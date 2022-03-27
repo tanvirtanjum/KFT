@@ -209,33 +209,6 @@ exports.postEmployee = (req, res, next) => {
 
 };
 
-exports.deleteNotice = (req, res, next) => {
-    var validated = true;
-    const data = {
-        'id' : req.params.id,
-    };
-
-    if(data.id <= 0) {
-        validated = false;
-    }
-
-    if(validated){
-        employeesService.deleteNotice(data, (error, results) => {
-            if (error) {
-                console.log(error);
-                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
-            }
-            else {
-                return res.status(204).send(results);
-            }
-        });
-    }
-    else{
-        return res.status(401).send({ success: false, data: "Unauthorized Request." })
-    }
-
-};
-
 exports.updateEmployee = (req, res, next) => {
     var validated = true;
     const data = {

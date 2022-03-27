@@ -69,19 +69,6 @@ exports.postTeacher = (data, callback) => {
     );
 };
 
-exports.deleteNotice = (data, callback) => {
-    db.query(
-        `DELETE FROM admission_notices WHERE id = ?;`,
-        [data.id],
-        (error, results, fields) => {
-            if (error) {
-                return callback(error);
-            }
-            return callback(null, results);
-        }
-    );
-};
-
 exports.updateTeacher = (data, callback) => {
     db.query(
         `UPDATE teachers SET name = ?, father_name = ?, mother_name = ?, contact = ?, sex = ?, bg = ?, religion = ?, present_address = ?, permanent_address = ?, salary = ?, subject_id = ?, file_no = ?, employment_status_id = ?, updated_at = current_timestamp WHERE id = ?;`,
