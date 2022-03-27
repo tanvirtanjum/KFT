@@ -255,7 +255,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].class_name +"</td>"+
                                         "<td>"+ data[i].group_name +"</td>"+
                                         "<td>"+ data[i].wing_name +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -742,7 +742,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].class_name +"</td>"+
                                         "<td>"+ data[i].group_name +"</td>"+
                                         "<td>"+ data[i].wing_name +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                 "</tr>";
                                 sl++;
                             }

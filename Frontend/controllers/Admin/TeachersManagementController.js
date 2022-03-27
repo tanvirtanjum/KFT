@@ -149,7 +149,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].contact +"</td>"+
                                         "<td>"+ data[i].email +"</td>"+
                                         "<td>"+ data[i].file_no +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -750,7 +750,7 @@ $(document).ready(function () {
                                             "<td>"+ data[i].contact +"</td>"+
                                             "<td>"+ data[i].email +"</td>"+
                                             "<td>"+ data[i].file_no +"</td>"+
-                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                     "</tr>";
                                 sl++;
                             }

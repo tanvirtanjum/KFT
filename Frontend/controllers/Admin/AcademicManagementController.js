@@ -58,7 +58,7 @@ $(document).ready(function () {
                             str += "<tr>"+
                                         "<th>"+ sl + "</th>"+
                                         "<td>"+ data[i].class_name  +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateClassModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateClassModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -289,7 +289,7 @@ $(document).ready(function () {
                                         "<th>"+ sl + "</th>"+
                                         "<td>"+ data[i].year_name  +"</td>"+
                                         "<td>"+ data[i].status_name  +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -393,7 +393,7 @@ $(document).ready(function () {
                                             "<th>"+ sl + "</th>"+
                                             "<td>"+ data[i].year_name  +"</td>"+
                                             "<td>"+ data[i].status_name  +"</td>"+
-                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                     "</tr>";
                                 sl++;
                             }
@@ -579,7 +579,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].subject_code  +"</td>"+
                                         "<td>"+ data[i].subject_name  +"</td>"+
                                         "<td>"+ data[i].group_name  +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSubjectModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSubjectModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -695,7 +695,7 @@ $(document).ready(function () {
                                             "<td>"+ data[i].subject_code  +"</td>"+
                                             "<td>"+ data[i].subject_name  +"</td>"+
                                             "<td>"+ data[i].group_name  +"</td>"+
-                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSubjectModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSubjectModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                     "</tr>";
                                 sl++;
                             }
