@@ -38,15 +38,16 @@ exports.getStudent = (data, callback) => {
     );
 };
 
-exports.getEmployeeByName = (data, callback) => {
+exports.getStudentsByNameID = (data, callback) => {
     db.query(
-        `SELECT employees.*, logins.email, logins.role_id, roles.role_name, designations.designation_name, employment_status.status_name FROM employees `+ 
-        `INNER JOIN logins ON employees.login_id = logins.id `+
-        `INNER JOIN roles ON logins.role_id = roles.id `+
-        `INNER JOIN designations ON employees.designation_id = designations.id `+
-        `INNER JOIN employment_status ON employees.employment_status_id = employment_status.id `+
-        `WHERE employees.name LIKE ?; `,
-        [data.name],
+        `SELECT students.*, logins.email, classes.class_name, groups.group_name, wings.wing_name, student_status.status_name FROM students `+ 
+        `INNER JOIN logins ON students.login_id = logins.id `+
+        `INNER JOIN classes ON students.cur_class_id = classes.id `+
+        `INNER JOIN groups ON students.cur_group_id = groups.id `+
+        `INNER JOIN wings ON students.wing_id = wings.id `+
+        `INNER JOIN student_status ON students.studentship_id = student_status.id `+
+        `WHERE students.name LIKE ? OR students.student_id LIKE ?; `,
+        [data.para, data.para],
         (error, results, fields) => {
             if (error) {
                 return callback(error);
@@ -56,12 +57,26 @@ exports.getEmployeeByName = (data, callback) => {
     );
 };
 
-exports.postEmployee = (data, callback) => {
+exports.getStudentByStudentID = (data, callback) => {
     db.query(
-        `INSERT INTO employees(name, father_name, mother_name, contact, sex, bg, religion, present_address, permanent_address, salary, designation_id, img_path, file_no, login_id, employment_status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-        [data.name, data.father_name, data.mother_name, data.contact, data.sex, data.bg, data.religion, data.present_address, data.permanent_address, data.salary, data.designation_id, data.img_path, data.file_no, data.login_id, data.employment_status_id],
+        `SELECT student_id FROM students WHERE student_id LIKE ?; `,
+        [data.student_id],
         (error, results, fields) => {
             if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
+exports.postStudent = (data, callback) => {
+    db.query(
+        `INSERT INTO students(name, student_id, admission_class_id, admission_group_id, father_name, mother_name, contact, sex, religion, present_address, permanent_address, cur_class_id, cur_group_id, studentship_id, login_id, wing_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [data.name, data.student_id, data.admission_class_id, data.admission_group_id, data.father_name, data.mother_name, data.contact, data.sex, data.religion, data.present_address, data.permanent_address, data.cur_class_id, data.cur_group_id, data.studentship_id, data.login_id, data.wing_id],
+        (error, results, fields) => {
+            if (error) {
+                console.log(data);
                 return callback(error);
             }
 
@@ -71,10 +86,11 @@ exports.postEmployee = (data, callback) => {
     );
 };
 
-exports.deleteNotice = (data, callback) => {
+
+exports.updateStudent = (data, callback) => {
     db.query(
-        `DELETE FROM admission_notices WHERE id = ?;`,
-        [data.id],
+        `UPDATE students SET name = ?, student_id = ?, father_name = ?, mother_name = ?, contact = ?, sex = ?, admission_class_id = ?, admission_group_id = ?, religion = ?, present_address = ?, permanent_address = ?, cur_class_id = ?, cur_group_id = ?, wing_id = ?, studentship_id = ?, updated_at = current_timestamp WHERE id = ?;`,
+        [data.name, data.student_id, data.father_name, data.mother_name, data.contact, data.sex, data.admission_class_id, data.admission_group_id, data. religion, data.present_address, data.permanent_address, data.cur_class_id, data.cur_group_id, data.wing_id, data.studentship_id, data.id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);
@@ -84,55 +100,14 @@ exports.deleteNotice = (data, callback) => {
     );
 };
 
-exports.updateEmployee = (data, callback) => {
+exports.updateStudentImage = (data, callback) => {
     db.query(
-        `UPDATE employees SET name = ?, father_name = ?, mother_name = ?, contact = ?, sex = ?, bg = ?, religion = ?, present_address = ?, permanent_address = ?, salary = ?, designation_id = ?, file_no = ?, employment_status_id = ?, updated_at = current_timestamp WHERE id = ?;`,
-        [data.name, data.father_name, data.mother_name, data.contact, data.sex, data.bg, data. religion, data.present_address, data.permanent_address, data.salary, data.designation_id, data.file_no, data.employment_status_id, data.id],
-        (error, results, fields) => {
-            if (error) {
-                return callback(error);
-            }
-            return callback(null, results);
-        }
-    );
-};
-
-exports.updateEmployeeImage = (data, callback) => {
-    db.query(
-        `UPDATE employees SET img_path = ?, updated_at = current_timestamp WHERE id = ?;`,
+        `UPDATE students SET img_path = ?, updated_at = current_timestamp WHERE id = ?;`,
         [data.img_path, data.id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);
             }
-            return callback(null, results);
-        }
-    );
-};
-
-exports.getContact = (data, callback) => {
-    db.query(
-        `SELECT contact FROM employees WHERE contact LIKE ?;`,
-        [data.contact],
-        (error, results, fields) => {
-            if (error) {
-                return callback(error);
-            }
-
-            return callback(null, results);
-        }
-    );
-};
-
-exports.getFileNo = (data, callback) => {
-    db.query(
-        `SELECT file_no FROM employees WHERE file_no LIKE ?;`,
-        [data.file_no],
-        (error, results, fields) => {
-            if (error) {
-                return callback(error);
-            }
-
             return callback(null, results);
         }
     );

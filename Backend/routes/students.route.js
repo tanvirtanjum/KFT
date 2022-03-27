@@ -3,7 +3,7 @@ const auth = require("../middleware/authenticate.middleware");
 const multer  = require('multer');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './uploads/employee images')
+      cb(null, './uploads/student images')
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
@@ -19,12 +19,11 @@ var router = express.Router();
 
 router.get("/get-all-students", studentsController.getAllStudent);
 router.get("/get-student/:id", studentsController.getStudent);
-router.get("/name/:name", studentsController.getEmployeeByName);
-router.post("/insert-employee", auth.authAdmin, studentsController.postEmployee);
-router.put("/update-employee/:id", auth.authAdmin, studentsController.updateEmployee);
-router.put("/update-employee-image/:id", auth.authAdmin, upload.single('uploaded_update_file'), studentsController.updateEmployeeImage);
-router.put("/insert-employee-image/:id", auth.authAdmin, upload.single('uploaded_file'), studentsController.insertEmployeeImage);
-router.get("/checkcontact/:contact", auth.authAdmin, studentsController.getContact);
-router.get("/checkfileno/:fileno", auth.authAdmin, studentsController.getFileNo);
+router.get("/nameid/:para", studentsController.getStudentsByNameID);
+router.get("/student_id/:student_id", auth.authAdmin, studentsController.getStudentByStudentID);
+router.post("/insert-student", auth.authAdmin, studentsController.postStudent);
+router.put("/update-student/:id", auth.authAdmin, studentsController.updateStudent);
+router.put("/update-student-image/:id", auth.authAdmin, upload.single('uploaded_update_file'), studentsController.updateStudentImage);
+router.put("/insert-student-image/:id", auth.authAdmin, upload.single('uploaded_file'), studentsController.insertStudentImage);
 
 module.exports = router;

@@ -356,7 +356,7 @@ $(document).ready(function () {
 
 
 
-    var LoadTeacherLoginDetails = function(id){
+    var LoadStudentLoginDetails = function(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -380,114 +380,14 @@ $(document).ready(function () {
         });
     }
 
-    $('#updateEmployeeEmailModal').on('show.bs.modal', function(e) {
+    $('#updateStudentEmailModal').on('show.bs.modal', function(e) {
         $('#msgU3').attr('hidden', true);
         var id = $(e.relatedTarget).data('bs-id');
-        LoadTeacherLoginDetails(id);
+        LoadStudentLoginDetails(id);
     });
 
 
-    var LoadTeacherLoginDetails2 = function(id){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/logins/get-login/id/"+id,
-            method: "GET",
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 200) {
-                    
-                   var data = xhr.responseJSON;
-                
-                   $('#idU4').val(data.id);
-                   $('#roleU4').val(data.role_id);
-                   $('#accessU4').val(data.access_id);
-                }
-                else {}
-            }
-        });
-    }
-
-    $('#updateEmployeeRoleModal').on('show.bs.modal', function(e) {
-        $('#msgU4').attr('hidden', true);
-        var id = $(e.relatedTarget).data('bs-id');
-        LoadTeacherLoginDetails2(id);
-    });
-
-    var UpdateTeacherAccess = function(){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        var access_id = 1;
-        var role = $('#roleU4').val();
-
-        if($('#accessU4').val() == 1)
-        {
-            access_id = 2;
-
-        }
-        else
-        {
-            access_id = 1;
-        }
-
-        $.ajax({
-            url: api_base_URL+"/api/logins/update-user-authentication-role",
-            method: "PUT",
-            data: {
-                id: $('#idU4').val(),
-                role_id: role,
-                access_id: access_id,
-            },
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                // console.log($('#nemailU2').val()+"   "+ $('#idu3').val())
-                if (xhr.status == 200) {
-                    var data = xhr.responseJSON;
-
-                    if(data.affectedRows >= 1)
-                    {
-                        $("#msgU4").removeClass("alert-danger");
-                        $("#msgU4").addClass("alert-success");
-                        $('#msgU4').html('<small>Role Updated.</small>');
-                        $('#msgU4').removeAttr('hidden');
-                    }
-                    else 
-                    {
-                        $("#msgU4").removeClass("alert-success");
-                        $("#msgU4").addClass("alert-danger");
-                        $('#msgU4').html('<small>Something Went Wrong.</small>');
-                        $('#msgU4').removeAttr('hidden');
-                    }
-                }
-                else 
-                {
-                    $("#msgU4").removeClass("alert-success");
-                    $("#msgU4").addClass("alert-danger");
-                    $('#msgU4').html('<small>Something Went Wrong.</small>');
-                    $('#msgU4').removeAttr('hidden');
-                }
-                LoadAllTeachers();
-                LoadTeacher($('#id').val());
-                LoadTeacherImage($('#id').val());
-                LoadTeacherLoginDetails($('#idu3').val());
-                LoadTeacherLoginDetails2($('#idU4').val());
-            }
-        });
-    }
-
-    $("#updateRoleBTN").click(function () {
-        UpdateTeacherAccess();
-    });
-
-    var loadAllTeachersByEmail = function (email) {
+    var loadAllStudentsByEmail = function (email) {
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
             decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
             decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -515,7 +415,7 @@ $(document).ready(function () {
         if($.trim($("#nemailU2").val()).length > 0)
         {
             $('#nemailU2').removeClass("is-invalid");
-            loadAllTeachersByEmail($("#nemailU2").val());
+            loadAllStudentsByEmail($("#nemailU2").val());
         }
         else
         {
@@ -523,7 +423,26 @@ $(document).ready(function () {
         }
     });
 
-    var UpdateTeacherEmail = function(){
+    var sendPasswordOnUpdate = function (id) {
+        $.ajax({
+            url: api_base_URL+"/api/logins/send-user-authentication-password",
+            method: "POST",
+            data: {
+                id : id,
+            },
+            
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;                 
+                }
+                else {
+                    var data = xhr.responseJSON;
+                }
+            }
+        });
+    }
+
+    var UpdateStudentEmail = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -567,10 +486,11 @@ $(document).ready(function () {
                     $('#msgU3').html('<small>Something Went Wrong.</small>');
                     $('#msgU3').removeAttr('hidden');
                 }
-                LoadAllTeachers();
-                LoadTeacher($('#id').val());
-                LoadTeacherImage($('#id').val());
-                LoadTeacherLoginDetails($('#idu3').val());
+                LoadAllStudents();
+                LoadStudent($('#id').val());
+                LoadStudentImage($('#id').val());
+                LoadStudentLoginDetails($('#idu3').val());
+                sendPasswordOnUpdate($('#idu3').val());
             }
         });
     }
@@ -582,11 +502,11 @@ $(document).ready(function () {
         }
         else
         {
-            UpdateTeacherEmail();
+            UpdateStudentEmail();
         }
     });
 
-    var UpdateTeacherImage = function(id){
+    var UpdateStudentImage = function(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -594,7 +514,7 @@ $(document).ready(function () {
         var data = new FormData($('#uploadForm')[0]);
 
         $.ajax({
-            url: api_base_URL+"/api/teachers/update-teacher-image/"+id,
+            url: api_base_URL+"/api/students/update-student-image/"+id,
             method: "PUT",
             contentType: false,
             processData: false,
@@ -631,18 +551,18 @@ $(document).ready(function () {
                     $('#msgU2').html('<small>Something Went Wrong.</small>');
                     $('#msgU2').removeAttr('hidden');
                 }
-                LoadAllTeachers();
-                LoadTeacher(id);
-                LoadTeacherImage(id);
+                LoadAllStudents();
+                LoadStudent(id);
+                LoadStudentImage(id);
             }
         });
     }
 
     $("#updateImageBTN").click(function () {
-        UpdateTeacherImage($('#id2').val());
+        UpdateStudentImage($('#id2').val());
     });
 
-    var validateTeacherUpdate= function() {
+    var validateStudentUpdate= function() {
         var validate = true;
         if($.trim($('#nameU').val()).length <= 0)
         {
@@ -652,6 +572,16 @@ $(document).ready(function () {
         else
         {
             $("#nameU").removeClass("is-invalid");
+        }
+
+        if($.trim($('#idU').val()).length <= 0)
+        {
+            validate = false;
+            $('#idU').addClass("is-invalid");
+        }
+        else
+        {
+            $("#idU").removeClass("is-invalid");
         }
 
         if($.trim($("#fatherU").val()).length <= 0)
@@ -704,25 +634,6 @@ $(document).ready(function () {
             $("#peadU").removeClass("is-invalid");
         }
 
-        if($("#salaryU").val() <= 0)
-        {
-            validate = false;
-            $("#salaryU").addClass("is-invalid");
-        }
-        else
-        {
-            $("#salaryU").removeClass("is-invalid");
-        }
-
-        if($.trim($("#fileU").val()).length <= 0)
-        {
-            validate = false;
-            $("#fileU").addClass("is-invalid");
-        }
-        else
-        {
-            $("#fileU").removeClass("is-invalid");
-        }
 
         if(!validate)
         {
@@ -732,29 +643,31 @@ $(document).ready(function () {
         return validate;
     }
 
-    var UpdateTeacher = function(id){
+    var UpdateStudent = function(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/teachers/update-teacher/"+id,
+            url: api_base_URL+"/api/students/update-student/"+id,
             method: "PUT",
             data : {
                 id: $('#id').val(),
                 name: $('#nameU').val(),
+                student_id: $('#idU').val(),
+                admission_class_id: $('#acU').val(),
+                admission_group_id: $('#agU').val(),               
                 sex: $('#sexU').val(),
                 religion: $('#relU').val(),
                 father_name: $('#fatherU').val(),
                 mother_name: $('#motherU').val(),
                 contact: $('#contactU').val(),
-                bg: $('#bgU').val(),
                 present_address: $('#pradU').val(),
                 permanent_address: $('#peadU').val(),
-                subject_id: $('#designU').val(),
-                salary: $('#salaryU').val(),
-                file_no: $('#fileU').val(),
-                employment_status_id: $('#statusU').val(),
+                cur_class_id: $('#ccU').val(),
+                cur_group_id: $('#cgU').val(),
+                wing_id: $('#wingU').val(),
+                studentship_id: $('#statusU').val(),
             },
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -785,27 +698,27 @@ $(document).ready(function () {
                     $('#msgU').html('<small>Something Went Wrong.</small>');
                     $('#msgU').removeAttr('hidden');
                 }
-                LoadAllTeachers();
-                LoadTeacher(id);
-                LoadTeacherImage(id);
+                LoadAllStudents();
+                LoadStudent(id);
+                LoadStudentImage(id);
             }
         });
     }
 
     $("#updateBTN").click(function () {
-        if(validateTeacherUpdate())
+        if(validateStudentUpdate())
         {
-            UpdateTeacher($('#id').val());
+            UpdateStudent($('#id').val());
         }
     });
 
-    var loadAllTeachersByName = function (name) {
+    var loadAllStudentByNameOrID = function (para) {
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
             decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
             decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
             $.ajax({
-                url: api_base_URL+"/api/teachers/name/"+name,
+                url: api_base_URL+"/api/students/nameid/"+para,
                 method: "GET",
                 headers : {
                     role : decryptLoginInfo.role_id,
@@ -821,16 +734,16 @@ $(document).ready(function () {
                             for (var i = 0; i < data.length; i++) 
                             {
                                 str += "<tr>"+
-                                            "<th>"+ sl + "</th>"+
-                                            "<td>"+ data[i].name +"</td>"+
-                                            "<td>"+ data[i].subject_name  +"</td>"+
-                                            "<td>"+ data[i].status_name  +"</td>"+
-                                            "<td>"+ data[i].role_name  +"</td>"+
-                                            "<td>"+ data[i].contact +"</td>"+
-                                            "<td>"+ data[i].email +"</td>"+
-                                            "<td>"+ data[i].file_no +"</td>"+
-                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
-                                    "</tr>";
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].name +"</td>"+
+                                        "<td>"+ data[i].student_id  +"</td>"+
+                                        "<td>"+ data[i].contact  +"</td>"+
+                                        "<td>"+ data[i].status_name  +"</td>"+
+                                        "<td>"+ data[i].class_name +"</td>"+
+                                        "<td>"+ data[i].group_name +"</td>"+
+                                        "<td>"+ data[i].wing_name +"</td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i></button></td>"+
+                                "</tr>";
                                 sl++;
                             }
                         }
@@ -839,11 +752,11 @@ $(document).ready(function () {
                             str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
                         }
     
-                        $("#empTable tbody").html(str);
+                        $("#studentTable tbody").html(str);
                     }
                     else {
                         str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
-                        $("#empTable tbody").html(str);
+                        $("#studentTable tbody").html(str);
                     }
                 }
             });
@@ -851,15 +764,15 @@ $(document).ready(function () {
     $("#search").on("keyup change",function(){
         if($.trim($("#search").val()).length > 0)
         {
-            loadAllTeachersByName($("#search").val());
+            loadAllStudentByNameOrID($("#search").val());
         }
         else
         {
-            LoadAllTeachers();
+            LoadAllStudents();
         }
     });
 
-    var loadAllTeachersByEmail2 = function (email) {
+    var loadAllStudentsByEmail2 = function (email) {
         var result = true;
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
             decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
@@ -894,7 +807,7 @@ $(document).ready(function () {
         if($.trim($("#emailP").val()).length > 0)
         {
             $('#emailP').removeClass("is-invalid");
-            loadAllTeachersByEmail2($("#emailP").val());
+            loadAllStudentsByEmail2($("#emailP").val());
         }
         else
         {
@@ -902,14 +815,14 @@ $(document).ready(function () {
         }
     });
 
-    var loadAllTeachersByContact2 = function (contact) {
+    var loadAllStudentsByStudentID = function (student_id) {
         var result = true;
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
             decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
             decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
             $.ajax({
-                url: api_base_URL+"/api/teachers/checkcontact/"+contact,
+                url: api_base_URL+"/api/students/student_id/"+student_id,
                 method: "GET",
                 headers : {
                     role : decryptLoginInfo.role_id,
@@ -918,39 +831,41 @@ $(document).ready(function () {
                     if (xhr.status == 200) {
                         var data = xhr.responseJSON;
 
-                        $('#contactP').addClass("is-invalid");
                         result = true;
+
+                        $('#idP').addClass("is-invalid");
                     }
                     
                     else {
-                        $('#contactP').removeClass("is-invalid");
+
                         result = false;
+                        $('#idP').removeClass("is-invalid");
                     }
                 }
             });
 
             return result;
     }
-    $("#contactP").on("keyup change",function(){
-        if($.trim($("#contactP").val()).length > 0)
+    $("#idP").on("keyup change",function(){
+        if($.trim($("#idP").val()).length > 0)
         {
-            $('#emailP').removeClass("is-invalid");
-            loadAllTeachersByContact2($("#contactP").val());
+            $('#idP').removeClass("is-invalid");
+            loadAllStudentsByStudentID($("#idP").val());
         }
         else
         {
-            $('#contactP').addClass("is-invalid");
+            $('#idP').addClass("is-invalid");
         }
     });
 
-    var loadAllTeachersByFileNo2 = function (fileno) {
+    var loadAllStudentsByStudentID2 = function (student_id) {
         var result = true;
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
             decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
             decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
             $.ajax({
-                url: api_base_URL+"/api/teachers/checkfileno/"+fileno,
+                url: api_base_URL+"/api/students/student_id/"+student_id,
                 method: "GET",
                 headers : {
                     role : decryptLoginInfo.role_id,
@@ -959,32 +874,34 @@ $(document).ready(function () {
                     if (xhr.status == 200) {
                         var data = xhr.responseJSON;
 
-                        $('#fileP').addClass("is-invalid");
                         result = true;
+
+                        $('#idU').addClass("is-invalid");
                     }
                     
                     else {
-                        $('#fileP').removeClass("is-invalid");
+
                         result = false;
+                        $('#idU').removeClass("is-invalid");
                     }
                 }
             });
 
             return result;
     }
-    $("#fileP").on("keyup change",function(){
-        if($.trim($("#fileP").val()).length > 0)
+    $("#idU").on("keyup change",function(){
+        if($.trim($("#idU").val()).length > 0)
         {
-            $('#fileP').removeClass("is-invalid");
-            loadAllTeachersByFileNo2($("#fileP").val());
+            $('#idU').removeClass("is-invalid");
+            loadAllStudentsByStudentID2($("#idU").val());
         }
         else
         {
-            $('#fileP').addClass("is-invalid");
+            $('#idU').addClass("is-invalid");
         }
     });
 
-    var validateTeacherInsert= function() {
+    var validateStudentInsert= function() {
         var validate = true;
         if($.trim($('#nameP').val()).length <= 0)
         {
@@ -996,23 +913,14 @@ $(document).ready(function () {
             $("#nameP").removeClass("is-invalid");
         }
 
-        if($.trim($('#emailP').val()).length <= 0)
+        if($.trim($('#idP').val()).length <= 0)
         {
             validate = false;
-            $('#emailP').addClass("is-invalid");
+            $('#idP').addClass("is-invalid");
         }
         else
         {
-            // if(loadAllTeachersByEmail2($('#emailP').val()))
-            // {
-            //     validate = false;
-            //     $('#emailP').addClass("is-invalid");
-            // }
-            // else
-            // {
-            //     $("#emailP").removeClass("is-invalid");
-            // }
-            $("#emailP").removeClass("is-invalid");
+            $("#idP").removeClass("is-invalid");
         }
 
         if($.trim($("#fatherP").val()).length <= 0)
@@ -1042,18 +950,8 @@ $(document).ready(function () {
         }
         else
         {
-            // if(loadAllTeachersByContact2($("#contactP").val()))
-            // {
-            //     validate = false;
-            //     $("#contactP").addClass("is-invalid");
-            // }
-            // else
-            // {
-            //     $("#contactP").removeClass("is-invalid");
-            // }
             $("#contactP").removeClass("is-invalid");
         }
-
 
         if($.trim($("#pradP").val()).length <= 0)
         {
@@ -1075,52 +973,10 @@ $(document).ready(function () {
             $("#peadP").removeClass("is-invalid");
         }
 
-        if($("#salaryP").val() <= 0)
-        {
-            validate = false;
-            $("#salaryP").addClass("is-invalid");
-        }
-        else
-        {
-            $("#salaryP").removeClass("is-invalid");
-        }
-
-        if($.trim($("#fileP").val()).length <= 0)
-        {
-            validate = false;
-            $("#fileP").addClass("is-invalid");
-        }
-        else
-        {
-            // if(loadAllTeachersByFileNo2($('#fileP').val()))
-            // {
-            //     validate = false;
-            //     $('#fileP').addClass("is-invalid");
-            // }
-            // else
-            // {
-            //     $("#fileP").removeClass("is-invalid");
-            // }
-            $("#fileP").removeClass("is-invalid");
-        }
-
-        // if($('#emailP').hasClass("is-invalid"))
-        // {
-        //     validate = false;
-        // }
-        // if($('#contactP').hasClass("is-invalid"))
-        // {
-        //     validate = false;
-        // }
-        // if($('#fileP').hasClass("is-invalid"))
-        // {
-        //     validate = false;
-        // }
-        
 
         if(!validate)
         {
-            $('#msgP').attr('hidden', true);
+            $('#msgU').attr('hidden', true);
         }
 
         return validate;
@@ -1134,7 +990,7 @@ $(document).ready(function () {
         var data = new FormData($('#uploadForm')[0]);
 
         $.ajax({
-            url: api_base_URL+"/api/teachers/insert-teacher-image/"+id,
+            url: api_base_URL+"/api/students/insert-student-image/"+id,
             method: "PUT",
             contentType: false,
             processData: false,
@@ -1162,31 +1018,32 @@ $(document).ready(function () {
         });
     }
 
-    var InsertTeacher = function(id){
+    var InsertStudent = function(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         // console.log(login_id);
         $.ajax({
-            url: api_base_URL+"/api/teachers/insert-teacher",
+            url: api_base_URL+"/api/students/insert-student",
             method: "POST",
             data : {
                 login_id: id,
                 name: $('#nameP').val(),
+                student_id: $('#idP').val(),
+                admission_class_id: $('#acP').val(),
+                admission_group_id: $('#agP').val(),               
                 sex: $('#sexP').val(),
                 religion: $('#relP').val(),
                 father_name: $('#fatherP').val(),
                 mother_name: $('#motherP').val(),
                 contact: $('#contactP').val(),
-                bg: $('#bgP').val(),
                 present_address: $('#pradP').val(),
                 permanent_address: $('#peadP').val(),
-                subject_id: $('#designP').val(),
-                salary: $('#salaryP').val(),
-                img_path: '',
-                file_no: $('#fileP').val(),
-                employment_status_id: 1,
+                cur_class_id: $('#ccP').val(),
+                cur_group_id: $('#cgP').val(),
+                wing_id: $('#wingP').val(),
+                studentship_id: $('#statusP').val(),
             },
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -1199,7 +1056,7 @@ $(document).ready(function () {
                     {
                         $("#msgP").removeClass("alert-danger");
                         $("#msgP").addClass("alert-success");
-                        $('#msgP').html('<small>Teacher Added.</small>');
+                        $('#msgP').html('<small>Student Added.</small>');
                         $('#msgP').removeAttr('hidden');
 
                         InsertTeacherImage(data.insertId);
@@ -1219,7 +1076,7 @@ $(document).ready(function () {
                     $('#msgP').html('<small>Something Went Wrong.</small>');
                     $('#msgP').removeAttr('hidden');
                 }
-                LoadAllTeachers();
+                LoadAllStudents();
             }
         });
     }
@@ -1236,7 +1093,7 @@ $(document).ready(function () {
                 if (xhr.status == 200) {
                     var data = xhr.responseJSON;
                    
-                    InsertTeacher(id);
+                    InsertStudent(id);
                 }
                 else {
                     var data = xhr.responseJSON;
@@ -1257,7 +1114,7 @@ $(document).ready(function () {
             data : {
                 email: $('#emailP').val(),
                 password: Math.floor(100000 + Math.random() * 900000),
-                role_id: 2,
+                role_id: 3,
                 access_id: 1,
             },
             headers : {
@@ -1282,7 +1139,7 @@ $(document).ready(function () {
     }
 
     $("#postBTN").click(function () {
-        if(validateTeacherInsert())
+        if(validateStudentInsert())
         {
             InsertLogin();
         }

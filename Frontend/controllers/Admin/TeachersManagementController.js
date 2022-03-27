@@ -424,6 +424,25 @@ $(document).ready(function () {
         }
     });
 
+    var sendPasswordOnUpdate = function (id) {
+        $.ajax({
+            url: api_base_URL+"/api/logins/send-user-authentication-password",
+            method: "POST",
+            data: {
+                id : id,
+            },
+            
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;                 
+                }
+                else {
+                    var data = xhr.responseJSON;
+                }
+            }
+        });
+    }
+
     var UpdateTeacherEmail = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
@@ -472,6 +491,7 @@ $(document).ready(function () {
                 LoadTeacher($('#id').val());
                 LoadTeacherImage($('#id').val());
                 LoadTeacherLoginDetails($('#idu3').val());
+                sendPasswordOnUpdate($('#idu3').val());
             }
         });
     }

@@ -41,7 +41,7 @@
 
         <div class="input-group mb-0">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-            <input type="text" id="search" class="form-control" placeholder="Search By Student Name" aria-label="Search By Employee Name" aria-describedby="basic-addon1">
+            <input type="text" id="search" class="form-control" placeholder="Search By Student Name Or Student ID" aria-label="Search By Employee Name" aria-describedby="basic-addon1">
           </div>
           
         <!-- Add Modal -->
@@ -192,7 +192,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateStudentModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Teacher</h5>
+                    <h5 class="modal-title" id="updateStudentModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Student</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -243,7 +243,7 @@
                     </div>
 
                     <div class="form-floating mb-2">
-                        <input type="text" class="form-control" placeholder="Write Subject" id="emailU">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="emailU" readonly>
                         <label for="emailU">Email</label>
                     </div>
 
@@ -354,11 +354,11 @@
     </div>
 
     <!-- Update Email Modal -->
-    <div class="modal fade" id="updateEmployeeEmailModal" tabindex="-1" aria-labelledby="updateEmployeeEmailModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateStudentEmailModal" tabindex="-1" aria-labelledby="updateStudentEmailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateEmployeeEmailModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Email</h5>
+                    <h5 class="modal-title" id="updateStudentEmailModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Email</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -378,31 +378,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" id="updateEmailBTN" class="btn btn-success">Update</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Update Role Modal -->
-    <div class="modal fade" id="updateEmployeeRoleModal" tabindex="-1" aria-labelledby="updateEmployeeRoleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateEmployeeRoleModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Privilege</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-floating mb-2">
-                        <div class="alert alert-warning mb-2" role="alert" align="center">Are you sure you want to proceed?</div>
-                        <div class="alert mb-2" id="msgU4" role="alert" align="center"></div>
-                        <input type="hidden" id="idU4">
-                        <input type="hidden" id="roleU4">
-                        <input type="hidden" id="accessU4">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="updateRoleBTN" class="btn btn-success">Confirm</button>
                 </div>
             </div>
         </div>

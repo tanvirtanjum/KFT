@@ -61,14 +61,14 @@ exports.getStudent = (req, res, next) => {
 
 };
 
-exports.getEmployeeByName = (req, res, next) => {
+exports.getStudentsByNameID = (req, res, next) => {
     var validated = true;
     const data = {
-        'name' : "%"+req.params.name+"%",
+        'para' : "%"+req.params.para+"%",
     };
 
     if(validated){
-        employeesService.getEmployeeByName(data, (error, results) => {
+        studentService.getStudentsByNameID(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
@@ -90,24 +90,25 @@ exports.getEmployeeByName = (req, res, next) => {
 
 };
 
-exports.postEmployee = (req, res, next) => {
+exports.postStudent = (req, res, next) => {
     var validated = true;
     const data = {
         'login_id' : req.body.login_id,
         'name' : req.body.name,
+        'student_id' : req.body.student_id,
         'father_name' : req.body.father_name,
         'mother_name' : req.body.mother_name,
         'contact' : req.body.contact,
         'sex' : req.body.sex,
-        'bg' : req.body.bg,
+        'admission_class_id' : req.body.admission_class_id,
+        'admission_group_id' : req.body.admission_group_id,
         'religion' : req.body.religion,
         'present_address' : req.body.present_address,
         'permanent_address' : req.body.permanent_address,
-        'salary' : req.body.salary,
-        'designation_id' : req.body.designation_id,
-        'file_no' : req.body.file_no,
-        'img_path' : req.body.img_path,
-        'employment_status_id' : req.body.employment_status_id,
+        'cur_class_id' : req.body.cur_class_id,
+        'cur_group_id' : req.body.cur_group_id,
+        'wing_id' : req.body.wing_id,
+        'studentship_id' : req.body.studentship_id,
     };
 
     if(data.login_id <= 0) {
@@ -115,6 +116,10 @@ exports.postEmployee = (req, res, next) => {
     }
 
     if(validator.isEmpty(data.name , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validator.isEmpty(data.student_id , {ignore_whitespace: true})) {
         validated = false;
     }
 
@@ -130,17 +135,6 @@ exports.postEmployee = (req, res, next) => {
         validated = false;
     }
 
-    if(validator.isEmpty(data.sex, {ignore_whitespace: true})) {
-        validated = false;
-    }
-
-    if(validator.isEmpty(data.bg, {ignore_whitespace: true})) {
-        validated = false;
-    }
-
-    if(validator.isEmpty(data.religion, {ignore_whitespace: true})) {
-        validated = false;
-    }
 
     if(validator.isEmpty(data.present_address, {ignore_whitespace: true})) {
         validated = false;
@@ -150,20 +144,8 @@ exports.postEmployee = (req, res, next) => {
         validated = false;
     }
 
-    if(validator.isEmpty(data.salary, {ignore_whitespace: true})) {
-        validated = false;
-    }
-
-    if(validator.isEmpty(data.designation_id, {ignore_whitespace: true})) {
-        validated = false;
-    }
-
-    if(validator.isEmpty(data.employment_status_id, {ignore_whitespace: true})) {
-        validated = false;
-    }
-
     if(validated){
-        employeesService.postEmployee(data, (error, results) => {
+        studentService.postStudent(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
@@ -180,50 +162,25 @@ exports.postEmployee = (req, res, next) => {
 
 };
 
-exports.deleteNotice = (req, res, next) => {
-    var validated = true;
-    const data = {
-        'id' : req.params.id,
-    };
-
-    if(data.id <= 0) {
-        validated = false;
-    }
-
-    if(validated){
-        employeesService.deleteNotice(data, (error, results) => {
-            if (error) {
-                console.log(error);
-                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
-            }
-            else {
-                return res.status(204).send(results);
-            }
-        });
-    }
-    else{
-        return res.status(401).send({ success: false, data: "Unauthorized Request." })
-    }
-
-};
-
-exports.updateEmployee = (req, res, next) => {
+exports.updateStudent = (req, res, next) => {
     var validated = true;
     const data = {
         'id' : req.params.id,
         'name' : req.body.name,
+        'student_id' : req.body.student_id,
         'father_name' : req.body.father_name,
         'mother_name' : req.body.mother_name,
         'contact' : req.body.contact,
         'sex' : req.body.sex,
-        'bg' : req.body.bg,
+        'admission_class_id' : req.body.admission_class_id,
+        'admission_group_id' : req.body.admission_group_id,
         'religion' : req.body.religion,
         'present_address' : req.body.present_address,
         'permanent_address' : req.body.permanent_address,
-        'salary' : req.body.salary,
-        'designation_id' : req.body.designation_id,
-        'file_no' : req.body.file_no,
-        'employment_status_id' : req.body.employment_status_id,
+        'cur_class_id' : req.body.cur_class_id,
+        'cur_group_id' : req.body.cur_group_id,
+        'wing_id' : req.body.wing_id,
+        'studentship_id' : req.body.studentship_id,
     };
 
     if(data.id <= 0) {
@@ -250,10 +207,6 @@ exports.updateEmployee = (req, res, next) => {
         validated = false;
     }
 
-    if(validator.isEmpty(data.bg, {ignore_whitespace: true})) {
-        validated = false;
-    }
-
     if(validator.isEmpty(data.religion, {ignore_whitespace: true})) {
         validated = false;
     }
@@ -266,20 +219,9 @@ exports.updateEmployee = (req, res, next) => {
         validated = false;
     }
 
-    if(validator.isEmpty(data.salary, {ignore_whitespace: true})) {
-        validated = false;
-    }
-
-    if(validator.isEmpty(data.designation_id, {ignore_whitespace: true})) {
-        validated = false;
-    }
-
-    if(validator.isEmpty(data.employment_status_id, {ignore_whitespace: true})) {
-        validated = false;
-    }
 
     if(validated){
-        employeesService.updateEmployee(data, (error, results) => {
+        studentService.updateStudent(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
@@ -296,7 +238,7 @@ exports.updateEmployee = (req, res, next) => {
 };
 
 
-exports.updateEmployeeImage = (req, res, next) => {
+exports.updateStudentImage = (req, res, next) => {
     var validated = true;
 
     if(req.file == null) {
@@ -308,7 +250,7 @@ exports.updateEmployeeImage = (req, res, next) => {
             'id' : req.params.id,
             'img_path': req.file.path,
         };
-        employeesService.updateEmployeeImage(data, (error, results) => {
+        studentService.updateStudentImage(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
@@ -331,7 +273,7 @@ exports.updateEmployeeImage = (req, res, next) => {
 
 };
 
-exports.insertEmployeeImage = (req, res, next) => {
+exports.insertStudentImage = (req, res, next) => {
     var validated = true;
 
     if(req.file == null) {
@@ -343,7 +285,7 @@ exports.insertEmployeeImage = (req, res, next) => {
             'id' : req.params.id,
             'img_path': req.file.path,
         };
-        employeesService.updateEmployeeImage(data, (error, results) => {
+        studentService.updateStudentImage(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
@@ -359,52 +301,15 @@ exports.insertEmployeeImage = (req, res, next) => {
 
 };
 
-exports.getContact = (req, res, next) => {
+
+exports.getStudentByStudentID = (req, res, next) => {
     var validated = true;
     const data = {
-        'contact' : "%"+req.params.contact+"%",
+        'student_id' : "%"+req.params.student_id+"%",
     };
-    // Validation Code here
-    // if(!validator.isEmail(data.email)) {
-    //     validated = false;
-    // }
 
     if(validated) {
-        employeesService.getContact(data, (error, results) => {
-            if (error) {
-                console.log(error);
-                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
-            }
-            else {
-                if (results.length > 0) {
-                    // console.log("1");
-                    return res.status(200).send(results[0]);
-
-                } else {
-                    // console.log("2");
-                    return res.status(204).send({ success: false, data: "No User Found." });
-                }
-            }
-        });
-    } else{
-        // console.log("3");
-        return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
-    }
-
-};
-
-exports.getFileNo = (req, res, next) => {
-    var validated = true;
-    const data = {
-        'file_no' : "%"+req.params.fileno+"%",
-    };
-    // Validation Code here
-    // if(!validator.isEmail(data.email)) {
-    //     validated = false;
-    // }
-
-    if(validated) {
-        employeesService.getFileNo(data, (error, results) => {
+        studentService.getStudentByStudentID(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
