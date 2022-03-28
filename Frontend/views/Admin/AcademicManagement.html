@@ -235,9 +235,81 @@
                         
                         </select>
                     </div>
+
+                    <div class="d-grid gap-2 col-6 mx-auto mb-3" align="center">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateAddSectionModal">
+                            <i class="fas fa-pen"></i>&nbsp; Add New Section
+                        </button>
+                    </div>
+
+                    <table class="table table-success table-striped" id="secTable">
+                        <thead>
+                            <th>#</th>
+                            <th>Section Name</th>
+                            <th>Class</th>
+                            <th>Group</th>
+                            <th>Wing</th>
+                            <th>Class Teacher</th>
+                            <th></th>
+                        </thead>
+                        <tbody class="table-light">
+          
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Section Modal -->
+    <div class="modal fade" id="updateAddSectionModal" tabindex="-1" aria-labelledby="updateAddSectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateAddSectionModalLabel"><i class="fas fa-pen"></i>&nbsp;Add Section</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id_u">
+                        <input type="text" class="form-control" placeholder="Write Section Name" id="section_nameU">
+                        <label for="section_nameUS">Section Name</label>
+                    </div>
+
+                    <div class="form-floating form-control">
+                        <select class="form-select" id="classUS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="classUS">Class</label>
+                    </div>
+
+                    <div class="form-floating form-control">
+                        <select class="form-select" id="groupUS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="groupUS">Group</label>
+                    </div>
+
+                    <div class="form-floating form-control">
+                        <select class="form-select" id="wingUS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="wingUS">Wing</label>
+                    </div>
+
+                    <div class="form-floating form-control">
+                        <select class="form-select" id="teacherUS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="teacherUS">Class Teacher</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="updateSessionBTN" class="btn btn-success">Update</button>
                 </div>
             </div>
         </div>

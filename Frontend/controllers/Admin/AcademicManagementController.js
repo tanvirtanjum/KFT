@@ -273,6 +273,129 @@ $(document).ready(function () {
     }
     LoadAllSessionStatusOptions();
 
+    var LoadAllSessionClassOptions = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/classes/get-all-classes",
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].class_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#classUS").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#classUS").html(str);
+                }
+            }
+        });
+    }
+    LoadAllSessionClassOptions();
+
+    var LoadAllSessionGroupOptions = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/groups/get-all-groups",
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].group_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#groupUS").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#groupUS").html(str);
+                }
+            }
+        });
+    }
+    LoadAllSessionClassOptions();
+
+    var LoadAllSessionWingOptions = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/wings/get-all-wings",
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].wing_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("wingUS").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#wingUS").html(str);
+                }
+            }
+        });
+    }
+    LoadAllSessionWingOptions();
+
     var LoadAllSessions = function(){
         $.ajax({
             url: api_base_URL+"/api/academic_sessions/get-all-session",
@@ -484,10 +607,60 @@ $(document).ready(function () {
         });
     }
 
+    var LoadSessionSections = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/academic_session_sections/get-sections/session/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].section_name  +"</td>"+
+                                        "<td>"+ data[i].class_name  +"</td>"+
+                                        "<td>"+ data[i].group_name  +"</td>"+
+                                        "<td>"+ data[i].wing_name  +"</td>"+
+                                        "<td>"+ data[i].name  +"</td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='7' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                    $("#secTable tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='7' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#secTable tbody").html(str);
+                }
+            }
+        });
+    }
+
     $('#updateAcademicSessionSectionModal').on('show.bs.modal', function(e) {
         $('#msgUS').attr('hidden', true);
         var id = $(e.relatedTarget).data('bs-id');
         LoadSession2(id);
+        LoadSessionSections(id);
     });
 
     var UpdateSession = function(id){

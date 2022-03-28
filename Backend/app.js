@@ -23,7 +23,7 @@ const student_statusRoutes = require("./routes/student_status.route");
 const studentsRoutes = require("./routes/students.route");
 const session_statusRoutes = require("./routes/session_status.route");
 const academic_sessionsRoutes = require("./routes/academic_sessions.route");
-
+const academic_session_sectionsRoutes = require("./routes/academic_session_sections.route");
 // <---> 
 dotenv.config();
 
@@ -54,6 +54,7 @@ app.use("/api/student_status", student_statusRoutes);
 app.use("/api/students", studentsRoutes);
 app.use("/api/academic_sessions", academic_sessionsRoutes);
 app.use("/api/session_status", session_statusRoutes);
+app.use("/api/academic_session_sections", academic_session_sectionsRoutes);
 
 // <-- -->
 app.listen(process.env.SERVER_PORT_NO, () => {

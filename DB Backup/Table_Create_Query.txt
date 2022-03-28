@@ -231,6 +231,7 @@ CREATE TABLE section_courses(
     id int AUTO_INCREMENT,
     section_id int NOT NULL,
     subject_id int NOT NULL,
+    class_timing varchar(255) NOT NULL,
     teacher_id int NOT NULL,
     created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
