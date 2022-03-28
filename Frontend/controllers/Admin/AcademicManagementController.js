@@ -259,12 +259,14 @@ $(document).ready(function () {
 
                     $("#session_statusP").html(str);
                     $("#session_statusU").html(str);
+                    $("#session_statusUS").html(str);
                 }
                 else 
                 {
                     str += "";
                     $("#session_statusP").html(str);
                     $("#session_statusU").html(str);
+                    $("#session_statusUS").html(str);
                 }
             }
         });
@@ -289,6 +291,7 @@ $(document).ready(function () {
                                         "<th>"+ sl + "</th>"+
                                         "<td>"+ data[i].year_name  +"</td>"+
                                         "<td>"+ data[i].status_name  +"</td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionSectionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-success'><i class='fas fa-edit'></i> Manage Sections & Courses</button></td>"+
                                         "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                 "</tr>";
                             sl++;
@@ -296,14 +299,14 @@ $(document).ready(function () {
                     }
                     else
                     {
-                        str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                        str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
                     }
 
                     $("#sesssionTable tbody").html(str);
                 }
                 else 
                 {
-                    str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                    str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
                     $("#sesssionTable tbody").html(str);
                 }
             }
@@ -393,6 +396,7 @@ $(document).ready(function () {
                                             "<th>"+ sl + "</th>"+
                                             "<td>"+ data[i].year_name  +"</td>"+
                                             "<td>"+ data[i].status_name  +"</td>"+
+                                            "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionSectionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-success'><i class='fas fa-edit'></i> Manage Sections & Courses</button></td>"+
                                             "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                     "</tr>";
                                 sl++;
@@ -400,14 +404,14 @@ $(document).ready(function () {
                         }
                         else
                         {
-                            str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                            str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
                         }
     
                         $("#sesssionTable tbody").html(str);
                     }
                     else 
                     {
-                        str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                        str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
                         $("#sesssionTable tbody").html(str);
                     }
                 }
@@ -453,6 +457,37 @@ $(document).ready(function () {
         $('#msgU').attr('hidden', true);
         var id = $(e.relatedTarget).data('bs-id');
         LoadSession(id);
+    });
+
+    var LoadSession2 = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/academic_sessions/get-session/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#id_us').val(data.id);
+                   $('#year_nameUS').val(data.year_name);
+                   $('#session_statusUS').val(data.session_status_id);
+                }
+                else {}
+            }
+        });
+    }
+
+    $('#updateAcademicSessionSectionModal').on('show.bs.modal', function(e) {
+        $('#msgUS').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadSession2(id);
     });
 
     var UpdateSession = function(id){
