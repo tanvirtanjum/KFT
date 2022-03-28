@@ -273,7 +273,7 @@ $(document).ready(function () {
     }
     LoadAllSessionStatusOptions();
 
-    var LoadAllSessionClassOptions = function(){
+    var LoadAllSectionClassOptions = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -303,18 +303,20 @@ $(document).ready(function () {
                     }
 
                     $("#classUS").html(str);
+                    $("#classPS").html(str);
                 }
                 else 
                 {
                     str += "";
                     $("#classUS").html(str);
+                    $("#classPS").html(str);
                 }
             }
         });
     }
-    LoadAllSessionClassOptions();
+    LoadAllSectionClassOptions();
 
-    var LoadAllSessionGroupOptions = function(){
+    var LoadAllSectionGroupOptions = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -344,18 +346,20 @@ $(document).ready(function () {
                     }
 
                     $("#groupUS").html(str);
+                    $("#groupPS").html(str);
                 }
                 else 
                 {
                     str += "";
                     $("#groupUS").html(str);
+                    $("#groupPS").html(str);
                 }
             }
         });
     }
-    LoadAllSessionClassOptions();
+    LoadAllSectionGroupOptions();
 
-    var LoadAllSessionWingOptions = function(){
+    var LoadAllSectionWingOptions = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -384,18 +388,64 @@ $(document).ready(function () {
                         str += "";
                     }
 
-                    $("wingUS").html(str);
+                    $("#wingUS").html(str);
+                    $("#wingPS").html(str);
                 }
                 else 
                 {
                     str += "";
                     $("#wingUS").html(str);
+                    $("#wingPS").html(str);
                 }
             }
         });
     }
-    LoadAllSessionWingOptions();
+    LoadAllSectionWingOptions();
 
+    var LoadAllSectionTeacherOptions = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/teachers/get-all-teachers",
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].name+' ('+data[i].subject_name+')</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#teacherUS").html(str);
+                    $("#teacherPS").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#teacherUS").html(str);
+                    $("#teacherPS").html(str);
+                }
+            }
+        });
+    }
+    LoadAllSectionTeacherOptions();
+
+    
     var LoadAllSessions = function(){
         $.ajax({
             url: api_base_URL+"/api/academic_sessions/get-all-session",
@@ -597,8 +647,9 @@ $(document).ready(function () {
                 if (xhr.status == 200) {
                     
                    var data = xhr.responseJSON;
-                
+
                    $('#id_us').val(data.id);
+                   $('#idUS').val(data.id);
                    $('#year_nameUS').val(data.year_name);
                    $('#session_statusUS').val(data.session_status_id);
                 }
@@ -611,6 +662,7 @@ $(document).ready(function () {
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
             decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
             decryptLoginInfo = JSON.parse(decryptLoginInfo);
+            
 
         $.ajax({
             url: api_base_URL+"/api/academic_session_sections/get-sections/session/"+id,
@@ -635,7 +687,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].group_name  +"</td>"+
                                         "<td>"+ data[i].wing_name  +"</td>"+
                                         "<td>"+ data[i].name  +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionSectionDetailsModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -1035,6 +1087,103 @@ $(document).ready(function () {
         {
 
         }
+    });
+
+
+    var InsertSessionSubject = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/academic_session_sections/insert-section",
+            method: "POST",
+            data : {
+                section_name: $('#section_nameUS').val(),
+                class_id: $('#classUS').val(),
+                group_id: $('#groupUS').val(),
+                wing_id: $('#wingUS').val(),
+                session_id: $('#idUS').val(),
+                class_teacher_id: $('#teacherUS').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    LoadSessionSections($('#idUS').val());
+
+                    alert("Section Inserted");
+                }
+                else 
+                {
+                    alert("Something Went Wrong");
+                }
+            }
+        });
+    }
+
+    var validateSessionSubjectInsert= function() {
+        var validate = true;
+        if($.trim($('#section_nameUS').val()).length <= 0)
+        {
+            validate = false;
+            $('#section_nameUS').addClass("is-invalid");
+        }
+        else
+        {
+            $("#section_nameUS").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#addSessionSectionBTN").click(function () {
+        if(validateSessionSubjectInsert())
+        {
+            InsertSessionSubject();
+        }
+        else
+        {
+            console.log("Something Went Wrong");
+        }
+        // InsertSessionSubject();
+    });
+
+    var LoadSessionSectionByID = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/academic_session_sections/get-section/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#idPS').val(data.id);
+                   $('#section_namePS').val(data.section_name);
+                   $('#classPS').val(data.class_id);
+                   $('#groupPS').val(data.group_id);
+                   $('#wingPS').val(data.wing_id);
+                   $('#teacherPS').val(data.class_teacher_id);
+                }
+                else {}
+            }
+        });
+    }
+
+    $('#updateAcademicSessionSectionDetailsModal').on('show.bs.modal', function(e) {
+        $('#msgU').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadSessionSectionByID(id);
     });
 
 });

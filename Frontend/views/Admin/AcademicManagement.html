@@ -274,33 +274,33 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-2">
-                        <input type="hidden" id="id_u">
-                        <input type="text" class="form-control" placeholder="Write Section Name" id="section_nameU">
+                        <input type="hidden" id="idUS">
+                        <input type="text" class="form-control" placeholder="Write Section Name" id="section_nameUS">
                         <label for="section_nameUS">Section Name</label>
                     </div>
 
-                    <div class="form-floating form-control">
+                    <div class="form-floating mb-2">
                         <select class="form-select" id="classUS" aria-label="Floating label select example">
                           
                         </select>
                         <label for="classUS">Class</label>
                     </div>
 
-                    <div class="form-floating form-control">
+                    <div class="form-floating mb-2">
                         <select class="form-select" id="groupUS" aria-label="Floating label select example">
                           
                         </select>
                         <label for="groupUS">Group</label>
                     </div>
 
-                    <div class="form-floating form-control">
+                    <div class="form-floating mb-2">
                         <select class="form-select" id="wingUS" aria-label="Floating label select example">
                           
                         </select>
                         <label for="wingUS">Wing</label>
                     </div>
 
-                    <div class="form-floating form-control">
+                    <div class="form-floating mb-2">
                         <select class="form-select" id="teacherUS" aria-label="Floating label select example">
                           
                         </select>
@@ -309,7 +309,58 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="updateSessionBTN" class="btn btn-success">Update</button>
+                    <button type="button" id="addSessionSectionBTN" class="btn btn-success">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Section Modal -->
+    <div class="modal fade" id="updateAcademicSessionSectionDetailsModal" tabindex="-1" aria-labelledby="updateAcademicSessionSectionDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateAcademicSessionSectionModalDetailsLabel"><i class="fas fa-pen"></i>&nbsp;Update Section</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="idPS">
+                        <input type="text" class="form-control" placeholder="Write Section Name" id="section_namePS">
+                        <label for="section_namePS">Section Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="classPS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="classPS">Class</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="groupPS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="groupPS">Group</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="wingPS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="wingPS">Wing</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="teacherPS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="teacherPS">Class Teacher</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="addSessionSectionBTN" class="btn btn-success">Add</button>
                 </div>
             </div>
         </div>
