@@ -2,17 +2,17 @@
 const validator = require('validator');
 
 // Importing Created Modules
-const academic_session_sectionsService = require("../services/academic_session_sections.service");
+const section_coursesService = require("../services/section_courses.service");
 
 
-exports.getSection = (req, res, next) => {
+exports.getCourse = (req, res, next) => {
     var validated = true;
     const data = {
         'id' : req.params.id,
     };
 
     if(validated){
-        academic_session_sectionsService.getSection(data, (error, results) => {
+        section_coursesService.getCourse(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
@@ -34,14 +34,14 @@ exports.getSection = (req, res, next) => {
 
 };
 
-exports.getSectionsBySession = (req, res, next) => {
+exports.getCoursesBySection = (req, res, next) => {
     var validated = true;
     const data = {
-        'session_id' : req.params.id,
+        'section_id' : req.params.id,
     };
 
     if(validated){
-        academic_session_sectionsService.getSectionsBySession(data, (error, results) => {
+        section_coursesService.getCoursesBySection(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });

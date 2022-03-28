@@ -687,7 +687,10 @@ $(document).ready(function () {
                                         "<td>"+ data[i].group_name  +"</td>"+
                                         "<td>"+ data[i].wing_name  +"</td>"+
                                         "<td>"+ data[i].name  +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionSectionDetailsModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
+                                        "<td>"+
+                                            "<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionSectionDetailsModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button>   "+
+                                            "<button type='button' data-bs-toggle='modal' data-bs-target='#detailsAcademicSessionSectionModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-success'><i class='fas fa-edit'></i> Manage Courses</button>"+
+                                        "</td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -1090,7 +1093,7 @@ $(document).ready(function () {
     });
 
 
-    var InsertSessionSubject = function(){
+    var InsertSessionSection = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -1125,7 +1128,7 @@ $(document).ready(function () {
         });
     }
 
-    var validateSessionSubjectInsert= function() {
+    var validateSessionSectionInsert= function() {
         var validate = true;
         if($.trim($('#section_nameUS').val()).length <= 0)
         {
@@ -1141,15 +1144,14 @@ $(document).ready(function () {
     }
 
     $("#addSessionSectionBTN").click(function () {
-        if(validateSessionSubjectInsert())
+        if(validateSessionSectionInsert())
         {
-            InsertSessionSubject();
+            InsertSessionSection();
         }
         else
         {
             console.log("Something Went Wrong");
         }
-        // InsertSessionSubject();
     });
 
     var LoadSessionSectionByID = function(id){
@@ -1186,4 +1188,167 @@ $(document).ready(function () {
         LoadSessionSectionByID(id);
     });
 
+    var UpdateSessionSection = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/academic_session_sections/update-section/"+id,
+            method: "PUT",
+            data : {
+                section_name: $('#section_namePS').val(),
+                class_id: $('#classPS').val(),
+                group_id: $('#groupPS').val(),
+                wing_id: $('#wingPS').val(),
+                class_teacher_id: $('#teacherPS').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        LoadSessionSections($('#idUS').val());
+                        LoadSessionSectionByID($('#idPS').val());
+
+                        alert("Section Updated.");
+                    }
+
+                    else
+                    {
+                        LoadSessionSections($('#idUS').val());
+                        LoadSessionSectionByID($('#idPS').val());
+
+                        alert("Something Went Wrong");
+                    }
+                }
+                else 
+                {
+                    alert("Something Went Wrong");
+                }
+            }
+        });
+    }
+
+    var validateSessionSectionUpdate= function() {
+        var validate = true;
+        if($.trim($('#section_namePS').val()).length <= 0)
+        {
+            validate = false;
+            $('#section_namePS').addClass("is-invalid");
+        }
+        else
+        {
+            $("#section_namePS").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#updateSessionSectionBTN").click(function () {
+        if(validateSessionSectionUpdate())
+        {
+            UpdateSessionSection($('#idPS').val());
+        }
+        else
+        {
+            console.log("Something Went Wrong");
+        }
+    });
+
+
+    // _____________________________________________________--
+
+    var LoadSessionSectionSubjects = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+            
+
+        $.ajax({
+            url: api_base_URL+"/api/academic_session_sections/get-sections/session/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].subject_name  +"</td>"+
+                                        "<td>"+ data[i].class_timing  +"</td>"+
+                                        "<td>"+ data[i].name  +"</td>"+
+                                        "<td>"+
+                                            "<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionSectionDetailsModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button>   "+
+                                        "</td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                    $("#subTable tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#subTable tbody").html(str);
+                }
+            }
+        });
+    }
+
+    var LoadSection = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/academic_session_sections/get-section/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#id_uss').val(data.id);
+                   $('#sec_name').html(data.section_name);
+                   $('#session_name').html(data.year_name);
+                   $('#class_name').html(data.class_name);
+                   $('#wing_name').html(data.wing_name);
+                   $('#group_name').html(data.group_name);
+                   $('#teacher_name').html(data.name);
+
+                   LoadSessionSectionSubjects(id);
+                }
+                else {}
+            }
+        });
+    }
+
+
+
+    $('#detailsAcademicSessionSectionModal').on('show.bs.modal', function(e) {
+        $('#msgU').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadSection(id);
+    });
 });

@@ -360,7 +360,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="addSessionSectionBTN" class="btn btn-success">Add</button>
+                    <button type="button" id="updateSessionSectionBTN" class="btn btn-success">Update</button>
                 </div>
             </div>
         </div>
@@ -396,6 +396,65 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" id="updateSubjectBTN" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Academic Session Section -->
+    <div class="modal fade" id="detailsAcademicSessionSectionModal" tabindex="-1" aria-labelledby="detailsAcademicSessionSectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsAcademicSessionSectionModalLabel"><i class="fas fa-pen"></i>&nbsp;Manage Section</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="hidden" id="id_uss">
+                        <dl class="row">
+                            <dt class="col-sm-3">Section Name</dt>
+                            <dd class="col-sm-9" id="sec_name">some</dd>
+                          
+                            <dt class="col-sm-3">Session</dt>
+                            <dd class="col-sm-9" id="session_name">some</dd>
+
+                            <dt class="col-sm-3">Class</dt>
+                            <dd class="col-sm-9" id="class_name">some</dd>
+
+                            <dt class="col-sm-3">Wing</dt>
+                            <dd class="col-sm-9" id="wing_name">some</dd>
+
+                            <dt class="col-sm-3">Group</dt>
+                            <dd class="col-sm-9" id="group_name">some</dd>
+
+                            <dt class="col-sm-3">Class Teacher</dt>
+                            <dd class="col-sm-9" id="teacher_name">some</dd>
+                          
+                        </dl>
+                    </div>
+
+                    <div class="d-grid gap-2 col-6 mx-auto mb-3" align="center">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateAddSectionModal">
+                            <i class="fas fa-pen"></i>&nbsp; Add New Section
+                        </button>
+                    </div>
+
+                    <table class="table table-responsive-sm table-success table-striped" id="subTable">
+                        <thead>
+                            <th>#</th>
+                            <th>Subject</th>
+                            <th>Time</th>
+                            <th>Teacher</th>
+                            <th></th>
+                        </thead>
+                        <tbody class="table-light">
+          
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

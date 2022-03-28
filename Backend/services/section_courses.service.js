@@ -1,15 +1,12 @@
 const db = require("../config/db.config");
 
 
-exports.getSection = (data, callback) => {
+exports.getCourse = (data, callback) => {
     db.query(
-        `SELECT academic_session_sections.*, classes.class_name, groups.group_name, wings.wing_name, teachers.name, academic_sessions.year_name FROM academic_session_sections `+
-        `INNER JOIN classes ON academic_session_sections.class_id = classes.id `+
-        `INNER JOIN groups ON academic_session_sections.group_id = groups.id `+
-        `INNER JOIN wings ON academic_session_sections.wing_id = wings.id `+
-        `INNER JOIN teachers ON academic_session_sections.class_teacher_id = teachers.id `+
-        `INNER JOIN academic_sessions ON academic_session_sections.session_id = academic_sessions.id `+
-        `WHERE academic_session_sections.id = ?; `,
+        `SELECT section_courses.*, subjects.subject_name, teachers.name FROM section_courses `+
+        `INNER JOIN subjects ON section_courses.subject_id = subjects.id `+
+        `INNER JOIN teachers ON section_courses.class_teacher_id = teachers.id `+
+        `WHERE section_courses.id = ?; `,
         [data.id],
         (error, results, fields) => {
             if (error) {
@@ -20,15 +17,13 @@ exports.getSection = (data, callback) => {
     );
 };
 
-exports.getSectionsBySession = (data, callback) => {
+exports.getCoursesBySection = (data, callback) => {
     db.query(
-        `SELECT academic_session_sections.*, classes.class_name, groups.group_name, wings.wing_name, teachers.name FROM academic_session_sections `+
-        `INNER JOIN classes ON academic_session_sections.class_id = classes.id `+
-        `INNER JOIN groups ON academic_session_sections.group_id = groups.id `+
-        `INNER JOIN wings ON academic_session_sections.wing_id = wings.id `+
-        `INNER JOIN teachers ON academic_session_sections.class_teacher_id = teachers.id `+
-        `WHERE academic_session_sections.session_id = ?; `,
-        [data.session_id],
+        `SELECT section_courses.*, subjects.subject_name, teachers.name FROM section_courses `+
+        `INNER JOIN subjects ON section_courses.subject_id = subjects.id `+
+        `INNER JOIN teachers ON section_courses.class_teacher_id = teachers.id `+
+        `WHERE section_courses.section_id = ?; `,
+        [data.section_id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);
