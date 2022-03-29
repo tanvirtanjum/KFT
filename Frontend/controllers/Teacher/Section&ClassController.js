@@ -169,7 +169,7 @@ $(document).ready(function () {
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/academic_session_sections/get-sections/session/"+session_id+"/teacher/"+teacher_id,
+            url: api_base_URL+"/api/section_courses/get-courses/session/"+session_id+"/teacher/"+teacher_id,
             method: "GET",
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -187,6 +187,7 @@ $(document).ready(function () {
                             str += "<tr>"+
                                         "<th>"+ sl + "</th>"+
                                         "<td>"+ data[i].class_name  +"</td>"+
+                                        "<td>"+ data[i].subject_name  +"</td>"+
                                         "<td>"+ data[i].section_name  +"</td>"+
                                         "<td>"+ data[i].wing_name  +"</td>"+
                                         "<td>"+ data[i].group_name  +"</td>"+
@@ -202,12 +203,12 @@ $(document).ready(function () {
                         str += "<tr><td colspan='6' align='middle'>NO DATA FOUND</td></tr>";
                     }
 
-                    $("#secTable tbody").html(str);
+                    $("#schTable tbody").html(str);
                 }
                 else 
                 {
                     str += "<tr><td colspan='6' align='middle'>NO DATA FOUND</td></tr>";
-                    $("#secTable tbody").html(str);
+                    $("#schTable tbody").html(str);
                 }
             }
         });
@@ -216,5 +217,6 @@ $(document).ready(function () {
 
     $('#session').change(function() {
         LoadMySections($('#session').val(), $('#teacherID').val());
+        LoadMySchedule($('#session').val(), $('#teacherID').val());
     });
 });

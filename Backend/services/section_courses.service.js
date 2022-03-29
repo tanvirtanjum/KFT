@@ -35,11 +35,15 @@ exports.getCoursesBySection = (data, callback) => {
 
 exports.getCourseBySession_Teacher = (data, callback) => {
     db.query(
-        `SELECT section_courses.*, subjects.subject_name, teachers.name FROM section_courses `+
+        `SELECT section_courses.*, subjects.subject_name, teachers.name, academic_session_sections.section_name, academic_session_sections.class_id, academic_session_sections.wing_id, academic_session_sections.group_id, classes.class_name, wings.wing_name, groups.group_name FROM section_courses `+
         `INNER JOIN subjects ON section_courses.subject_id = subjects.id `+
         `INNER JOIN teachers ON section_courses.teacher_id = teachers.id `+
-        `WHERE section_courses.section_id = ? AND section_courses.teacher_id = ?; `,
-        [data.section_id, data.teacher_id],
+        `INNER JOIN academic_session_sections ON section_courses.section_id = academic_session_sections.id `+
+        `INNER JOIN classes ON academic_session_sections.class_id = classes.id `+
+        `INNER JOIN wings ON academic_session_sections.wing_id = wings.id `+
+        `INNER JOIN groups ON academic_session_sections.group_id = groups.id `+
+        `WHERE section_courses.session_id = ? AND section_courses.teacher_id = ?; `,
+        [data.session_id, data.teacher_id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);
