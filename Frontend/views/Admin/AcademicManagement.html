@@ -435,8 +435,8 @@
                     </div>
 
                     <div class="d-grid gap-2 col-6 mx-auto mb-3" align="center">
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateAddSectionModal">
-                            <i class="fas fa-pen"></i>&nbsp; Add New Section
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateAddCourseModal">
+                            <i class="fas fa-pen"></i>&nbsp; Add New Course
                         </button>
                     </div>
 
@@ -460,6 +460,81 @@
         </div>
     </div>
 
+    <!-- Add Section Modal -->
+    <div class="modal fade" id="updateAddCourseModal" tabindex="-1" aria-labelledby="updateAddCourseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateAddCourseModalLabel"><i class="fas fa-pen"></i>&nbsp;Add Course</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="subjectUSS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="subjectUSS">Subject</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject Name" id="timimgUSS">
+                        <label for="timimgUSS">Class Timing</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="teacherUSS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="teacherUSS">Course Teacher</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="addCourseBTN" class="btn btn-success">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Add Section Modal -->
+    <div class="modal fade" id="updateCourseModal" tabindex="-1" aria-labelledby="updateCourseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateCourseModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Course</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" id="id_pss">
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="subjectPSS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="subjectPSS">Subject</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject Name" id="timimgPSS">
+                        <label for="timimgPSS">Class Timing</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="teacherPSS" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="teacherPSS">Course Teacher</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="updateCourseBTN" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container-fluid text-center" id="bottomLayout"></div>
 </body>

@@ -228,6 +228,50 @@ $(document).ready(function () {
 
 
 // ________________________________________
+
+    var LoadAllSessionSectionSubjects = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/subjects/get-all-subjects",
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].subject_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#subjectUSS").html(str);
+                    $("#subjectPSS").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#subjectUSS").html(str);
+                    $("#subjectPSS").html(str);
+                }
+            }
+        });
+    }
+    LoadAllSessionSectionSubjects();
+
     var LoadAllSessionStatusOptions = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
@@ -433,12 +477,16 @@ $(document).ready(function () {
 
                     $("#teacherUS").html(str);
                     $("#teacherPS").html(str);
+                    $("#teacherUSS").html(str);
+                    $("#teacherPSS").html(str);
                 }
                 else 
                 {
                     str += "";
                     $("#teacherUS").html(str);
                     $("#teacherPS").html(str);
+                    $("#teacherUSS").html(str);
+                    $("#teacherPSS").html(str);
                 }
             }
         });
@@ -1270,7 +1318,7 @@ $(document).ready(function () {
             
 
         $.ajax({
-            url: api_base_URL+"/api/academic_session_sections/get-sections/session/"+id,
+            url: api_base_URL+"/api/section_courses/get-courses/section/"+id,
             method: "GET",
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -1291,7 +1339,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].class_timing  +"</td>"+
                                         "<td>"+ data[i].name  +"</td>"+
                                         "<td>"+
-                                            "<button type='button' data-bs-toggle='modal' data-bs-target='#updateAcademicSessionSectionDetailsModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button>   "+
+                                            "<button type='button' data-bs-toggle='modal' data-bs-target='#updateCourseModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button>   "+
                                         "</td>"+
                                 "</tr>";
                             sl++;
@@ -1351,4 +1399,159 @@ $(document).ready(function () {
         var id = $(e.relatedTarget).data('bs-id');
         LoadSection(id);
     });
+
+    var InsertCourse = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_courses/insert-course",
+            method: "POST",
+            data : {
+                section_id: $('#id_uss').val(),
+                subject_id: $('#subjectUSS').val(),
+                class_timing: $('#timimgUSS').val(),
+                teacher_id: $('#teacherUSS').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    LoadSessionSectionSubjects($('#id_uss').val());
+
+                    alert("Course Inserted");
+                }
+                else 
+                {
+                    alert("Something Went Wrong");
+                }
+            }
+        });
+    }
+
+    var validateCourseInsert= function() {
+        var validate = true;
+        if($.trim($('#timimgUSS').val()).length <= 0)
+        {
+            validate = false;
+            $('#timimgUSS').addClass("is-invalid");
+        }
+        else
+        {
+            $("#timimgUSS").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#addCourseBTN").click(function () {
+        if(validateCourseInsert())
+        {
+            InsertCourse();
+        }
+        else
+        {
+            console.log("Something Went Wrong");
+        }
+    });
+
+    
+    var LoadCourse = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_courses/get-courses/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#id_pss').val(data.id);
+                   $('#subjectPSS').val(data.subject_id);
+                   $('#timimgPSS').val(data.class_timing);
+                   $('#teacherPSS').val(data.teacher_id);
+                   
+                }
+                else {}
+            }
+        });
+    }
+
+
+
+    $('#updateCourseModal').on('show.bs.modal', function(e) {
+        $('#msgU').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadCourse(id);
+    });
+
+    var UpdateCourse = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_courses/insert-course",
+            method: "POST",
+            data : {
+                section_id: $('#id_uss').val(),
+                subject_id: $('#subjectUSS').val(),
+                class_timing: $('#timimgUSS').val(),
+                teacher_id: $('#teacherUSS').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    LoadSessionSectionSubjects($('#id_uss').val());
+
+                    alert("Course Inserted");
+                }
+                else 
+                {
+                    alert("Something Went Wrong");
+                }
+            }
+        });
+    }
+
+    var validateCourseUpdate= function() {
+        var validate = true;
+        if($.trim($('#timimgPSS').val()).length <= 0)
+        {
+            validate = false;
+            $('#timimgPSS').addClass("is-invalid");
+        }
+        else
+        {
+            $("#timimgPSS").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#updateCourseBTN").click(function () {
+        if(validateCourseUpdate())
+        {
+            UpdateCourse($('#id_pss').val());
+        }
+        else
+        {
+            console.log("Something Went Wrong");
+        }
+    });
+
 });

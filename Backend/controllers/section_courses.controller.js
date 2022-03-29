@@ -63,23 +63,21 @@ exports.getCoursesBySection = (req, res, next) => {
 
 };
 
-exports.postSection = (req, res, next) => {
+exports.postCourse = (req, res, next) => {
     var validated = true;
     const data = {
-        'section_name' : req.body.section_name,
-        'class_id' : req.body.class_id,
-        'group_id' : req.body.group_id,
-        'wing_id' : req.body.wing_id,
-        'session_id' : req.body.session_id,
-        'class_teacher_id' : req.body.class_teacher_id,
+        'section_id' : req.body.section_id,
+        'subject_id' : req.body.subject_id,
+        'class_timing' : req.body.class_timing,
+        'teacher_id' : req.body.teacher_id,
     };
 
-    if(validator.isEmpty(data.section_name , {ignore_whitespace: true})) {
+    if(validator.isEmpty(data.class_timing , {ignore_whitespace: true})) {
         validated = false;
     }
 
     if(validated){
-        academic_session_sectionsService.postSection(data, (error, results) => {
+        section_coursesService.postCourse(data, (error, results) => {
             if (error) {
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
             }

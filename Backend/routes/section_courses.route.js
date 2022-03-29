@@ -7,7 +7,7 @@ var router = express.Router();
 
 router.get("/get-courses/:id", auth.authAdmin, section_coursesController.getCourse);
 router.get("/get-courses/section/:id", auth.authAdmin, section_coursesController.getCoursesBySection);
-router.post("/insert-section", auth.authAdmin, section_coursesController.postSection);
+router.post("/insert-course", auth.authAdmin, section_coursesController.postCourse);
 router.put("/update-section/:id", auth.authAdmin, section_coursesController.updateSection);
 
 module.exports = router;
