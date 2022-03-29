@@ -8,6 +8,7 @@ var router = express.Router();
 router.get("/get-courses/:id", auth.authAdmin, section_coursesController.getCourse);
 router.get("/get-courses/section/:id", auth.authAdmin, section_coursesController.getCoursesBySection);
 router.post("/insert-course", auth.authAdmin, section_coursesController.postCourse);
-router.put("/update-section/:id", auth.authAdmin, section_coursesController.updateSection);
+router.put("/update-course/:id", auth.authAdmin, section_coursesController.updateCourse);
+router.delete("/delete-course/:id", auth.authAdmin, section_coursesController.deleteCourse);
 
 module.exports = router;

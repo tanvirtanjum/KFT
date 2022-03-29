@@ -18,6 +18,7 @@ var express = require("express");
 var router = express.Router();
 
 router.get("/get-all-teachers", teachersController.getAllTeachers);
+router.get("/get-count", teachersController.getCount);
 router.get("/get-teacher/:id", teachersController.getTeacher);
 router.get("/name/:name", teachersController.getTeachersByName);
 router.post("/insert-teacher", auth.authAdmin, teachersController.postTeacher);

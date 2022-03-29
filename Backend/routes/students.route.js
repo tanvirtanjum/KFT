@@ -18,6 +18,7 @@ var express = require("express");
 var router = express.Router();
 
 router.get("/get-all-students", studentsController.getAllStudent);
+router.get("/get-count", studentsController.getCount);
 router.get("/get-student/:id", studentsController.getStudent);
 router.get("/nameid/:para", studentsController.getStudentsByNameID);
 router.get("/student_id/:student_id", auth.authAdmin, studentsController.getStudentByStudentID);

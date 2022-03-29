@@ -92,33 +92,58 @@ exports.postCourse = (req, res, next) => {
 
 };
 
-exports.updateSection = (req, res, next) => {
+exports.updateCourse = (req, res, next) => {
     var validated = true;
     const data = {
         'id' : req.params.id,
-        'section_name' : req.body.section_name,
-        'class_id' : req.body.class_id,
-        'group_id' : req.body.group_id,
-        'wing_id' : req.body.wing_id,
-        'class_teacher_id' : req.body.class_teacher_id,
+        'subject_id' : req.body.subject_id,
+        'class_timing' : req.body.class_timing,
+        'teacher_id' : req.body.teacher_id,
     };
 
     if(data.id <= 0) {
         validated = false;
     }
 
-    if(validator.isEmpty(data.section_name , {ignore_whitespace: true})) {
+    if(validator.isEmpty(data.class_timing , {ignore_whitespace: true})) {
         validated = false;
     }
 
     if(validated){
-        academic_session_sectionsService.updateSection(data, (error, results) => {
+        section_coursesService.updateCourse(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
             }
             else {
                 return res.status(200).send(results);
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
+exports.deleteCourse = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'id' : req.params.id,
+    };
+
+    if(data.id <= 0) {
+        validated = false;
+    }
+
+    if(validated){
+        section_coursesService.deleteCourse(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                return res.status(204).send(results);
             }
         });
     }

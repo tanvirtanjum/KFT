@@ -29,8 +29,101 @@
 <body class="bg-secondary bg-opacity-75">
     <div class="container-fluid" id="topLayout"></div>
     
-    <div class="container-fluid">
-        
+    <div class="container-fluid" style="padding-top: 4vh;">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+              <div class="card text-white bg-primary">
+                <div class="card-body">
+                  <h3 class="card-title"><i class="fas fa-users"></i> Employees</h3>
+                  <p class="card-text">
+                      <p class="h5">Active: <span id="ae"></span></p>
+                      <p class="h5">On Break: <span id="oe"></span></p>
+                      <p class="h5">Left: <span id="le"></span></p>
+                      <p class="h5">Retired: <span id="re"></span></p>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card text-white bg-success">
+                <div class="card-body">
+                  <h3 class="card-title"><i class="fas fa-user-tie"></i> Teachers</h3>
+                  <p class="card-text">
+                    <p class="h5">Active: <span id="at"></span></p>
+                    <p class="h5">On Break: <span id="ot"></span></p>
+                    <p class="h5">Left: <span id="lt"></span></p>
+                    <p class="h5">Retired: <span id="rt"></span></p>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card text-white bg-danger">
+                <div class="card-body">
+                  <h3 class="card-title"><i class="fas fa-user-graduate"></i> Students</h3>
+                  <p class="card-text">
+                    <p class="h5">Active: <span id="as"></span></p>
+                    <p class="h5">Alumni-Graduate: <span id="ags"></span></p>
+                    <p class="h5">Alumni-Transfer(Normal): <span id="atns"></span></p>
+                    <p class="h5">Alumni-Transfer(Disciplinary): <span id="atds"></span></p>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <div class="container-fluid" style="padding-top: 8vh;">
+        <div class="h1">
+            Notices
+        </div>
+        <div id="notices">
+            
+        </div>
+
+         <!-- Modal -->
+    <div class="modal fade" id="updateNoticeModal" tabindex="-1" aria-labelledby="updateNoticeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateNoticeModalLabel"><i class='fas fa-eye'></i>&nbsp;Full Notice</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id">
+                    <div class="alert mb-2" id="msg" role="alert"></div>
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control bg-light" placeholder="Write Subject" id="subjectU" style="resize: none;" readonly></textarea>
+                        <label for="subjectU">Notice Subject</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control bg-light" placeholder="Write Content" id="contentU" style="height: 40vh; resize: none;" readonly></textarea>
+                        <label for="contentU">Notice Content</label>
+                    </div>
+                    <div class="mb-2">
+                        <div align="center">
+                            Attachments
+                            <table class="table table-borderless table-responsive-sm table-hover" id="filelistU">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col" align="center">File Name</th>
+                                    <th scope="col"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
     <div class="container-fluid text-center" id="bottomLayout"></div>

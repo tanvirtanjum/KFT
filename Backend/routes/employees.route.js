@@ -18,6 +18,7 @@ var express = require("express");
 var router = express.Router();
 
 router.get("/get-all-employees", employeesController.getAllEmployees);
+router.get("/get-count", employeesController.getCount);
 router.get("/get-employee/:id", employeesController.getEmployee);
 router.get("/get-employee/login/:id", auth.authAdmin, employeesController.getEmployeeByLogin);
 router.get("/name/:name", employeesController.getEmployeeByName);

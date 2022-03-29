@@ -19,6 +19,24 @@ exports.getAllStudent = (data, callback) => {
     );
 };
 
+exports.getCount = (data, callback) => {
+    db.query(
+        `SELECT
+            SUM(IF(studentship_id = 1, 1, 0)) AS active_stu,
+            SUM(IF(studentship_id = 2, 1, 0)) AS ag_stu,
+            SUM(IF(studentship_id = 3, 1, 0)) AS atn_stu,
+            SUM(IF(studentship_id = 4, 1, 0)) AS atd_stu
+        FROM students; `,
+        [],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.getStudent = (data, callback) => {
     db.query(
         `SELECT students.*, logins.email, classes.class_name, groups.group_name, wings.wing_name, student_status.status_name FROM students `+ 

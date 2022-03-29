@@ -1501,24 +1501,32 @@ $(document).ready(function () {
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/section_courses/insert-course",
-            method: "POST",
+            url: api_base_URL+"/api/section_courses/update-course/"+id,
+            method: "PUT",
             data : {
-                section_id: $('#id_uss').val(),
-                subject_id: $('#subjectUSS').val(),
-                class_timing: $('#timimgUSS').val(),
-                teacher_id: $('#teacherUSS').val(),
+                id: id,
+                subject_id: $('#subjectPSS').val(),
+                class_timing: $('#timimgPSS').val(),
+                teacher_id: $('#teacherPSS').val(),
             },
             headers : {
                 role : decryptLoginInfo.role_id,
             },
             complete: function (xhr, status) {
-                if (xhr.status == 201) {
+                if (xhr.status == 200) {
                     var data = xhr.responseJSON;
 
-                    LoadSessionSectionSubjects($('#id_uss').val());
+                    if(data.affectedRows >= 1)
+                    {
+                        LoadSessionSectionSubjects($('#id_uss').val());
 
-                    alert("Course Inserted");
+                        alert("Course Updated");
+                    }
+                    else 
+                    {
+                        alert("Something Went Wrong");
+                    }
+                    
                 }
                 else 
                 {
@@ -1552,6 +1560,42 @@ $(document).ready(function () {
         {
             console.log("Something Went Wrong");
         }
+    });
+
+
+    var DeleteCourse = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_courses/delete-course/"+id,
+            method: "DELETE",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 204) {
+                    var data = xhr.responseJSON;
+
+                    LoadSessionSectionSubjects($('#id_uss').val());
+                   
+                    alert("Course Deleted");
+
+                    $('#updateCourseModal').modal('toggle');
+                    
+                    
+                }
+                else 
+                {
+                    alert("Something Went Wrong");
+                }
+            }
+        });
+    }
+
+    $("#deleteCourseBTN").click(function () {
+        DeleteCourse($('#id_pss').val());
     });
 
 });
