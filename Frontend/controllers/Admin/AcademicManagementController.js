@@ -1378,6 +1378,7 @@ $(document).ready(function () {
                    var data = xhr.responseJSON;
                 
                    $('#id_uss').val(data.id);
+                   $('#id_uss2').val(data.session_id);
                    $('#sec_name').html(data.section_name);
                    $('#session_name').html(data.year_name);
                    $('#class_name').html(data.class_name);
@@ -1409,6 +1410,7 @@ $(document).ready(function () {
             url: api_base_URL+"/api/section_courses/insert-course",
             method: "POST",
             data : {
+                session_id: $('#id_uss2').val(),
                 section_id: $('#id_uss').val(),
                 subject_id: $('#subjectUSS').val(),
                 class_timing: $('#timimgUSS').val(),

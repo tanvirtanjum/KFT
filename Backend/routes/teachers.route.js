@@ -20,6 +20,7 @@ var router = express.Router();
 router.get("/get-all-teachers", teachersController.getAllTeachers);
 router.get("/get-count", teachersController.getCount);
 router.get("/get-teacher/:id", teachersController.getTeacher);
+router.get("/get-teacher/login/:id", auth.authTeacher, teachersController.getTeacherByLogin);
 router.get("/name/:name", teachersController.getTeachersByName);
 router.post("/insert-teacher", auth.authAdmin, teachersController.postTeacher);
 router.put("/update-teacher/:id", auth.authAdmin, teachersController.updateTeacher);

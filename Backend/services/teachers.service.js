@@ -54,6 +54,24 @@ exports.getTeacher = (data, callback) => {
     );
 };
 
+exports.getTeacherByLogin = (data, callback) => {
+    db.query(
+        `SELECT teachers.*, logins.email, logins.role_id, logins.access_id, roles.role_name, subjects.subject_name, employment_status.status_name FROM teachers `+ 
+        `INNER JOIN logins ON teachers.login_id = logins.id `+
+        `INNER JOIN roles ON logins.role_id = roles.id `+
+        `INNER JOIN subjects ON teachers.subject_id = subjects.id `+
+        `INNER JOIN employment_status ON teachers.employment_status_id = employment_status.id `+
+        `WHERE teachers.login_id = ?; `,
+        [data.login_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.getTeachersByName = (data, callback) => {
     db.query(
         `SELECT teachers.*, logins.email, logins.role_id, roles.role_name, subjects.subject_name, employment_status.status_name FROM teachers `+ 

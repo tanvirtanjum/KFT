@@ -34,6 +34,36 @@ exports.getCourse = (req, res, next) => {
 
 };
 
+exports.getCourseBySession_Teacher = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'session_id' : req.params.session_id,
+        'teacher_id' : req.params.teacher_id,
+    };
+
+    if(validated){
+        section_coursesService.getCourseBySession_Teacher(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                if (results.length > 0) {
+                    return res.status(200).send(results);
+                }
+    
+                else {
+                    return res.status(204).send({ success: false, data: "No Data Found." });
+                }
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
 exports.getCoursesBySection = (req, res, next) => {
     var validated = true;
     const data = {
@@ -66,6 +96,7 @@ exports.getCoursesBySection = (req, res, next) => {
 exports.postCourse = (req, res, next) => {
     var validated = true;
     const data = {
+        'session_id' : req.body.session_id,
         'section_id' : req.body.section_id,
         'subject_id' : req.body.subject_id,
         'class_timing' : req.body.class_timing,
@@ -79,6 +110,7 @@ exports.postCourse = (req, res, next) => {
     if(validated){
         section_coursesService.postCourse(data, (error, results) => {
             if (error) {
+                console.log(error)
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
             }
             else {

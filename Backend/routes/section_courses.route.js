@@ -7,6 +7,7 @@ var router = express.Router();
 
 router.get("/get-courses/:id", auth.authAdmin, section_coursesController.getCourse);
 router.get("/get-courses/section/:id", auth.authAdmin, section_coursesController.getCoursesBySection);
+router.get("/get-courses/session/:session_id/teacher/:teacher_id", auth.authTeacher, section_coursesController.getCourseBySession_Teacher);
 router.post("/insert-course", auth.authAdmin, section_coursesController.postCourse);
 router.put("/update-course/:id", auth.authAdmin, section_coursesController.updateCourse);
 router.delete("/delete-course/:id", auth.authAdmin, section_coursesController.deleteCourse);
