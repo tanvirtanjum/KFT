@@ -118,6 +118,19 @@ exports.updateStudent = (data, callback) => {
     );
 };
 
+exports.updateStudentClassGroup = (data, callback) => {
+    db.query(
+        `UPDATE students SET cur_class_id = ?, cur_group_id = ?, updated_at = current_timestamp WHERE id = ?;`,
+        [data.cur_class_id, data.cur_group_id, data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.updateStudentImage = (data, callback) => {
     db.query(
         `UPDATE students SET img_path = ?, updated_at = current_timestamp WHERE id = ?;`,

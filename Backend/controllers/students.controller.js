@@ -265,6 +265,37 @@ exports.updateStudent = (req, res, next) => {
 };
 
 
+exports.updateStudentClassGroup = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'id' : req.params.id,
+        'cur_class_id' : req.body.cur_class_id,
+        'cur_group_id' : req.body.cur_group_id,
+    };
+
+    if(data.id <= 0) {
+        validated = false;
+    }
+
+
+    if(validated){
+        studentService.updateStudentClassGroup(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                return res.status(200).send(results);
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
+
 exports.updateStudentImage = (req, res, next) => {
     var validated = true;
 

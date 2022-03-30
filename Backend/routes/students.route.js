@@ -24,6 +24,7 @@ router.get("/nameid/:para", studentsController.getStudentsByNameID);
 router.get("/student_id/:student_id", auth.authAdmin, studentsController.getStudentByStudentID);
 router.post("/insert-student", auth.authAdmin, studentsController.postStudent);
 router.put("/update-student/:id", auth.authAdmin, studentsController.updateStudent);
+router.put("/update-student-class-group/:id", auth.authTeacher, studentsController.updateStudentClassGroup);
 router.put("/update-student-image/:id", auth.authAdmin, upload.single('uploaded_update_file'), studentsController.updateStudentImage);
 router.put("/insert-student-image/:id", auth.authAdmin, upload.single('uploaded_file'), studentsController.insertStudentImage);
 

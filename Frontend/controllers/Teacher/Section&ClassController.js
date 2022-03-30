@@ -141,7 +141,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].wing_name  +"</td>"+
                                         "<td>"+ data[i].group_name  +"</td>"+
                                         "<td>"+
-                                            "<a class='btn btn-sm btn-primary' href="+base_URL+"/views/Teacher/MySection.html?section="+btoa(data[i].id)+" role='button'><i class='fas fa-sitemap'></i> Manage Section</a>"+
+                                            "<a class='btn btn-sm btn-primary' href="+base_URL+"/views/Teacher/MySection.html?section="+btoa(data[i].id)+"&session="+btoa(data[i].session_id)+" role='button'><i class='fas fa-sitemap'></i> Manage Section</a>"+
                                         "</td>"+
                                 "</tr>";
                             sl++;

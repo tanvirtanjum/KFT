@@ -30,6 +30,12 @@
     <div class="container-fluid" id="topLayout"></div>
     
     <input type="hidden" id="teacherID">
+    <input type="hidden" id="sectionID">
+    <input type="hidden" id="academicSessionID">
+    <input type="hidden" id="classID">
+    <input type="hidden" id="groupID">
+
+
     <div class="container-fluid" style="padding-top: 2vh;">
         <div class="h3">Section Info<hr></div>
         <dl class="row">
@@ -56,7 +62,7 @@
         <div><hr></div>
     </div>
 
-    <div class="container-fluid" style="padding-top: 2vh;">
+    <div class="container-fluid" style="padding-top: 2vh; overflow-x: scroll;">
         
         <div class="row">
             <div class="col-4">
@@ -69,26 +75,245 @@
             <div class="col-8">
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="list-routine" role="tabpanel" aria-labelledby="list-routine-list">
-                    <table class="table table-light" id="routineTable">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Subject</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Teacher</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          
-                        </tbody>
-                      </table>
+                    <div class="table-responsive">
+                        <table class="table table-light" id="routineTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Teacher</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="list-students" role="tabpanel" aria-labelledby="list-students-list">...S</div>
+
+
+                <div class="tab-pane fade" id="list-students" role="tabpanel" aria-labelledby="list-students-list">
+                    <div class="d-grid gap-2 col-6 mx-auto mb-2" align="center">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+                            <i class="fas fa-pen"></i>&nbsp; Add New Student
+                        </button>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-light" id="studentsTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Father Name</th>
+                                <th scope="col">Mother Name</th>
+                                <th scope="col">Contact</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <div class="tab-pane fade" id="list-files" role="tabpanel" aria-labelledby="list-files-list">...F</div>
               </div>
             </div>
           </div>
 
+    </div>
+
+
+    <!-- Add Student Modal -->
+    <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStudentModalLabel"><i class="fas fa-pen"></i>&nbsp;Add Students</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-0">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                        <input type="text" id="search" class="form-control" placeholder="Search By Student Name Or Student ID" aria-label="Search By Employee Name" aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="table-responsive" style="padding-top: 2vh;">
+                        <table class="table table-sm table-striped" id="studentTable">
+                            <thead class="table-dark">
+                              <th>#</th>
+                              <th>Name</th>
+                              <th>ID</th>
+                              <th>Contact</th>
+                              <th>Status</th>
+                              <th>Class</th>
+                              <th>Group</th>
+                              <th>Wing</th>
+                              <th></th>
+                            </thead>
+                            <tbody class="table-light">
+            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Confirmation Student Modal -->
+    <div class="modal fade" id="confirmAddStudentModal" tabindex="-1" aria-labelledby="confirmAddStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmAddStudentModalLabel"><i class="fas fa-pen"></i>&nbsp;Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="studentID">
+                    <div class="alert alert-warning"><b>Press Confirm</b> to add student to your section.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmBTN">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateStudentModal" tabindex="-1" aria-labelledby="updateStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateStudentModalLabel"><i class="fas fa-pen"></i>&nbsp;Student Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="nameU" readonly>
+                        <label for="nameU">Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write ID" id="idU" readonly>
+                        <label for="idU">ID</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="sexU" aria-label="Floating label select example" disabled>
+                          <option value="Male">MALE</option>
+                          <option value="Female">FEMALE</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <label for="sexU">Sex</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="relU" aria-label="Floating label select example" disabled>
+                          <option value="Muslim">MUSLIM</option>
+                          <option value="Hindu">HINDU</option>
+                          <option value="Christian">CHRISTIAN</option>
+                          <option value="Buddha">BUDDHA</option>
+                        </select>
+                        <label for="relU">Religion</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="fatherU" readonly>
+                        <label for="fatherU">Father's Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="motherU" readonly>
+                        <label for="motherU">Mother's Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="contactU" readonly>
+                        <label for="contactU">Contact No.</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="emailU" readonly>
+                        <label for="emailU">Email</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="pradU" style="height: 100px" readonly></textarea>
+                        <label for="pradU">Present Address</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="peadU" style="height: 100px" readonly></textarea>
+                        <label for="peadU">Permanent Address</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="acU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="acU">Admission Class</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="agU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="agU">Admission Group</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="wingU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="wingU">Wing</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="ccU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="ccU">Current Class</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="cgU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="cgU">Current Group</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="statusU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="statusU">Student Status</label>
+                    </div>
+
+                    <div class="mb-2" style="width: calc(100%);" align="center">
+                        <img src="" class="img-fluid img-thumbnail rounded-circle" alt="NO DATA FOUND" id="avatarU" height="200" width="200">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="button" id="removeBTN" class="btn btn-danger"><i class="fas fa-user-slash"></i> Remove</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="container-fluid text-center" id="bottomLayout"></div>
