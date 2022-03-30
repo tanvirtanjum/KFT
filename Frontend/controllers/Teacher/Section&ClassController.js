@@ -193,7 +193,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].wing_name  +"</td>"+
                                         "<td>"+ data[i].group_name  +"</td>"+
                                         "<td>"+
-                                            "<button type='button' data-bs-toggle='modal' data-bs-target='#updateCourseModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button>   "+
+                                            "<a class='btn btn-sm btn-secondary' href="+base_URL+"/views/Teacher/Classroom.html?section="+btoa(data[i].section_id)+"&session="+btoa(data[i].session_id)+" role='button'><i class='fas fa-eye'></i> View Classroom</a>"+
                                         "</td>"+
                                 "</tr>";
                             sl++;
@@ -201,14 +201,14 @@ $(document).ready(function () {
                     }
                     else
                     {
-                        str += "<tr><td colspan='7' align='middle'>NO DATA FOUND</td></tr>";
+                        str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
                     }
 
                     $("#schTable tbody").html(str);
                 }
                 else 
                 {
-                    str += "<tr><td colspan='7' align='middle'>NO DATA FOUND</td></tr>";
+                    str += "<tr><td colspan='8' align='middle'>NO DATA FOUND</td></tr>";
                     $("#schTable tbody").html(str);
                 }
             }
