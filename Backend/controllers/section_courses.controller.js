@@ -49,7 +49,7 @@ exports.getCourseBySession_Teacher = (req, res, next) => {
             }
             else {
                 if (results.length > 0) {
-                    console.log(results)
+                    // console.log(results)
                     return res.status(200).send(results);
                 }
     

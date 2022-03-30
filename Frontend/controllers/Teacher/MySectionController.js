@@ -42,6 +42,10 @@ $(document).ready(function () {
     checkLocalStorage();
 
 
+    let searchParams = new URLSearchParams(window.location.search);
+    var sectionID = atob(searchParams.get('section'));
+
+
     var LoadTeachingProfile = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
@@ -54,14 +58,9 @@ $(document).ready(function () {
                 role : decryptLoginInfo.role_id,
             },
             complete: function (xhr, status) {
-                if (xhr.status == 200) {
-                    
+                if (xhr.status == 200) {                  
                    var data = xhr.responseJSON;
-                   $('#teacherID').val(data.id);
-
-                //    alert($('#teacherID').val());
-
-                   
+                   $('#teacherID').val(data.id);                   
                 }
                 else {}
             }
@@ -71,46 +70,35 @@ $(document).ready(function () {
 
     LoadTeachingProfile();
 
-    var LoadAllSessionOptions = function(){
+    var LoadSection = function(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/academic_sessions/get-all-session",
+            url: api_base_URL+"/api/academic_session_sections/get-section/"+id,
             method: "GET",
             headers : {
                 role : decryptLoginInfo.role_id,
             },
             complete: function (xhr, status) {
                 if (xhr.status == 200) {
-                    var data = xhr.responseJSON;
+                    
+                   var data = xhr.responseJSON;
 
-                    var str = '<option value="0">Select Session</option>';
+                   $('#sec_name').html(data.section_name);
+                   $('#session_name').html(data.year_name);
+                   $('#class_name').html(data.class_name);
+                   $('#wing_name').html(data.wing_name);
+                   $('#group_name').html(data.group_name);
+                   $('#teacher_name').html(data.name);
 
-                    if(data.length > 0)
-                    {
-                        for (var i = 0; i < data.length; i++) 
-                        {
-                            str += '<option value="'+data[i].id+'">'+data[i].year_name+'</option>';
-                        }
-                    }
-                    else
-                    {
-                        str += "";
-                    }
-
-                    $("#session").html(str);
                 }
-                else 
-                {
-                    str += "";
-                    $("#session").html(str);
-                }
+                else {}
             }
         });
     }
-    LoadAllSessionOptions();
+    LoadSection(sectionID);
 
 
     var LoadMySections = function(session_id, teacher_id){

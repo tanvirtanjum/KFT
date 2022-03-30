@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Section | KFT</title>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/image/logo/KFT_Trust_Logo.ico">
+
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <link href="../../assets/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="../../assets/jQueryTyper/jquery.typer.js"></script>
+    <script src="../../assets/crypto-js/crypto.js"></script>
+
+
+    <!-- URL Controller -->
+    <script type="text/javascript" src="../../controllers/urlController.js"></script>
+
+    <!-- Controller -->
+    <script type="text/javascript" src="../../controllers/Teacher/MySectionController.js"></script>
+</head>
+
+<body class="bg-secondary bg-opacity-75">
+    <div class="container-fluid" id="topLayout"></div>
+    
+    <input type="hidden" id="teacherID">
+    <div class="container-fluid" style="padding-top: 2vh;">
+        <div class="h3">Section Info<hr></div>
+        <dl class="row">
+            
+            <dt class="col-sm-3">Session</dt>
+            <dd class="col-sm-9" id="session_name">some</dd>
+
+            <dt class="col-sm-3">Class</dt>
+            <dd class="col-sm-9" id="class_name">some</dd>
+
+            <dt class="col-sm-3">Section Name</dt>
+            <dd class="col-sm-9" id="sec_name">some</dd>
+          
+            <dt class="col-sm-3">Wing</dt>
+            <dd class="col-sm-9" id="wing_name">some</dd>
+
+            <dt class="col-sm-3">Group</dt>
+            <dd class="col-sm-9" id="group_name">some</dd>
+
+            <dt class="col-sm-3">Class Teacher</dt>
+            <dd class="col-sm-9" id="teacher_name">some</dd>
+          
+        </dl>
+        <div><hr></div>
+    </div>
+
+    <div class="container-fluid" style="padding-top: 2vh;">
+        
+        <div class="row">
+            <div class="col-4">
+              <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-home">Students</a>
+                <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Profile</a>
+                <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Messages</a>
+                <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-students" role="tabpanel" aria-labelledby="list-students-list">...</div>
+                <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
+                <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+                <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+              </div>
+            </div>
+          </div>
+          
+    </div>
+
+    <div class="container-fluid text-center" id="bottomLayout"></div>
+</body>
+
+</html>
