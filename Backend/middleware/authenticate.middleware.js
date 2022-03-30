@@ -36,3 +36,12 @@ exports.authAdmin_Teacher = (req, res, next) => {
         return res.status(401).send({ success: false, data: "Unauthorized Request." });
     }   
 };
+
+exports.authAdmin_Teacher_Student = (req, res, next) => {
+    if (req.header("role") == 1 || req.header("role") == 2 || req.header("role") == 3) {
+        next();
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." });
+    }   
+};

@@ -101,13 +101,13 @@ $(document).ready(function () {
     LoadSection(sectionID);
 
 
-    var LoadMySections = function(session_id, teacher_id){
+    var LoadRoutine = function(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         $.ajax({
-            url: api_base_URL+"/api/academic_session_sections/get-sections/session/"+session_id+"/teacher/"+teacher_id,
+            url: api_base_URL+"/api/section_courses/get-courses/section/"+id,
             method: "GET",
             headers : {
                 role : decryptLoginInfo.role_id,
@@ -124,32 +124,30 @@ $(document).ready(function () {
                         {
                             str += "<tr>"+
                                         "<th>"+ sl + "</th>"+
-                                        "<td>"+ data[i].class_name  +"</td>"+
-                                        "<td>"+ data[i].section_name  +"</td>"+
-                                        "<td>"+ data[i].wing_name  +"</td>"+
-                                        "<td>"+ data[i].group_name  +"</td>"+
-                                        "<td>"+
-                                            "<a class='btn btn-sm btn-primary' href="+base_URL+"/views/Teacher/MySection.html?section="+btoa(data[i].id)+" role='button'><i class='fas fa-sitemap'></i> Manage Section</a>"+
-                                        "</td>"+
-                                "</tr>";
+                                        "<td>"+ data[i].subject_name  +"</td>"+
+                                        "<td>"+ data[i].class_timing  +"</td>"+
+                                        "<td>"+ data[i].name  +"</td>"+
+                                   "</tr>";
                             sl++;
                         }
                     }
                     else
                     {
-                        str += "<tr><td colspan='6' align='middle'>NO DATA FOUND</td></tr>";
+                        str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
                     }
 
-                    $("#secTable tbody").html(str);
+                    $("#routineTable tbody").html(str);
                 }
                 else 
                 {
-                    str += "<tr><td colspan='6' align='middle'>NO DATA FOUND</td></tr>";
-                    $("#secTable tbody").html(str);
+                    str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#routineTable tbody").html(str);
                 }
             }
         });
     }
+
+    LoadRoutine(sectionID);
 
     var LoadMySchedule = function(session_id, teacher_id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');

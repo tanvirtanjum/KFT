@@ -61,16 +61,30 @@
         <div class="row">
             <div class="col-4">
               <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action active" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-home">Students</a>
-                <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Files</a>
-                <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Routine</a>
+                <a class="list-group-item list-group-item-action active" id="list-routine-list" data-bs-toggle="list" href="#list-routine" role="tab" aria-controls="list-routine">Routine</a>
+                <a class="list-group-item list-group-item-action" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-home">Students</a>
+                <a class="list-group-item list-group-item-action" id="list-files-list" data-bs-toggle="list" href="#list-files" role="tab" aria-controls="list-files">Files</a>
               </div>
             </div>
             <div class="col-8">
               <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="list-students" role="tabpanel" aria-labelledby="list-students-list">...</div>
-                <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-                <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+                <div class="tab-pane fade show active" id="list-routine" role="tabpanel" aria-labelledby="list-routine-list">
+                    <table class="table table-light" id="routineTable">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Teacher</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                        </tbody>
+                      </table>
+                </div>
+                <div class="tab-pane fade" id="list-students" role="tabpanel" aria-labelledby="list-students-list">...S</div>
+                <div class="tab-pane fade" id="list-files" role="tabpanel" aria-labelledby="list-files-list">...F</div>
               </div>
             </div>
           </div>
