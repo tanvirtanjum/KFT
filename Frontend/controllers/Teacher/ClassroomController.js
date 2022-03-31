@@ -45,6 +45,7 @@ $(document).ready(function () {
     let searchParams = new URLSearchParams(window.location.search);
     var sectionID = atob(searchParams.get('section'));
     var sessionID = atob(searchParams.get('session'));
+    var courseID = atob(searchParams.get('course'));
 
     var LoadAllClassOptions = function(){
         $.ajax({
@@ -277,6 +278,32 @@ $(document).ready(function () {
     LoadSection(sectionID);
 
 
+    var LoadMySubject = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+            decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_courses/get-courses/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+
+                   $('#subject_name').html(data.subject_name);
+                   $('#class_time').html(data.class_timing);
+                }
+                else {}
+            }
+        });
+    }
+    LoadMySubject(courseID);
+
+
     var LoadRoutine = function(id){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
@@ -377,251 +404,7 @@ $(document).ready(function () {
 
     LoadStudents(sectionID);
 
-    var LoadAllStudents = function(){
-        $.ajax({
-            url: api_base_URL+"/api/students/get-all-students",
-            method: "GET",
-            complete: function (xhr, status) {
-                if (xhr.status == 200) {
-                    var data = xhr.responseJSON;
-
-                    var str = '';
-                    var sl = 1;
-                    if(data.length > 0)
-                    {
-                        for (var i = 0; i < data.length; i++) 
-                        {
-                            str += "<tr>"+
-                                        "<th>"+ sl + "</th>"+
-                                        "<td>"+ data[i].name +"</td>"+
-                                        "<td>"+ data[i].student_id  +"</td>"+
-                                        "<td>"+ data[i].contact  +"</td>"+
-                                        "<td>"+ data[i].status_name  +"</td>"+
-                                        "<td>"+ data[i].class_name +"</td>"+
-                                        "<td>"+ data[i].group_name +"</td>"+
-                                        "<td>"+ data[i].wing_name +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#confirmAddStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-plus'></i> Add</button></td>"+
-                                "</tr>";
-                            sl++;
-                        }
-                    }
-                    else
-                    {
-                        str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
-                    }
-
-                    $("#studentTable tbody").html(str);
-                }
-                else 
-                {
-                    str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
-                    $("#studentTable tbody").html(str);
-                }
-            }
-        });
-    }
-    LoadAllStudents();
-
-    var loadAllStudentByNameOrID = function (para) {
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-            decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-            decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-            $.ajax({
-                url: api_base_URL+"/api/students/nameid/"+para,
-                method: "GET",
-                headers : {
-                    role : decryptLoginInfo.role_id,
-                },
-                complete: function (xhr, status) {
-                    if (xhr.status == 200) {
-                        var data = xhr.responseJSON;
     
-                        var str = '';
-                        var sl = 1;
-
-                        if(data.length > 0)
-                        {
-                            for (var i = 0; i < data.length; i++) 
-                            {
-                                str += "<tr>"+
-                                        "<th>"+ sl + "</th>"+
-                                        "<td>"+ data[i].name +"</td>"+
-                                        "<td>"+ data[i].student_id  +"</td>"+
-                                        "<td>"+ data[i].contact  +"</td>"+
-                                        "<td>"+ data[i].status_name  +"</td>"+
-                                        "<td>"+ data[i].class_name +"</td>"+
-                                        "<td>"+ data[i].group_name +"</td>"+
-                                        "<td>"+ data[i].wing_name +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#confirmAddStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-plus'></i> Add</button></td>"+
-                                "</tr>";
-                                sl++;
-
-                            }
-                        }
-                        else
-                        {
-                            str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
-                        }
-    
-                        $("#studentTable tbody").html(str);
-                    }
-                    else {
-                        str += "<tr><td colspan='9' align='middle'>NO DATA FOUND</td></tr>";
-                        $("#studentTable tbody").html(str);
-                    }
-                }
-            });
-    }
-    $("#search").on("keyup change",function(){
-        if($.trim($("#search").val()).length > 0)
-        {
-            loadAllStudentByNameOrID($("#search").val());
-        }
-        else
-        {
-            LoadAllStudents();
-        }
-    });
-
-
-    $('#confirmAddStudentModal').on('show.bs.modal', function(e) {
-        $('#msgU3').attr('hidden', true);
-        var id = $(e.relatedTarget).data('bs-id');
-        $('#studentID').val(id);
-    });
-
-    var UpdateMyInfo = function(id){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/students/update-student-class-group/"+id,
-            method: "PUT",
-            data : {
-                cur_class_id: $('#classID').val(),
-                cur_group_id: $('#groupID').val(),
-            },
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                console.log(xhr)
-                if (xhr.status == 200) {
-                    var data = xhr.responseJSON;
-
-                    if(data.affectedRows >= 1)
-                    {
-                        alert("Student Added");
-                        LoadStudents(sectionID);
-                        LoadAllStudents();
-                    }
-                    else 
-                    {
-                        alert("Something Went Wrong.");
-                    }
-                }
-                else 
-                {
-                    alert("Something Went Wrong.");
-                }
-            }
-        });
-    }
-    
-    var InsertToMySession = function(){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/my_academic_sessions/insert-session",
-            method: "POST",
-            data : {
-                academic_session_id: sessionID,
-                section_id: sectionID,
-                student_id: $('#studentID').val(),
-            },
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 201) {
-                    var data = xhr.responseJSON;
-
-                    UpdateMyInfo($('#studentID').val());
-                }
-                else {
-
-                }
-            }
-        });
-    }
-
-    var InsertToSection = function(){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/section_students/insert-student",
-            method: "POST",
-            data : {
-                section_id: sectionID,
-                student_id: $('#studentID').val(),
-            },
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 201) {
-                    var data = xhr.responseJSON;
-                    InsertToMySession();
-                }
-                else {
-                    alert("Something Went Wrong.");
-                }
-            }
-        });
-    }
-
-    var checkMySessions = function(){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/my_academic_sessions/get-session/student/"+$('#studentID').val()+"/session/"+sessionID,
-            method: "GET",
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 200) {
-                    var data = xhr.responseJSON;
-
-                    if(data.length > 0)
-                    {
-                        alert("Student already enrolled in your or other section.");
-                    }
-                    else
-                    {
-                        InsertToSection();
-                    }
-                }
-                else 
-                {
-                    alert("Something Went Wrong.");
-                }
-            }
-        });
-    }
-
-    $("#confirmBTN").click(function () {
-        checkMySessions();
-    });
-
     var LoadStudentDetails = function(id){
         $.ajax({
             url: api_base_URL+"/api/students/get-student/"+id,
@@ -657,64 +440,5 @@ $(document).ready(function () {
     $('#updateStudentModal').on('show.bs.modal', function(e) {
         var id = $(e.relatedTarget).data('bs-id');
         LoadStudentDetails(id);
-    });
-
-    var DeleteMySession = function(id){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/my_academic_sessions/delete-session/session/"+sessionID+"/student/"+id+"/section/"+sectionID,
-            method: "DELETE",
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 204) {
-                    var data = xhr.responseJSON;
-
-                    alert("Student Removed");
-
-                    LoadStudents(sectionID);
-
-                    $('#updateStudentModal').modal('toggle');
-
-                }
-                else {
-                    alert("Something Went Wrong.");
-                }
-            }
-        });
-    }
-
-    var DeleteFromSection = function(id){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
-
-        $.ajax({
-            url: api_base_URL+"/api/section_students/delete-student/section/"+sectionID+"/student/"+id,
-            method: "DELETE",
-            headers : {
-                role : decryptLoginInfo.role_id,
-            },
-            complete: function (xhr, status) {
-                if (xhr.status == 204) {
-                    var data = xhr.responseJSON;
-
-                    DeleteMySession(id);
-                    
-                }
-                else {
-                    alert("Something Went Wrong.");
-                }
-            }
-        });
-    }
-
-
-    $("#removeBTN").click(function () {
-        DeleteFromSection($('#id').val());
     });
 });

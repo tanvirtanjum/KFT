@@ -193,7 +193,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].wing_name  +"</td>"+
                                         "<td>"+ data[i].group_name  +"</td>"+
                                         "<td>"+
-                                            "<a class='btn btn-sm btn-secondary' href="+base_URL+"/views/Teacher/Classroom.html?section="+btoa(data[i].section_id)+"&session="+btoa(data[i].session_id)+" role='button'><i class='fas fa-eye'></i> View Classroom</a>"+
+                                            "<a class='btn btn-sm btn-secondary' href="+base_URL+"/views/Teacher/Classroom.html?section="+btoa(data[i].section_id)+"&session="+btoa(data[i].session_id)+"&course="+btoa(data[i].id)+" role='button'><i class='fas fa-eye'></i> View Classroom</a>"+
                                         "</td>"+
                                 "</tr>";
                             sl++;

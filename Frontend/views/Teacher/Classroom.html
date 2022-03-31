@@ -41,26 +41,38 @@
         <dl class="row">
             
             <dt class="col-sm-3">Session</dt>
-            <dd class="col-sm-9" id="session_name">some</dd>
+            <dd class="col-sm-9" id="session_name"></dd>
 
             <dt class="col-sm-3">Class</dt>
-            <dd class="col-sm-9" id="class_name">some</dd>
+            <dd class="col-sm-9" id="class_name"></dd>
 
             <dt class="col-sm-3">Section Name</dt>
-            <dd class="col-sm-9" id="sec_name">some</dd>
+            <dd class="col-sm-9" id="sec_name"></dd>
           
             <dt class="col-sm-3">Wing</dt>
-            <dd class="col-sm-9" id="wing_name">some</dd>
+            <dd class="col-sm-9" id="wing_name"></dd>
 
             <dt class="col-sm-3">Group</dt>
-            <dd class="col-sm-9" id="group_name">some</dd>
+            <dd class="col-sm-9" id="group_name"></dd>
 
             <dt class="col-sm-3">Class Teacher</dt>
-            <dd class="col-sm-9" id="teacher_name">some</dd>
+            <dd class="col-sm-9" id="teacher_name"></dd>
           
         </dl>
         <div><hr></div>
+        <dl class="row">
+            
+            <dt class="col-sm-3">My Subject:</dt>
+            <dd class="col-sm-9" id="subject_name"></dd>
+
+            <dt class="col-sm-3">Time: </dt>
+            <dd class="col-sm-9" id="class_time"></dd>
+
+        </dl>
+        <div><hr></div>
     </div>
+
+    
 
     <div class="container-fluid" style="padding-top: 2vh; overflow-x: scroll;">
         
@@ -94,11 +106,6 @@
 
 
                 <div class="tab-pane fade" id="list-students" role="tabpanel" aria-labelledby="list-students-list">
-                    <div class="d-grid gap-2 col-6 mx-auto mb-2" align="center">
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudentModal">
-                            <i class="fas fa-pen"></i>&nbsp; Add New Student
-                        </button>
-                    </div>
                     
                     <div class="table-responsive">
                         <table class="table table-light" id="studentsTable">
@@ -125,68 +132,6 @@
             </div>
           </div>
 
-    </div>
-
-
-    <!-- Add Student Modal -->
-    <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addStudentModalLabel"><i class="fas fa-pen"></i>&nbsp;Add Students</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group mb-0">
-                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                        <input type="text" id="search" class="form-control" placeholder="Search By Student Name Or Student ID" aria-label="Search By Employee Name" aria-describedby="basic-addon1">
-                    </div>
-
-                    <div class="table-responsive" style="padding-top: 2vh;">
-                        <table class="table table-sm table-striped" id="studentTable">
-                            <thead class="table-dark">
-                              <th>#</th>
-                              <th>Name</th>
-                              <th>ID</th>
-                              <th>Contact</th>
-                              <th>Status</th>
-                              <th>Class</th>
-                              <th>Group</th>
-                              <th>Wing</th>
-                              <th></th>
-                            </thead>
-                            <tbody class="table-light">
-            
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Confirmation Student Modal -->
-    <div class="modal fade" id="confirmAddStudentModal" tabindex="-1" aria-labelledby="confirmAddStudentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmAddStudentModalLabel"><i class="fas fa-pen"></i>&nbsp;Confirmation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="studentID">
-                    <div class="alert alert-warning"><b>Press Confirm</b> to add student to your section.</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmBTN">Confirm</button>
-                </div>
-            </div>
-        </div>
     </div>
 
 
@@ -308,7 +253,7 @@
                 </div>
                 <div class="modal-footer">
                     
-                    <button type="button" id="removeBTN" class="btn btn-danger"><i class="fas fa-user-slash"></i> Remove</button>
+                    <button type="button" id="publishResultBTN" class="btn btn-primary"><i class="fas fa-upload"></i> Publish Result</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     
                 </div>
