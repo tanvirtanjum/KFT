@@ -27,6 +27,7 @@ const academic_session_sectionsRoutes = require("./routes/academic_session_secti
 const section_coursesRoutes = require("./routes/section_courses.route");
 const section_studentsRoutes = require("./routes/section_students.route");
 const my_academic_sessionsRoutes = require("./routes/my_academic_sessions.route");
+const section_filesRoutes = require("./routes/section_files.route");
 
 
 // <---> 
@@ -63,6 +64,7 @@ app.use("/api/academic_session_sections", academic_session_sectionsRoutes);
 app.use("/api/section_courses", section_coursesRoutes);
 app.use("/api/section_students", section_studentsRoutes);
 app.use("/api/my_academic_sessions", my_academic_sessionsRoutes);
+app.use("/api/section_files", section_filesRoutes)
 
 // <-- -->
 app.listen(process.env.SERVER_PORT_NO, () => {

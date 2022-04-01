@@ -717,4 +717,148 @@ $(document).ready(function () {
     $("#removeBTN").click(function () {
         DeleteFromSection($('#id').val());
     });
+
+
+    var LoadSectionFiles = function(id){
+        $.ajax({
+            url: api_base_URL+"/api/section_files/get-all-files/section/"+id,
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0 && data[0].file_path != '')
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].file_name +"</td>"+
+                                        "<td>"+ '<a class="btn btn-primary btn-sm" href="'+api_base_URL+'/api/download?path='+data[i].file_path+'" target="_blank" role="button" download><i class="fas fa-download"></i> Download</a>' +"</td>"+
+                                        "<td>"+ "<button type='button' data-bs-toggle='modal' data-bs-target='#deleteNoticeFileModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-danger'><i class='fas fa-trash-alt'></i> Delete</button>" +"</td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                   $("#filelistTable tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#filelistTable tbody").html(str);
+                }
+            }
+        });
+    }
+    LoadSectionFiles(sectionID);
+
+
+    var PostSectionFile = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var data = new FormData($('#uploadForm')[0]);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_files/post-files/section/"+id,
+            method: "POST",
+            contentType: false,
+            processData: false,
+            cache: false,
+            data: data,
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                       alert("File Uploaded.");
+                       $('#uploaded_file').val(null);
+                    }
+                    else 
+                    {
+                        console.log(data)
+                        alert("Something Went Wrong.");
+                    }
+                }
+                else 
+                {
+                    alert("Something Went Wrong.");
+                }
+                LoadSectionFiles(id);
+             }
+        });
+    }
+
+    $("#uploadFileBTN").click(function () {
+        PostSectionFile(sectionID);
+    });
+
+
+    
+
+    ////////
+    var LoadFileByID = function LoadFileByID(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var data;
+
+        $.ajax({
+            url: api_base_URL+"/api/section_files/get-files/file_id/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    data = xhr.responseJSON[0];
+                    //alert(encodeURIComponent(data.file_path.toString()));
+                    $('#fileid').val(data.id);
+                    $('#filepath').val(data.file_path.toString());
+                    $('#filename').html(data.file_name.toString());
+                }
+            }
+        });
+    }
+    $('#deleteNoticeFileModal').on('show.bs.modal', function(e) {
+        $('#msg').attr('hidden', true);
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadFileByID(id);
+    });
+
+
+    var DeleteFileByID = function(id, path){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_files/delete/id/"+id,
+            method: "DELETE",
+            headers : {
+                role : decryptLoginInfo.role_id,
+                path: path,
+            },
+            complete: function (xhr, status) {
+                $('#deleteNoticeFileModal').modal('toggle');
+                LoadSectionFiles(sectionID);
+            }
+        });
+    }
+
+    $("#deletefileBTN").click(function () {
+        DeleteFileByID($('#fileid').val(), $('#filepath').val());
+    });
 });

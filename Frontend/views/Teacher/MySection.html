@@ -27,6 +27,7 @@
 </head>
 
 <body class="bg-secondary bg-opacity-75">
+    <form id="uploadForm" enctype="multipart/form-data" method="post">
     <div class="container-fluid" id="topLayout"></div>
     
     <input type="hidden" id="teacherID">
@@ -120,7 +121,30 @@
                     </div>
                 </div>
 
-                <div class="tab-pane fade" id="list-files" role="tabpanel" aria-labelledby="list-files-list">...F</div>
+                <div class="tab-pane fade" id="list-files" role="tabpanel" aria-labelledby="list-files-list">
+
+                    <div class="input-group mb-2">
+                        <input type="file" class="form-control" id="uploaded_file" name="uploaded_file" aria-describedby="uploadFileBTN" aria-label="Upload">
+                        <button class="btn btn-danger" type="button" id="uploadFileBTN"><i class="fas fa-upload"></i> Upload</button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-light" id="filelistTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">File Name</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
@@ -316,7 +340,32 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="deleteNoticeFileModal" tabindex="-1" aria-labelledby="deleteNoticeFileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="fileid">
+                    <input type="hidden" id="filepath">
+                    <div class="form-floating mb-2" align="center">
+                        <div class="alert alert-warning" role="alert">
+                            <i class="fas fa-question-circle"></i> Are you sure you want to delete?
+                            <p id="filename"></p>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="deletefileBTN" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid text-center" id="bottomLayout"></div>
+    </form>
 </body>
 
 </html>
