@@ -1,15 +1,15 @@
-const section_coursesController = require("../controllers/section_courses.controller");
+const section_course_resultsController = require("../controllers/section_course_results.controller");
 const auth = require("../middleware/authenticate.middleware");
 
 var express = require("express");
 
 var router = express.Router();
 
-router.get("/get-courses/:id", auth.authAdmin_Teacher, section_coursesController.getCourse);
-router.get("/get-courses/section/:id", auth.authAdmin_Teacher, section_coursesController.getCoursesBySection);
-router.get("/get-courses/session/:session_id/teacher/:teacher_id", auth.authTeacher, section_coursesController.getCourseBySession_Teacher);
-router.post("/insert-course", auth.authAdmin, section_coursesController.postCourse);
-router.put("/update-course/:id", auth.authAdmin, section_coursesController.updateCourse);
-router.delete("/delete-course/:id", auth.authAdmin, section_coursesController.deleteCourse);
+router.get("/get-result/:id", auth.authAdmin_Teacher, section_course_resultsController.getResult);
+router.get("/get-result/course/:course_id/term/:term_id/section/:section_id", auth.authAdmin_Teacher, section_course_resultsController.getResultsBySectionCourse);
+router.get("/get-result/course/:course_id/term/:term_id/student/:student_id/section/:section_id", auth.authTeacher, section_course_resultsController.getVerification);
+router.post("/insert-result", auth.authTeacher, section_course_resultsController.postResult);
+router.put("/update-course/:id", auth.authAdmin, section_course_resultsController.updateCourse);
+router.delete("/delete-course/:id", auth.authAdmin, section_course_resultsController.deleteCourse);
 
 module.exports = router;

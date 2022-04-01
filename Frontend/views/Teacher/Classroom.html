@@ -81,7 +81,8 @@
             <div class="col-4">
               <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action active" id="list-routine-list" data-bs-toggle="list" href="#list-routine" role="tab" aria-controls="list-routine">Routine</a>
-                <a class="list-group-item list-group-item-action" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-home">Students</a>
+                <a class="list-group-item list-group-item-action" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-students">Students</a>
+                <a class="list-group-item list-group-item-action" id="list-results-list" data-bs-toggle="list" href="#list-results" role="tab" aria-controls="list-results">Results</a>
                 <a class="list-group-item list-group-item-action" id="list-files-list" data-bs-toggle="list" href="#list-files" role="tab" aria-controls="list-files">Files</a>
               </div>
             </div>
@@ -151,6 +152,42 @@
                     </div>
 
                 </div>
+
+                <div class="tab-pane fade" id="list-results" role="tabpanel" aria-labelledby="list-results-list">
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="termS" aria-label="Floating label select example">
+                            
+
+                        </select>
+                        <label for="termS">Term</label>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-light" id="resultsTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Student Name</th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Term</th>
+                                <th scope="col">CT 1</th>
+                                <th scope="col">CT 2</th>
+                                <th scope="col">Term Final</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Remark</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
               </div>
             </div>
           </div>
@@ -337,6 +374,69 @@
                 <div class="modal-footer">
                     
                     <button type="button" id="publishBTN" class="btn btn-primary"><i class="fas fa-upload"></i> Publish Result</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateStudentResultModal" tabindex="-1" aria-labelledby="updateStudentResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateStudentResultModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Student Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="h3">Student Info<hr></div>
+                        <dl class="row">
+                            
+                            <dt class="col-sm-3">Student Name</dt>
+                            <dd class="col-sm-9" id="student_name_u"></dd>
+
+                            <dt class="col-sm-3">Student ID</dt>
+                            <dd class="col-sm-9" id="student_id_u"></dd>
+
+                            <dt class="col-sm-3">Subject</dt>
+                            <dd class="col-sm-9" id="subject_u"></dd>
+                        </dl>
+                    <div><hr></div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="termU" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="termU">Term</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id_r_u">
+                        <input type="number" class="form-control" placeholder="Write Mark" id="CT1U">
+                        <label for="CT1U">Class Test (1st)</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" placeholder="Write Mark" id="CT2U">
+                        <label for="CT2U">Class Test (2nd)</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" placeholder="Write Mark" id="FinalU">
+                        <label for="FinalU">Term Final</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="remarkU" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="remarkU">Remark</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="button" id="updateBTN" class="btn btn-primary"><i class="fas fa-edit"></i> Update Result</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     
                 </div>
