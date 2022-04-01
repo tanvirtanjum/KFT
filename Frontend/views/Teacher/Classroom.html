@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="tab-pane fade" id="list-files" role="tabpanel" aria-labelledby="list-files-list">
-                    
+
                     <div class="input-group mb-2">
                         <input type="file" class="form-control" id="uploaded_file" name="uploaded_file" aria-describedby="uploadFileBTN" aria-label="Upload">
                         <button class="btn btn-danger" type="button" id="uploadFileBTN"><i class="fas fa-upload"></i> Upload</button>
@@ -275,8 +275,68 @@
 
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="addStudentResultModal" tabindex="-1" aria-labelledby="addStudentResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStudentResultModalLabel"><i class="fas fa-pen"></i>&nbsp;Submit Student Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="h3">Student Info<hr></div>
+                        <dl class="row">
+                            
+                            <dt class="col-sm-3">Student Name</dt>
+                            <dd class="col-sm-9" id="student_name"></dd>
+
+                            <dt class="col-sm-3">Student ID</dt>
+                            <dd class="col-sm-9" id="student_id"></dd>
+
+                            <dt class="col-sm-3">Subject</dt>
+                            <dd class="col-sm-9" id="subject"></dd>
+                        </dl>
+                    <div><hr></div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="termP" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="termP">Term</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id_r_p">
+                        <input type="number" class="form-control" placeholder="Write Mark" id="CT1P">
+                        <label for="CT1P">Class Test (1st)</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" placeholder="Write Mark" id="CT2P">
+                        <label for="CT2P">Class Test (2nd)</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" placeholder="Write Mark" id="FinalP">
+                        <label for="FinalP">Term Final</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="remarkP" aria-label="Floating label select example">
+                          
+                        </select>
+                        <label for="remarkP">Remark</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
                     
-                    <button type="button" id="publishResultBTN" class="btn btn-primary"><i class="fas fa-upload"></i> Publish Result</button>
+                    <button type="button" id="publishBTN" class="btn btn-primary"><i class="fas fa-upload"></i> Publish Result</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     
                 </div>

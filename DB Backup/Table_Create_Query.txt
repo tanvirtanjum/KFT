@@ -249,12 +249,16 @@ CREATE TABLE section_course_results(
     ct1 double(10,2),
     ct2 double(10,2),
     termfinal double(10,2),
+    session_id int NOT NULL,
+    section_id int NOT NULL,
     section_course_id int NOT NULL,
     term_id int NOT NULL,
     remark_id int NOT NULL,
     created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
+    FOREIGN KEY (session_id) REFERENCES academic_sessions(id),
+    FOREIGN KEY (section_id) REFERENCES academic_session_sections(id),
     FOREIGN KEY (section_course_id) REFERENCES section_courses(id),
     FOREIGN KEY (student_id) REFERENCES students(id),
     FOREIGN KEY (term_id) REFERENCES terms(id),
@@ -337,7 +341,8 @@ INSERT INTO `groups` (`id`, `group_name`) VALUES
 (2, 'SCIENCE');
 
 INSERT INTO `remarks` (`id`, `remark_name`) VALUES
-(2, 'FAILED'),
+(3, 'FAILED'),
+(2, 'PASSED (ON CONSIDERATION)'),
 (1, 'PASSED');
 
 INSERT INTO `session_status` (`id`, `status_name`) VALUES

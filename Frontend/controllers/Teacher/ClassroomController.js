@@ -47,6 +47,80 @@ $(document).ready(function () {
     var sessionID = atob(searchParams.get('session'));
     var courseID = atob(searchParams.get('course'));
 
+    var LoadAllTermsOptions = function(){
+        $.ajax({
+            url: api_base_URL+"/api/terms/get-all-terms",
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].term_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#termP").html(str);
+                    // $("#ccU").html(str);
+                }
+                else 
+                {
+                    str += "";
+
+                    $("#termP").html(str);
+                    // $("#ccU").html(str);
+                }
+            }
+        });
+    }
+    LoadAllTermsOptions();
+
+    var LoadAllRemarksOptions = function(){
+        $.ajax({
+            url: api_base_URL+"/api/remarks/get-all-remarks",
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].remark_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#remarkP").html(str);
+                    // $("#ccU").html(str);
+                }
+                else 
+                {
+                    str += "";
+
+                    $("#remarkP").html(str);
+                    // $("#ccU").html(str);
+                }
+            }
+        });
+    }
+    LoadAllRemarksOptions();
+
     var LoadAllClassOptions = function(){
         $.ajax({
             url: api_base_URL+"/api/classes/get-all-classes",
@@ -380,7 +454,8 @@ $(document).ready(function () {
                                         "<td>"+ data[i].father_name  +"</td>"+
                                         "<td>"+ data[i].mother_name  +"</td>"+
                                         "<td>"+ data[i].contact  +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].student_id+"' class='btn btn-sm btn-dark'><i class='fas fa-eye'></i> View</button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].student_id+"' class='btn btn-sm btn-dark'><i class='fas fa-eye'></i> View</button>"+
+                                               "&nbsp;<button type='button' data-bs-toggle='modal' data-bs-target='#addStudentResultModal' data-bs-id='"+data[i].student_id+"' class='btn btn-sm btn-warning'><i class='fas fa-flag'></i> Submit Result</button></td>"+
                                    "</tr>";
                             sl++;
                         }
@@ -532,6 +607,30 @@ $(document).ready(function () {
 
     $("#uploadFileBTN").click(function () {
         PostSectionFile(sectionID);
+    });
+
+    var LoadStudentDetailsForResult = function(id){
+        $.ajax({
+            url: api_base_URL+"/api/students/get-student/"+id,
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#student_name').html(data.name);
+                   $('#student_id').html(data.student_id);
+                   $('#subject').html($('#subject_name').html());
+
+                }
+                else {}
+            }
+        });
+    }
+
+    $('#addStudentResultModal').on('show.bs.modal', function(e) {
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadStudentDetailsForResult(id);
     });
 
 });
