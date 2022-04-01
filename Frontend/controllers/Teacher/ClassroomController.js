@@ -683,7 +683,7 @@ $(document).ready(function () {
         });
     }
 
-    var VerifyResult = function(){
+    var VerifyResultInsert = function(){
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
@@ -754,7 +754,7 @@ $(document).ready(function () {
     $("#publishBTN").click(function () {
         if(validateResultPost())
         {
-            VerifyResult();
+            VerifyResultInsert();
         }
     });
 
@@ -834,6 +834,7 @@ $(document).ready(function () {
                    var data = xhr.responseJSON;
                 
                    $('#id_r_u').val(data.id);
+                   $('#student_i_r_u').val(data.student_id);
                    $('#student_name_u').html(data.name);
                    $('#student_id_u').html(data.roll);
                    $('#subject_u').html(data.subject_name);
@@ -852,6 +853,104 @@ $(document).ready(function () {
     $('#updateStudentResultModal').on('show.bs.modal', function(e) {
         var id = $(e.relatedTarget).data('bs-id');
         LoadStudentResultForUpdate(id);
+    });
+
+    var updateResult = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_course_results/update-result/"+id,
+            method: "PUT",
+            data: {
+                student_id : $('#student_i_r_u').val(),
+                ct1 : $('#CT1U').val(),
+                ct2 : $('#CT2U').val(),
+                termfinal : $('#FinalU').val(),
+                session_id : sessionID,
+                section_id : sectionID,
+                section_course_id : courseID,
+                term_id : $('#termU').val(),
+                remark_id : $('#remarkU').val(),
+            },
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                       alert("Result Updated.");
+                       LoadResultsOfMyCourse();
+                       LoadStudentResultForUpdate(id);
+                    }
+                    else 
+                    {
+                        alert("Something Went Wrong.");
+                    }
+                }
+                else 
+                {
+                    alert("Something Went Wrong.");
+                }
+                // LoadSectionFiles(id);
+             }
+        });
+    }
+
+    var validateResultUpdate= function() {
+        var validate = true;
+        if(!$.isNumeric($("#CT1U").val()) || $("#CT1U").val() < 0)
+        {
+            validate = false;
+            $("#CT1U").addClass("is-invalid");
+        }
+        else
+        {
+            $("#CT1U").removeClass("is-invalid");
+        }
+
+        if(!$.isNumeric($("#CT2U").val()) || $("#CT2U").val() < 0)
+        {
+            validate = false;
+            $("#CT2U").addClass("is-invalid");
+        }
+        else
+        {
+            $("#CT2U").removeClass("is-invalid");
+        }
+
+        if(!$.isNumeric($("#FinalU").val()) || $("#FinalU").val() < 0)
+        {
+            validate = false;
+            $("#FinalU").addClass("is-invalid");
+        }
+        else
+        {
+            $("#FinalU").removeClass("is-invalid");
+        }
+
+        if($("#termU").val() <= 0)
+        {
+            validate = false;
+            $("#termU").addClass("is-invalid");
+        }
+        else
+        {
+            $("#termU").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    $("#updateBTN").click(function () {
+        if(validateResultUpdate())
+        {
+            updateResult($('#id_r_u').val());
+        }
     });
 
 });

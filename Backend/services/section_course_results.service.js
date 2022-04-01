@@ -66,23 +66,10 @@ exports.postResult = (data, callback) => {
 };
 
 
-exports.updateCourse = (data, callback) => {
+exports.updateResult = (data, callback) => {
     db.query(
-        `UPDATE section_courses SET subject_id = ?, class_timing = ?, teacher_id = ?, updated_at = current_timestamp WHERE id = ?;`,
-        [data.subject_id, data.class_timing, data.teacher_id, data.id],
-        (error, results, fields) => {
-            if (error) {
-                return callback(error);
-            }
-            return callback(null, results);
-        }
-    );
-};
-
-exports.deleteCourse = (data, callback) => {
-    db.query(
-        `DELETE FROM section_courses WHERE id = ?;`,
-        [data.id],
+        `UPDATE section_course_results SET ct1 = ?, ct2 = ?, termfinal = ?, term_id = ?, remark_id = ?, updated_at = current_timestamp WHERE id = ? AND section_course_id = ?;`,
+        [data.ct1, data.ct2, data.termfinal, data.term_id, data.remark_id, data.id, data.section_course_id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);
