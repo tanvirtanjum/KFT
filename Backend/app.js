@@ -70,6 +70,7 @@ app.use("/api/my_academic_sessions", my_academic_sessionsRoutes);
 app.use("/api/section_files", section_filesRoutes);
 app.use("/api/terms", termsRoutes);
 app.use("/api/remarks", remarksRoutes);
+app.use("/api/section_course_results", section_course_resultsRoutes);
 
 // <-- -->
 app.listen(process.env.SERVER_PORT_NO, () => {
