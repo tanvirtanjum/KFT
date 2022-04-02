@@ -46,6 +46,83 @@ $(document).ready(function () {
     var sectionID = atob(searchParams.get('section'));
     var sessionID = atob(searchParams.get('session'));
 
+    var LoadAllTermsOptions = function(){
+        $.ajax({
+            url: api_base_URL+"/api/terms/get-all-terms",
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '<option value= "0">Select Term</option>';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].term_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#termS").html(str);
+                }
+                else 
+                {
+                    str += "";
+
+                    $("#termS").html(str);
+                }
+            }
+        });
+    }
+    LoadAllTermsOptions();
+
+    var LoadAllSubjectsOptions = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_courses/get-courses/section/"+sectionID,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '<option value= "0">Select Subject</option>';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].subject_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#subjectS").html(str);
+                }
+                else 
+                {
+                    str += "";
+
+                    $("#subjectS").html(str);
+                }
+            }
+        });
+    }
+    LoadAllSubjectsOptions();
+
     var LoadAllClassOptions = function(){
         $.ajax({
             url: api_base_URL+"/api/classes/get-all-classes",
@@ -860,5 +937,66 @@ $(document).ready(function () {
 
     $("#deletefileBTN").click(function () {
         DeleteFileByID($('#fileid').val(), $('#filepath').val());
+    });
+
+
+    var LoadResultsOfMySection = function(term, course){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/section_course_results/get-result/course/"+course+"/term/"+term+"/section/"+sectionID,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].name  +"</td>"+
+                                        "<td>"+ data[i].roll  +"</td>"+
+                                        "<td>"+ data[i].subject_name  +"</td>"+
+                                        "<td>"+ data[i].term_name  +"</td>"+
+                                        "<td>"+ data[i].ct1  +"</td>"+
+                                        "<td>"+ data[i].ct2  +"</td>"+
+                                        "<td>"+ data[i].termfinal  +"</td>"+
+                                        "<td>"+ (data[i].ct1 + data[i].ct2 + data[i].termfinal)  +"</td>"+
+                                        "<td>"+ data[i].remark_name  +"</td>"+
+                                   "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='10' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                    $("#resultsTable tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='10' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#resultsTable tbody").html(str);
+                }
+            }
+        });
+    }
+
+    $('#termS').change(function() {
+        LoadResultsOfMySection($('#termS').val(), $('#subjectS').val());
+    });
+
+    $('#subjectS').change(function() {
+        LoadResultsOfMySection($('#termS').val(), $('#subjectS').val());
     });
 });

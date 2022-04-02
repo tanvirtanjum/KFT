@@ -66,14 +66,32 @@
     <div class="container-fluid" style="padding-top: 2vh; overflow-x: scroll;">
         
         <div class="row">
-            <div class="col-4">
-              <div class="list-group" id="list-tab" role="tablist">
+            <div class="col-12 mb-3">
+                <ul class="nav justify-content-center bg-light">
+                    <li class="nav-item">
+                        <a class="list-group-item list-group-item-action active" id="list-routine-list" data-bs-toggle="list" href="#list-routine" role="tab" aria-controls="list-routine">Routine</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="list-group-item list-group-item-action" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-students">Students</a>
+                
+                    </li>
+                    <li class="nav-item">
+                        <a class="list-group-item list-group-item-action" id="list-results-list" data-bs-toggle="list" href="#list-results" role="tab" aria-controls="list-results">Results</a>
+                
+                    </li>
+                    <li class="nav-item">
+                        <a class="list-group-item list-group-item-action" id="list-files-list" data-bs-toggle="list" href="#list-files" role="tab" aria-controls="list-files">Files</a>
+              
+                    </li>
+                </ul>
+              <!-- <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action active" id="list-routine-list" data-bs-toggle="list" href="#list-routine" role="tab" aria-controls="list-routine">Routine</a>
-                <a class="list-group-item list-group-item-action" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-home">Students</a>
+                <a class="list-group-item list-group-item-action" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-students">Students</a>
+                <a class="list-group-item list-group-item-action" id="list-results-list" data-bs-toggle="list" href="#list-results" role="tab" aria-controls="list-results">Results</a>
                 <a class="list-group-item list-group-item-action" id="list-files-list" data-bs-toggle="list" href="#list-files" role="tab" aria-controls="list-files">Files</a>
-              </div>
+              </div> -->
             </div>
-            <div class="col-8">
+            <div class="col-12">
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="list-routine" role="tabpanel" aria-labelledby="list-routine-list">
                     <div class="table-responsive">
@@ -145,6 +163,49 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="tab-pane fade" id="list-results" role="tabpanel" aria-labelledby="list-results-list">
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="termS" aria-label="Floating label select example">
+                            
+
+                        </select>
+                        <label for="termS">Term</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="subjectS" aria-label="Floating label select example">
+                            
+
+                        </select>
+                        <label for="subjectS">Subject</label>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-light" id="resultsTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Student Name</th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Term</th>
+                                <th scope="col">CT 1</th>
+                                <th scope="col">CT 2</th>
+                                <th scope="col">Term Final</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Remark</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
               </div>
             </div>
           </div>
