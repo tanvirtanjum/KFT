@@ -255,7 +255,10 @@ $(document).ready(function () {
                                         "<td>"+ data[i].class_name +"</td>"+
                                         "<td>"+ data[i].group_name +"</td>"+
                                         "<td>"+ data[i].wing_name +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
+                                        "<td>"+
+                                            "<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button>"+
+                                            "&nbsp;<button type='button' data-bs-toggle='modal' data-bs-target='#viewResultModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-warning'><i class='fas fa-chart-bar'></i> View Results</button>"+
+                                        "</td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -1149,4 +1152,41 @@ $(document).ready(function () {
         }
     });
 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+
+    var LoadStudentForResult = function(id){
+        $.ajax({
+            url: api_base_URL+"/api/students/get-student/"+id,
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+            
+                   $('#id_r').val(data.id);
+
+                   $('#name_r').html(data.name);
+                   $('#student_id_r').html(data.student_id);
+                   $('#father_name_r').html(data.father_name);
+                   $('#mother_name_r').html(data.mother_name);
+                   $('#contact_r').html(data.contact);
+                   $('#email_r').html(data.email);
+                   $('#status_r').html(data.status_name);
+                }
+                else {}
+            }
+        });
+    }
+
+    $('#viewResultModal').on('show.bs.modal', function(e) {
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadStudentForResult(id);
+    });
 });
