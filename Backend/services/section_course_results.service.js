@@ -52,6 +52,25 @@ exports.getVerification = (data, callback) => {
     );
 };
 
+exports.getStudentResult = (data, callback) => {
+    db.query(
+        `SELECT section_course_results.*, section_courses.subject_id, subjects.subject_name, students.name, students.student_id as roll, terms.term_name, remarks.remark_name FROM section_course_results `+
+        `INNER JOIN section_courses ON section_course_results.section_course_id = section_courses.id `+
+        `INNER JOIN subjects ON section_courses.subject_id = subjects.id `+
+        `INNER JOIN students ON section_course_results.student_id = students.id `+
+        `INNER JOIN terms ON section_course_results.term_id = terms.id `+
+        `INNER JOIN remarks ON section_course_results.remark_id = remarks.id `+
+        `WHERE section_course_results.student_id = ? AND section_course_results.session_id = ? ORDER BY section_course_results.term_id; `,
+        [data.student_id, data.session_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.postResult = (data, callback) => {
     db.query(
         `INSERT INTO section_course_results(student_id, ct1, ct2, termfinal, session_id, section_id, section_course_id, term_id, remark_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,

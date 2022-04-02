@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students | KFT</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/image/logo/KFT_Trust_Logo.ico">
+    
+
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <link href="../../assets/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="../../assets/jQueryTyper/jquery.typer.js"></script>
+    <script src="../../assets/crypto-js/crypto.js"></script>
+
+
+    <!-- URL Controller -->
+    <script type="text/javascript" src="../../controllers/urlController.js"></script>
+
+    <!-- Controller -->
+    <script type="text/javascript" src="../../controllers/Teacher/StudentsController.js"></script>
+</head>
+
+<body class="bg-secondary bg-opacity-75">
+    <form id="uploadForm" enctype="multipart/form-data" method="post">
+    <div class="container-fluid" id="topLayout"><!-- Added Through Controller (./controllers/Public/SignInController.js) --></div>
+    
+    <div class="container-fluid">
+
+
+        <div class="input-group mb-0">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+            <input type="text" id="search" class="form-control" placeholder="Search By Student Name Or Student ID" aria-label="Search By Employee Name" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="table-responsive" style="padding-top: 2vh;">
+            <table class="table table-sm table-striped" id="studentTable">
+                <thead class="table-dark">
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>ID</th>
+                  <th>Contact</th>
+                  <th>Status</th>
+                  <th>Class</th>
+                  <th>Group</th>
+                  <th>Wing</th>
+                  <th></th>
+                </thead>
+                <tbody class="table-light">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateStudentModal" tabindex="-1" aria-labelledby="updateStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateStudentModalLabel"><i class="fas fa-eye"></i>&nbsp;Student Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert mb-2" id="msgU" role="alert" align="center"></div>
+                    <div class="form-floating mb-2">
+                        <input type="hidden" id="id">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="nameU" readonly>
+                        <label for="nameU">Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write ID" id="idU" readonly>
+                        <label for="idU">ID</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="sexU" aria-label="Floating label select example" disabled>
+                          <option value="Male">MALE</option>
+                          <option value="Female">FEMALE</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <label for="sexU">Sex</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="relU" aria-label="Floating label select example" disabled>
+                          <option value="Muslim">MUSLIM</option>
+                          <option value="Hindu">HINDU</option>
+                          <option value="Christian">CHRISTIAN</option>
+                          <option value="Buddha">BUDDHA</option>
+                        </select>
+                        <label for="relU">Religion</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="fatherU" readonly>
+                        <label for="fatherU">Father's Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="motherU" readonly>
+                        <label for="motherU">Mother's Name</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="contactU" readonly>
+                        <label for="contactU">Contact No.</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" placeholder="Write Subject" id="emailU" readonly>
+                        <label for="emailU">Email</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="pradU" style="height: 100px" readonly></textarea>
+                        <label for="pradU">Present Address</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="peadU" style="height: 100px" readonly></textarea>
+                        <label for="peadU">Permanent Address</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="acU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="acU">Admission Class</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="agU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="agU">Admission Group</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="wingU" aria-label="Floating label select example" disabled> 
+                          
+                        </select>
+                        <label for="wingU">Wing</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="ccU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="ccU">Current Class</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="cgU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="cgU">Current Group</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="statusU" aria-label="Floating label select example" disabled>
+                          
+                        </select>
+                        <label for="statusU">Student Status</label>
+                    </div>
+
+                    <div class="mb-2" style="width: calc(100%);" align="center">
+                        <img src="" class="img-fluid img-thumbnail rounded-circle" alt="NO DATA FOUND" id="avatarU" height="200" width="200">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   
+
+
+    <!-- View Result Modal -->
+    <div class="modal fade" id="viewResultModal" tabindex="-1" aria-labelledby="viewResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewResultModalLabel"><i class="fas fa-chart-bar"></i>&nbsp;Results</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <dl class="row">
+                        <input type="hidden" id="id_r">
+                        <dt class="col-sm-3">Student Name</dt>
+                        <dd class="col-sm-9" id="name_r"></dd>
+
+                        <dt class="col-sm-3">Student ID</dt>
+                        <dd class="col-sm-9" id="student_id_r"></dd>
+    
+                        <dt class="col-sm-3">Father's Name</dt>
+                        <dd class="col-sm-9" id="father_name_r"></dd>
+
+                        <dt class="col-sm-3">Mother's Name</dt>
+                        <dd class="col-sm-9" id="mother_name_r"></dd>
+
+                        <dt class="col-sm-3">Contact</dt>
+                        <dd class="col-sm-9" id="contact_r"></dd>
+
+                        <dt class="col-sm-3">Email</dt>
+                        <dd class="col-sm-9" id="email_r"></dd>
+
+                        <dt class="col-sm-3">Studentship</dt>
+                        <dd class="col-sm-9" id="status_r"></dd>
+                    </dl>
+                    <div class="container-fluid">
+                        <div class="form-floating mb-lg-3">
+                            <select class="form-select" id="session" aria-label="Floating label select example">
+                                
+                            </select>
+                            <label for="session">My Session</label>
+                        </div>
+                    </div>
+
+                    <div class="h3">Section Details<hr></div>
+                    <dl class="row">
+            
+                        <dt class="col-sm-3">Session</dt>
+                        <dd class="col-sm-9" id="session_name"></dd>
+            
+                        <dt class="col-sm-3">Class</dt>
+                        <dd class="col-sm-9" id="class_name"></dd>
+            
+                        <dt class="col-sm-3">Section Name</dt>
+                        <dd class="col-sm-9" id="sec_name"></dd>
+                      
+                        <dt class="col-sm-3">Wing</dt>
+                        <dd class="col-sm-9" id="wing_name"></dd>
+            
+                        <dt class="col-sm-3">Group</dt>
+                        <dd class="col-sm-9" id="group_name"></dd>
+            
+                        <dt class="col-sm-3">Class Teacher</dt>
+                        <dd class="col-sm-9" id="teacher_name"></dd>
+                      
+                    </dl>
+                    <div><hr></div>
+                    <div class="table-responsive">
+                        <table class="table table-light" id="resultsTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Student Name</th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Term</th>
+                                <th scope="col">CT 1</th>
+                                <th scope="col">CT 2</th>
+                                <th scope="col">Term Final</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Remark</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="container-fluid text-center" id="bottomLayout"></div>
+    </form>
+</body>
+
+</html>

@@ -386,7 +386,7 @@
 
     <!-- View Result Modal -->
     <div class="modal fade" id="viewResultModal" tabindex="-1" aria-labelledby="viewResultModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="viewResultModalLabel"><i class="fas fa-chart-bar"></i>&nbsp;Results</h5>
@@ -416,7 +416,61 @@
                         <dt class="col-sm-3">Studentship</dt>
                         <dd class="col-sm-9" id="status_r"></dd>
                     </dl>
+                    <div class="container-fluid">
+                        <div class="form-floating mb-lg-3">
+                            <select class="form-select" id="session" aria-label="Floating label select example">
+                                
+                            </select>
+                            <label for="session">My Session</label>
+                        </div>
+                    </div>
+
+                    <div class="h3">Section Details<hr></div>
+                    <dl class="row">
+            
+                        <dt class="col-sm-3">Session</dt>
+                        <dd class="col-sm-9" id="session_name"></dd>
+            
+                        <dt class="col-sm-3">Class</dt>
+                        <dd class="col-sm-9" id="class_name"></dd>
+            
+                        <dt class="col-sm-3">Section Name</dt>
+                        <dd class="col-sm-9" id="sec_name"></dd>
+                      
+                        <dt class="col-sm-3">Wing</dt>
+                        <dd class="col-sm-9" id="wing_name"></dd>
+            
+                        <dt class="col-sm-3">Group</dt>
+                        <dd class="col-sm-9" id="group_name"></dd>
+            
+                        <dt class="col-sm-3">Class Teacher</dt>
+                        <dd class="col-sm-9" id="teacher_name"></dd>
+                      
+                    </dl>
+                    <div><hr></div>
+                    <div class="table-responsive">
+                        <table class="table table-light" id="resultsTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Student Name</th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Term</th>
+                                <th scope="col">CT 1</th>
+                                <th scope="col">CT 2</th>
+                                <th scope="col">Term Final</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Remark</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>

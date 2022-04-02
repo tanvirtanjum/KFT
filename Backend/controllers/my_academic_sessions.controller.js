@@ -29,6 +29,29 @@ exports.getStudents = (req, res, next) => {
 
 };
 
+exports.getMyStudentSession = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'student_id' : req.params.student_id,
+    };
+
+    if(validated){
+        my_academic_sessionsService.getMyStudentSession(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                return res.status(200).send(results);
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
 exports.postStudent = (req, res, next) => {
     var validated = true;
     const data = {

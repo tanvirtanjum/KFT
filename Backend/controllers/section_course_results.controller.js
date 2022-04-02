@@ -67,6 +67,37 @@ exports.getVerification = (req, res, next) => {
 
 };
 
+exports.getStudentResult = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'student_id' : req.params.student_id,
+        'session_id' : req.params.session_id,
+    };
+
+    if(validated){
+        section_course_resultsService.getStudentResult(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                if (results.length > 0) {
+                    console.log(results)
+                    return res.status(200).send(results);
+                }
+    
+                else {
+                    return res.status(204).send({ success: false, data: "No Data Found." });
+                }
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
 exports.getResultsBySectionCourse = (req, res, next) => {
     var validated = true;
     const data = {

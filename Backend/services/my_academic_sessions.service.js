@@ -14,6 +14,23 @@ exports.getStudents = (data, callback) => {
     );
 };
 
+exports.getMyStudentSession = (data, callback) => {
+    db.query(
+        `SELECT my_academic_sessions.*, academic_sessions.year_name, academic_session_sections.class_id, classes.class_name FROM my_academic_sessions `+ 
+        `INNER JOIN academic_sessions ON my_academic_sessions.academic_session_id = academic_sessions.id `+
+        `INNER JOIN academic_session_sections ON my_academic_sessions.section_id = academic_session_sections.id `+
+        `INNER JOIN classes ON academic_session_sections.class_id = classes.id `+
+        `WHERE student_id = ?; `,
+        [data.student_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.postStudent = (data, callback) => {
     db.query(
         `INSERT INTO my_academic_sessions(academic_session_id, section_id, student_id) VALUES (?, ?, ?);`,
