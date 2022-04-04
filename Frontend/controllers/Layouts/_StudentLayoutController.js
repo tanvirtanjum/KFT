@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('#homeTab').attr("href", base_URL+"/views/Public/Home.html");
     $('#dashboardTab').attr("href", base_URL+"/views/Student/Dashboard.html");
     $('#changepassTab').attr("href", base_URL+"/views/Common/ChangePassword.html");
+    $('#profileTab').attr("href", base_URL+"/views/Student/Profile.html");
     
 
     function activeSection()
@@ -19,7 +20,7 @@ $(document).ready(function () {
             // $('#noticeTab').removeClass("active");
             // $('#loginTab').removeClass("active");
         }
-        if(window.location.href == base_URL+"/views/Common/ChangePassword.html")
+        if(window.location.href == base_URL+"/views/Common/ChangePassword.html"|| window.location.href == base_URL+"/views/Student/Profile.html")
         {
             $('#settingTab').addClass("active");
             $('#dashboardTab').removeClass("active");

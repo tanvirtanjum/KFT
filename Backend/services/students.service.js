@@ -56,6 +56,25 @@ exports.getStudent = (data, callback) => {
     );
 };
 
+exports.getStudentByLogin = (data, callback) => {
+    db.query(
+        `SELECT students.*, logins.email, classes.class_name, groups.group_name, wings.wing_name, student_status.status_name FROM students `+ 
+        `INNER JOIN logins ON students.login_id = logins.id `+
+        `INNER JOIN classes ON students.cur_class_id = classes.id `+
+        `INNER JOIN groups ON students.cur_group_id = groups.id `+
+        `INNER JOIN wings ON students.wing_id = wings.id `+
+        `INNER JOIN student_status ON students.studentship_id = student_status.id `+
+        `WHERE students.login_id = ?; `,
+        [data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.getStudentsByNameID = (data, callback) => {
     db.query(
         `SELECT students.*, logins.email, classes.class_name, groups.group_name, wings.wing_name, student_status.status_name FROM students `+ 
