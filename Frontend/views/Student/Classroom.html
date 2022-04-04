@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom | KFT</title>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/image/logo/KFT_Trust_Logo.ico">
+
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <link href="../../assets/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="../../assets/jQueryTyper/jquery.typer.js"></script>
+    <script src="../../assets/crypto-js/crypto.js"></script>
+
+
+    <!-- URL Controller -->
+    <script type="text/javascript" src="../../controllers/urlController.js"></script>
+
+    <!-- Controller -->
+    <script type="text/javascript" src="../../controllers/Student/ClassroomController.js"></script>
+</head>
+
+<body class="bg-secondary bg-opacity-75">
+    <div class="container-fluid" id="topLayout"></div>
+    
+    <input type="hidden" id="studentID">
+    <input type="hidden" id="sectionID">
+    <input type="hidden" id="academicSessionID">
+    <input type="hidden" id="classID">
+    <input type="hidden" id="groupID">
+
+
+    <div class="container-fluid" style="padding-top: 2vh;">
+        <div class="form-floating mb-lg-3">
+            <select class="form-select" id="session" aria-label="Floating label select example">
+                
+            </select>
+            <label for="session">My Session</label>
+        </div>
+        <div class="h3">Section Info<hr></div>
+        <dl class="row">
+            
+            <dt class="col-sm-3">Session</dt>
+            <dd class="col-sm-9" id="session_name"></dd>
+
+            <dt class="col-sm-3">Class</dt>
+            <dd class="col-sm-9" id="class_name"></dd>
+
+            <dt class="col-sm-3">Section Name</dt>
+            <dd class="col-sm-9" id="sec_name"></dd>
+          
+            <dt class="col-sm-3">Wing</dt>
+            <dd class="col-sm-9" id="wing_name"></dd>
+
+            <dt class="col-sm-3">Group</dt>
+            <dd class="col-sm-9" id="group_name"></dd>
+
+            <dt class="col-sm-3">Class Teacher</dt>
+            <dd class="col-sm-9" id="teacher_name"></dd>
+          
+        </dl>
+        <div><hr></div>
+    </div>
+
+    <div class="container-fluid" style="padding-top: 2vh; overflow-x: scroll;">
+        
+        <div class="row">
+            <div class="col-12 mb-3">
+                <ul class="nav justify-content-center bg-light">
+                    <li class="nav-item">
+                        <a class="list-group-item list-group-item-action active" id="list-routine-list" data-bs-toggle="list" href="#list-routine" role="tab" aria-controls="list-routine">Routine</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="list-group-item list-group-item-action" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-students">Classmates</a>
+                
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="list-group-item list-group-item-action" id="list-files-list" data-bs-toggle="list" href="#list-files" role="tab" aria-controls="list-files">Files</a>
+              
+                    </li>
+                </ul>
+              <!-- <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-routine-list" data-bs-toggle="list" href="#list-routine" role="tab" aria-controls="list-routine">Routine</a>
+                <a class="list-group-item list-group-item-action" id="list-students-list" data-bs-toggle="list" href="#list-students" role="tab" aria-controls="list-students">Students</a>
+                <a class="list-group-item list-group-item-action" id="list-results-list" data-bs-toggle="list" href="#list-results" role="tab" aria-controls="list-results">Results</a>
+                <a class="list-group-item list-group-item-action" id="list-files-list" data-bs-toggle="list" href="#list-files" role="tab" aria-controls="list-files">Files</a>
+              </div> -->
+            </div>
+            <div class="col-12">
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-routine" role="tabpanel" aria-labelledby="list-routine-list">
+                    <div class="table-responsive">
+                        <table class="table table-light" id="routineTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Teacher</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="tab-pane fade" id="list-students" role="tabpanel" aria-labelledby="list-students-list">
+                    <div class="table-responsive">
+                        <table class="table table-light" id="studentsTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Father Name</th>
+                                <th scope="col">Mother Name</th>
+                                <th scope="col">Contact</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="list-files" role="tabpanel" aria-labelledby="list-files-list">
+                    <div class="table-responsive">
+                        <table class="table table-light" id="filelistTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">File Name</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                
+              </div>
+            </div>
+          </div>
+
+    </div>
+
+
+
+    <div class="container-fluid text-center" id="bottomLayout"></div>
+</body>
+
+</html>

@@ -6,6 +6,8 @@ $(document).ready(function () {
     $('#dashboardTab').attr("href", base_URL+"/views/Student/Dashboard.html");
     $('#changepassTab').attr("href", base_URL+"/views/Common/ChangePassword.html");
     $('#profileTab').attr("href", base_URL+"/views/Student/Profile.html");
+    $('#classTab').attr("href", base_URL+"/views/Student/Classroom.html");
+    $('#resultTab').attr("href", base_URL+"/views/Student/Result.html");
     
 
     function activeSection()
@@ -14,21 +16,29 @@ $(document).ready(function () {
         {
             $('#dashboardTab').addClass("active");
             $('#settingTab').removeClass("active");
-            // $('#academicOptionTab').removeClass("active");
-            // $('#admissionTab').removeClass("active");
-            // $('#conatctTab').removeClass("active");
-            // $('#noticeTab').removeClass("active");
-            // $('#loginTab').removeClass("active");
+            $('#classTab').removeClass("active");
+            $('#resultTab').removeClass("active");
         }
         if(window.location.href == base_URL+"/views/Common/ChangePassword.html"|| window.location.href == base_URL+"/views/Student/Profile.html")
         {
             $('#settingTab').addClass("active");
             $('#dashboardTab').removeClass("active");
-            // $('#academicOptionTab').removeClass("active");
-            // $('#admissionTab').removeClass("active");
-            // $('#conatctTab').removeClass("active");
-            // $('#noticeTab').removeClass("active");
-            // $('#loginTab').removeClass("active");
+            $('#classTab').removeClass("active");
+            $('#resultTab').removeClass("active");
+        }
+        if(window.location.href == base_URL+"/views/Student/Classroom.html")
+        {
+            $('#classTab').addClass("active");
+            $('#settingTab').removeClass("active");
+            $('#dashboardTab').removeClass("active");
+            $('#resultTab').removeClass("active");
+        }
+        if(window.location.href == base_URL+"/views/Student/Result.html")
+        {
+            $('#resultTab').addClass("active");
+            $('#settingTab').removeClass("active");
+            $('#classTab').removeClass("active");
+            $('#dashboardTab').removeClass("active");
         }
     }
 
