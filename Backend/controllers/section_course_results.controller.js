@@ -98,6 +98,38 @@ exports.getStudentResult = (req, res, next) => {
 
 };
 
+exports.getStudentResultTerm = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'student_id' : req.params.student_id,
+        'session_id' : req.params.session_id,
+        'term_id' : req.params.term_id,
+    };
+
+    if(validated){
+        section_course_resultsService.getStudentResultTerm(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                if (results.length > 0) {
+                    console.log(results)
+                    return res.status(200).send(results);
+                }
+    
+                else {
+                    return res.status(204).send({ success: false, data: "No Data Found." });
+                }
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
 exports.getResultsBySectionCourse = (req, res, next) => {
     var validated = true;
     const data = {

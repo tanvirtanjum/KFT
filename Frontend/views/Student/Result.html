@@ -29,6 +29,89 @@
 <body class="bg-secondary bg-opacity-75">
     <div class="container-fluid" id="topLayout"></div>
     
+    <input type="hidden" id="studentID">
+    <div class="container-fluid">
+        <div class="h3">Student Info<hr></div>
+        <dl class="row">
+            <dt class="col-sm-3">Student Name</dt>
+            <dd class="col-sm-9" id="name_r"></dd>
+
+            <dt class="col-sm-3">Student ID</dt>
+            <dd class="col-sm-9" id="student_id_r"></dd>
+
+            <dt class="col-sm-3">Father's Name</dt>
+            <dd class="col-sm-9" id="father_name_r"></dd>
+
+            <dt class="col-sm-3">Mother's Name</dt>
+            <dd class="col-sm-9" id="mother_name_r"></dd>
+
+            <dt class="col-sm-3">Contact</dt>
+            <dd class="col-sm-9" id="contact_r"></dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9" id="email_r"></dd>
+
+        </dl>
+
+        <div class="h3">Selection<hr></div>
+        <div class="form-floating mb-lg-3">
+            <select class="form-select" id="session" aria-label="Floating label select example">
+                
+            </select>
+            <label for="session">My Session</label>
+        </div>
+
+        <div class="form-floating mb-lg-3">
+            <select class="form-select" id="term" aria-label="Floating label select example">
+                
+            </select>
+            <label for="term">Terms</label>
+        </div>
+
+        <div class="h3">Session Info<hr></div>
+        <dl class="row">
+            
+            <dt class="col-sm-3">Session</dt>
+            <dd class="col-sm-9" id="session_name"></dd>
+
+            <dt class="col-sm-3">Class</dt>
+            <dd class="col-sm-9" id="class_name"></dd>
+
+            <dt class="col-sm-3">Section Name</dt>
+            <dd class="col-sm-9" id="sec_name"></dd>
+          
+            <dt class="col-sm-3">Wing</dt>
+            <dd class="col-sm-9" id="wing_name"></dd>
+
+            <dt class="col-sm-3">Group</dt>
+            <dd class="col-sm-9" id="group_name"></dd>
+
+            <dt class="col-sm-3">Class Teacher</dt>
+            <dd class="col-sm-9" id="teacher_name"></dd>
+          
+        </dl>
+        <div><hr></div>
+        <div class="h3">Results<hr></div>
+        <div class="table-responsive">
+            <table class="table table-light" id="resultsTable">
+                <thead>
+                  <tr class="table-dark">
+                    <th scope="col">#</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Term</th>
+                    <th scope="col">CT 1</th>
+                    <th scope="col">CT 2</th>
+                    <th scope="col">Term Final</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Remark</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <div class="container-fluid text-center" id="bottomLayout"></div>
 </body>
