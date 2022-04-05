@@ -5,7 +5,8 @@ $(document).ready(function () {
     $('#homeTab').attr("href", base_URL+"/views/Public/Home.html");
     $('#kftTrustTab').attr("href", base_URL+"/views/Public/AboutKFTTrust.html");
     $('#kftSchoolTab').attr("href", base_URL+"/views/Public/AboutKFTCollegiateSchool.html");
-
+    $('#teacherTab').attr("href", base_URL+"/views/Public/Teachers.html");
+    $('#dressTab').attr("href", base_URL+"/views/Public/DressCode.html");
     $('#admissionTab').attr("href", base_URL+"/views/Public/Admission.html");
     $('#conatctTab').attr("href", base_URL+"/views/Public/ContactUs.html");
     $('#noticeTab').attr("href", base_URL+"/views/Public/Notice.html");
@@ -35,6 +36,16 @@ $(document).ready(function () {
             $('#loginTab').removeClass("active");
         }
         // Write Code for academic options here...
+        if(window.location.href == base_URL+"/views/Public/Teachers.html" || window.location.href == base_URL+"/views/Public/DressCode.html")
+        {
+            $('#academicOptionTab').addClass("active");
+            $('#homeTab').removeClass("active");
+            $('#kftOptionTab').removeClass("active");
+            $('#admissionTab').removeClass("active");
+            $('#conatctTab').removeClass("active");
+            $('#noticeTab').removeClass("active");
+            $('#loginTab').removeClass("active");
+        }
 
         if(window.location.href == base_URL+"/views/Public/Admission.html")
         {
