@@ -54,6 +54,7 @@ $(document).ready(function () {
     }
 
     $("#proccedBTN").click(function () {
+        $('#msg').attr('hidden', true);
         if(validateLogin())
         {
             recoverPassword();

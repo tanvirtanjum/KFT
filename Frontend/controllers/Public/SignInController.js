@@ -107,6 +107,7 @@ $(document).ready(function () {
     }
 
     $("#loginBTN").click(function () {
+        $('#msg').attr('hidden', true);
         if(validateLogin())
         {
             userLogin();
