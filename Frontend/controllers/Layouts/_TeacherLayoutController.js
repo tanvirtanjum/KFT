@@ -52,14 +52,14 @@ $(document).ready(function () {
     }
 
     var userLogout = function () {
-        var decryptLoginInfo = decryptLocal(localStorage.getItem('loginInfo'));
+        // var decryptLoginInfo = decryptLocal(localStorage.getItem('loginInfo'));
 
         $.ajax({
             url: api_base_URL+"/api/logins/authenticated-user/logout",
             method: "GET",
-            headers: {
-                role : decryptLoginInfo.role_id,
-            },
+            // headers: {
+            //     role : decryptLoginInfo.role_id,
+            // },
             
             complete: function (xhr, status) {
                 if (xhr.status == 200) {

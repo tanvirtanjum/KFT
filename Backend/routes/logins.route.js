@@ -10,7 +10,7 @@ router.post("/get-user-authentication-password", loginsController.getUserPasswor
 router.post("/send-user-authentication-password", loginsController.sendUserPassword);
 router.put("/update-user-authentication-password", auth.authLogin, loginsController.updateUserPassword);
 router.post("/insert-user", auth.authAdmin, loginsController.postUser);
-router.get("/authenticated-user/logout", auth.authLogin, loginsController.getUserLogout);
+router.get("/authenticated-user/logout", loginsController.getUserLogout);
 router.get("/checkemail/:email", auth.authAdmin, loginsController.getEmail);
 router.get("/get-login/id/:id", auth.authAdmin, loginsController.getLogin);
 router.put("/update-user-authentication-email", auth.authAdmin, loginsController.updateUserEmail);
