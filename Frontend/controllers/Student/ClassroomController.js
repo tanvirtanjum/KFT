@@ -29,17 +29,24 @@ $(document).ready(function () {
         decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
         decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
-        if(localStorage.loginInfo != null && decryptLoginInfo.role_id == 3) 
+        if(decryptLoginInfo.role_id == 3) 
         {
 
         }
         else
         {   
-            redirect(null);
+            redirect(decryptLoginInfo.role_id);
         }
     }
 
-    checkLocalStorage();
+    if(localStorage.getItem('loginInfo') == null)
+    {
+        redirect(null);
+    }
+    else
+    {
+        checkLocalStorage();
+    }
 
 
 

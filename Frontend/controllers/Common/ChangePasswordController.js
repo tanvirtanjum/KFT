@@ -62,7 +62,14 @@ $(document).ready(function () {
         }
     }
 
-    checkLocalStorage();
+    if(localStorage.getItem('loginInfo') == null)
+    {
+        redirect(null);
+    }
+    else
+    {
+        checkLocalStorage();
+    }
 
     var validatePassword = function() {
         var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
