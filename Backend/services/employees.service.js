@@ -54,6 +54,24 @@ exports.getEmployee = (data, callback) => {
     );
 };
 
+exports.getPrincipal = (data, callback) => {
+    db.query(
+        `SELECT employees.*, logins.email, logins.role_id, roles.role_name, designations.designation_name, employment_status.status_name FROM employees `+ 
+        `INNER JOIN logins ON employees.login_id = logins.id `+
+        `INNER JOIN roles ON logins.role_id = roles.id `+
+        `INNER JOIN designations ON employees.designation_id = designations.id `+
+        `INNER JOIN employment_status ON employees.employment_status_id = employment_status.id `+
+        `WHERE employees.designation_id = 4 AND employees.employment_status_id = 1; `,
+        [],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.getEmployeeByLogin = (data, callback) => {
     db.query(
         `SELECT employees.*, logins.email, logins.role_id, roles.role_name, designations.designation_name, employment_status.status_name FROM employees `+ 

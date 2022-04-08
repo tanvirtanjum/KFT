@@ -1029,7 +1029,7 @@ $(document).ready(function () {
             // {
             //     $("#fileP").removeClass("is-invalid");
             // }
-            $("#fileP").addClass("is-invalid");
+            $("#fileP").removeClass("is-invalid");
         }
 
         // if($('#emailP').hasClass("is-invalid"))
@@ -1167,8 +1167,7 @@ $(document).ready(function () {
                     InsertEmployee(id);
                 }
                 else {
-                    var data = xhr.responseJSON;
-                    alert("...");
+                    
                 }
             }
         });
