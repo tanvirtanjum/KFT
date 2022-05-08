@@ -58,7 +58,7 @@ $(document).ready(function () {
             $('#loginTab').removeClass("active");
         }
 
-        if(window.location.href == base_URL+"/views/Public/SignIn.html")
+        if(window.location.href == base_URL+"/views/Public/SignIn.html" || window.location.href == base_URL+"/views/Public/RecoverPassword.html")
         {
             $('#loginTab').addClass("active");
             $('#kftOptionTab').removeClass("active");

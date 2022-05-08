@@ -79,7 +79,7 @@ $(document).ready(function () {
                    $('#designation').html(data.designation_name);
                    $('#salary').html(data.salary);
                    $('#file').html(data.file_no);
-                   $('#avater').attr('src', api_base_URL+"/"+data.img_path);
+                   $('#avater').attr('src', api_base_URL+'/api/download?path='+data.img_path+"");
                 }
                 else {}
             }

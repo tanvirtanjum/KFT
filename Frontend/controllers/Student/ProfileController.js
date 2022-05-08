@@ -80,7 +80,7 @@ $(document).ready(function () {
                    $('#group').html(data.group_name);
                    $('#class').html(data.class_name);
                    $('#wing').html(data.wing_name);
-                   $('#avater').attr('src', api_base_URL+"/"+data.img_path);
+                   $('#avater').attr('src', api_base_URL+'/api/download?path='+data.img_path+"");
                 }
                 else {}
             }

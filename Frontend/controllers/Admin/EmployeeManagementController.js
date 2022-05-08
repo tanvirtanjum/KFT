@@ -201,7 +201,7 @@ $(document).ready(function () {
                    $('#salaryU').val(data.salary);
                    $('#fileU').val(data.file_no);
                    $('#statusU').val(data.employment_status_id);
-                   $('#avatarU').attr('src', api_base_URL+"/"+data.img_path);
+                   $('#avatarU').attr('src', api_base_URL+'/api/download?path='+data.img_path+"");
                    $('#id').val(data.id);
                    $('#renderUpdate').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeImageModal' data-bs-id='"+data.id+"' class='btn btn-sm btn-danger'>Update Image</button>");
                    $('#renderEmBtn').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateEmployeeEmailModal' data-bs-id='"+data.login_id+"' class='btn btn-dark'>Update Email</button>");
@@ -237,7 +237,7 @@ $(document).ready(function () {
                    var data = xhr.responseJSON;
                 
                    $('#nameU2').val(data.name);
-                   $('#avatarU2').attr('src', api_base_URL+"/"+data.img_path);
+                   $('#avatarU2').attr('src', api_base_URL+'/api/download?path='+data.img_path+"");
                    $('#id2').val(data.id);
                    $('#pathU2').val(data.img_path);
                 }
@@ -391,6 +391,7 @@ $(document).ready(function () {
     }
 
     $("#updateRoleBTN").click(function () {
+        $('#msgU4').attr('hidden', true);
         UpdateEmployeeRole();
     });
 
@@ -503,6 +504,7 @@ $(document).ready(function () {
     }
 
     $("#updateEmailBTN").click(function () {
+        $('#msgU3').attr('hidden', true);
         if($('#nemailU2').hasClass("is-invalid"))
         {
             $('#nemailU2').addClass("is-invalid");
@@ -566,6 +568,7 @@ $(document).ready(function () {
     }
 
     $("#updateImageBTN").click(function () {
+        $('#msgU2').attr('hidden', true);
         UpdateEmployeeImage($('#id2').val());
     });
 
@@ -720,6 +723,7 @@ $(document).ready(function () {
     }
 
     $("#updateBTN").click(function () {
+        $('#msgU').attr('hidden', true);
         if(validateEmployeeUpdate())
         {
             UpdateEmployee($('#id').val());
@@ -1209,6 +1213,7 @@ $(document).ready(function () {
     }
 
     $("#postBTN").click(function () {
+        $('#msgP').attr('hidden', true);
         if(validateEmployeeInsert())
         {
             InsertLogin();
@@ -1428,6 +1433,7 @@ $(document).ready(function () {
     }
 
     $("#updateDesignationBTN").click(function () {
+        $('#msgU6').attr('hidden', true);
         if(validateDesignationUpdate())
         {
             UpdateDesignation($('#idU6').val());

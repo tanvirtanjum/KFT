@@ -311,7 +311,7 @@ $(document).ready(function () {
                    $('#ccU').val(data.cur_class_id);
                    $('#cgU').val(data.cur_group_id);
                    $('#statusU').val(data.studentship_id);
-                   $('#avatarU').attr('src', api_base_URL+"/"+data.img_path);
+                   $('#avatarU').attr('src', api_base_URL+'/api/download?path='+data.img_path+"");
                    $('#id').val(data.id);
                    $('#renderUpdate').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentImageModal' data-bs-id='"+data.id+"' class='btn btn-sm btn-danger'>Update Image</button>");
                    $('#renderEmBtn').html("<button type='button' data-bs-toggle='modal' data-bs-target='#updateStudentEmailModal' data-bs-id='"+data.login_id+"' class='btn btn-dark'>Update Email</button>");
@@ -339,7 +339,7 @@ $(document).ready(function () {
                    var data = xhr.responseJSON;
                 
                    $('#nameU2').val(data.name);
-                   $('#avatarU2').attr('src', api_base_URL+"/"+data.img_path);
+                   $('#avatarU2').attr('src', api_base_URL+'/api/download?path='+data.img_path+"");
                    $('#id2').val(data.id);
                    $('#pathU2').val(data.img_path);
                 }
@@ -506,6 +506,7 @@ $(document).ready(function () {
     }
 
     $("#updateEmailBTN").click(function () {
+        $('#msgU3').attr('hidden', true);
         if($('#nemailU2').hasClass("is-invalid"))
         {
             $('#nemailU2').addClass("is-invalid");
@@ -569,6 +570,7 @@ $(document).ready(function () {
     }
 
     $("#updateImageBTN").click(function () {
+        $('#msgU2').attr('hidden', true);
         UpdateStudentImage($('#id2').val());
     });
 
@@ -716,6 +718,7 @@ $(document).ready(function () {
     }
 
     $("#updateBTN").click(function () {
+        $('#msgU').attr('hidden', true);
         if(validateStudentUpdate())
         {
             UpdateStudent($('#id').val());
@@ -1151,6 +1154,7 @@ $(document).ready(function () {
     }
 
     $("#postBTN").click(function () {
+        $('#msgP').attr('hidden', true);
         if(validateStudentInsert())
         {
             InsertLogin();
