@@ -1,7 +1,7 @@
 // <-- Importing System Library Modules -->
 const express = require("express");
 const dotenv = require("dotenv");
-const cors = require('cors')
+const cors = require("cors");
 
 // <-- IMPORTING ROUTES -->
 const downloadRoutes = require("./routes/download.route");
@@ -44,7 +44,7 @@ app.set('trust proxy', 1);
 app.use(cors());
 
 // <-- ROUTES -->
-app.use('/api/download', downloadRoutes);
+app.use("/api/download", downloadRoutes);
 app.use("/api/roles", rolesRoutes);
 app.use("/api/logins", loginsRoutes);
 app.use("/api/notices", noticesRoutes);
