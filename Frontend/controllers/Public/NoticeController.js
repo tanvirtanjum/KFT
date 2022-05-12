@@ -22,18 +22,39 @@ $(document).ready(function () {
                             var Post_Date = new Date(data[i].created_at);
                             var Update_Date = new Date(data[i].updated_at);
                             
-                            str += '<div class="card text-center mb-4 opacity-75">'+
-                                        '<div class="card-header" id="postTime">'+
-                                            "Posted At: "+Post_Date.toDateString()+
-                                        "</div>"+
-                                        '<div class="card-body">'+
-                                            '<h5 class="card-title" id="subject">'+data[i].subject+'</h5>'+
-                                            '<div id="view">'+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-dark'><i class='fas fa-eye'></i>&nbsp;View</button>"+'</div>'+
+                            // OLD STYLE------
+                            // str += '<div class="card text-center mb-4 opacity-75">'+
+                            //             '<div class="card-header" id="postTime">'+
+                            //                 "Posted At: "+Post_Date.toDateString()+
+                            //             "</div>"+
+                            //             '<div class="card-body">'+
+                            //                 '<h5 class="card-title" id="subject">'+data[i].subject+'</h5>'+
+                            //                 '<div id="view">'+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-dark'><i class='fas fa-eye'></i>&nbsp;View</button>"+'</div>'+
+                            //             '</div>'+
+                            //             '<div class="card-footer text-muted" id="lastUpdate">'+
+                            //                 "Last Update: <span style='color: blue;'>"+Update_Date.toUTCString()+"</span>"+
+                            //             '</div>'+
+                            //     "</div>";
+                            // sl++;
+
+                            str += '<div class="container-fluid bg-light opacity-75 mb-1 pb-1 pt-1">'+
+                                        '<div class="row align-items-center">'+
+                                            '<div class="col-3">'+
+                                                '<small class="fw-light">'+
+                                                    '<i class="fas fa-clock"></i> Posted At: '+Post_Date.toDateString()+
+                                                '</small>'+
+                                            '</div>'+
+                                            '<div class="col-6 border-start border-end border-dark">'+
+                                                '<span class="fw-bold fs-5">'+data[i].subject+'</span><br>'+
+                                                '<small class="fw-light"><i class="fas fa-history"></i> Last Update:'+
+                                                    '<span class="text-info">'+Update_Date.toUTCString()+'</span>'+
+                                                '</small>'+              
+                                            '</div>'+
+                                            '<div class="col-3">'+
+                                                "<button type='button' data-bs-toggle='modal' data-bs-target='#updateNoticeModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-dark'><i class='fas fa-eye'></i>&nbsp;View</button>"+
+                                            '</div>'+
                                         '</div>'+
-                                        '<div class="card-footer text-muted" id="lastUpdate">'+
-                                            "Last Update: <span style='color: blue;'>"+Update_Date.toUTCString()+"</span>"+
-                                        '</div>'+
-                                "</div>";
+                                    '</div>';
                             sl++;
                         }
                     }

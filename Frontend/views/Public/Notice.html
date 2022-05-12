@@ -8,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notice | KFT</title>
 
+    <meta property="og:image" content="https://kftcs.com/assets/image/logo/KFT_School_Logo_Web_Preview.png"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kftcs.com/views/Public/Notice.html"/>
+    <meta property="og:title" content="KFT Collegiate School" />
+    <meta property="og:description" content="ঢাকিরগাঁও, মতলব দক্ষিণ, চাঁদপুর"/>
+
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/image/logo/KFT_Trust_Logo.ico">
     
 
@@ -38,54 +44,54 @@
                                         background-position:right center;"
                                         align="center">
 
-        <div id="notices">
+        <div class="container-fluide" id="notices">
             
         </div>
 
          <!-- Modal -->
-    <div class="modal fade" id="updateNoticeModal" tabindex="-1" aria-labelledby="updateNoticeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateNoticeModalLabel"><i class='fas fa-eye'></i>&nbsp;Full Notice</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="id">
-                    <div class="alert mb-2" id="msg" role="alert"></div>
-                    <div class="form-floating mb-2">
-                        <textarea class="form-control bg-light" placeholder="Write Subject" id="subjectU" style="resize: none;" readonly></textarea>
-                        <label for="subjectU">Notice Subject</label>
+        <div class="modal fade" id="updateNoticeModal" tabindex="-1" aria-labelledby="updateNoticeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateNoticeModalLabel"><i class='fas fa-eye'></i>&nbsp;Full Notice</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="form-floating mb-2">
-                        <textarea class="form-control bg-light" placeholder="Write Content" id="contentU" style="height: 40vh; resize: none;" readonly></textarea>
-                        <label for="contentU">Notice Content</label>
-                    </div>
-                    <div class="mb-2">
-                        <div class="table-responsive" align="center">
-                            <p class="h4">Attachments</p>
-                            <hr>
-                            <table class="table table-borderless table-responsive-sm table-hover" id="filelistU">
-                                <thead>
-                                  <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col" align="center">File Name</th>
-                                    <th scope="col"></th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                              </table>
+                    <div class="modal-body">
+                        <input type="hidden" id="id">
+                        <div class="alert mb-2" id="msg" role="alert"></div>
+                        <div class="form-floating mb-2">
+                            <textarea class="form-control bg-light" placeholder="Write Subject" id="subjectU" style="resize: none;" readonly></textarea>
+                            <label for="subjectU">Notice Subject</label>
                         </div>
-                    </div>                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <div class="form-floating mb-2">
+                            <textarea class="form-control bg-light" placeholder="Write Content" id="contentU" style="height: 40vh; resize: none;" readonly></textarea>
+                            <label for="contentU">Notice Content</label>
+                        </div>
+                        <div class="mb-2">
+                            <div class="table-responsive" align="center">
+                                <p class="h4">Attachments</p>
+                                <hr>
+                                <table class="table table-borderless table-responsive-sm table-hover" id="filelistU">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col" align="center">File Name</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     </div>
 
