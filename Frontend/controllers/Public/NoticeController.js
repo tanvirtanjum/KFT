@@ -46,8 +46,8 @@ $(document).ready(function () {
                                             '</div>'+
                                             '<div class="col-6 border-start border-end border-dark">'+
                                                 '<span class="fw-bold fs-5">'+data[i].subject+'</span><br>'+
-                                                '<small class="fw-light"><i class="fas fa-history"></i> Last Update:'+
-                                                    '<span class="text-info">'+Update_Date.toUTCString()+'</span>'+
+                                                '<small class="fw-light"><i class="fas fa-history"></i> Last Update: '+
+                                                    '<span class="text-info">'+Update_Date.toDateString()+'</span>'+
                                                 '</small>'+              
                                             '</div>'+
                                             '<div class="col-3">'+
