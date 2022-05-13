@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Calenders | KFT</title>
+
+    <meta property="og:image" content="https://kftcs.com/assets/image/logo/KFT_School_Logo_Web_Preview.png"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kftcs.com/views/Public/Calenders.html"/>
+    <meta property="og:title" content="KFT Collegiate School" />
+    <meta property="og:description" content="ঢাকিরগাঁও, মতলব দক্ষিণ, চাঁদপুর"/>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/image/logo/KFT_Trust_Logo.ico">
+    
+
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <link href="../../assets/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="../../assets/jQueryTyper/jquery.typer.js"></script>
+    <script src="../../assets/crypto-js/crypto.js"></script>
+
+
+    <!-- URL Controller -->
+    <script type="text/javascript" src="../../controllers/urlController.js"></script>
+
+    <!-- Controller -->
+    <script type="text/javascript" src="../../controllers/Public/CalendersController.js"></script>
+</head>
+
+<body class="bg-dark bg-opacity-75">
+    <div class="container-fluid" id="topLayout"></div>
+    
+    <div class="container-fluid" style="min-height: 90vh;">
+        <p class="h3 text-white mb-lg-4">Academic Calender</p>
+
+        <div class="container-fluide">
+            <div class="accordion accordion-flush" id="calender">
+
+                <div class="accordion-item mb-2">
+                  <h2 class="accordion-header" id="cal_heading_1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cal1" aria-expanded="false" aria-controls="cal1">
+                      Class VI & VII
+                    </button>
+                  </h2>
+                  <div id="cal1" class="accordion-collapse collapse" aria-labelledby="cal_heading_1" data-bs-parent="#calender">
+                    
+                    <img class="img-fluid pb-1" src="../../assets/image/Calendar/Class 6,7 Top.jpg" alt="Error">
+                    <img class="img-fluid pb-1" src="../../assets/image/Calendar/Class 6,7 Bottom.jpg" alt="Error">
+                  
+                  </div>
+                </div>
+        
+                <div class="accordion-item mb-2">
+                  <h2 class="accordion-header" id="cal_heading_2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cal2" aria-expanded="false" aria-controls="cal2">
+                        Class VIII
+                    </button>
+                  </h2>
+                  <div id="cal2" class="accordion-collapse collapse" aria-labelledby="cal_heading_2" data-bs-parent="#calender">
+                    <img class="img-fluid pb-1" src="../../assets/image/Calendar/Class 8 Top.jpg" alt="Error">
+                    <img class="img-fluid pb-1" src="../../assets/image/Calendar/Class 8 Bottom.jpg" alt="Error">
+                  </div>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid text-center" id="bottomLayout"></div>
+</body>
+
+</html>
