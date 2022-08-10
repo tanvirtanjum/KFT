@@ -1310,6 +1310,7 @@ $(document).ready(function () {
                     $('#msgp5').removeAttr('hidden');
                 }
                 LoadAllDesignations();
+                LoadAllDesignationOptions();
             }
         });
     }
@@ -1412,6 +1413,7 @@ $(document).ready(function () {
                     $('#msgU6').removeAttr('hidden');
                 }
                 LoadAllDesignations();
+                LoadAllDesignationOptions();
                 LoadDesignation(id);
             }
         });
