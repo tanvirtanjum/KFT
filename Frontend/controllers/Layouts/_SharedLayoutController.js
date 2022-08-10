@@ -9,6 +9,7 @@ $(document).ready(function () {
     $('#rulesTab').attr("href", base_URL+"/views/Public/Rules.html");
     $('#dressTab').attr("href", base_URL+"/views/Public/DressCode.html");
     $('#admissionTab').attr("href", base_URL+"/views/Public/Admission.html");
+    $('#eventTab').attr("href", base_URL+"/views/Public/Event.html");
     $('#conatctTab').attr("href", base_URL+"/views/Public/ContactUs.html");
     $('#noticeTab').attr("href", base_URL+"/views/Public/Notice.html");
     $('#loginTab').attr("href", base_URL+"/views/Public/SignIn.html");
@@ -21,6 +22,7 @@ $(document).ready(function () {
             $('#kftOptionTab').removeClass("active");
             $('#academicOptionTab').removeClass("active");
             $('#admissionTab').removeClass("active");
+            $('#eventTab').removeClass("active");
             $('#conatctTab').removeClass("active");
             $('#noticeTab').removeClass("active");
             $('#loginTab').removeClass("active");
@@ -32,6 +34,7 @@ $(document).ready(function () {
             $('#homeTab').removeClass("active");
             $('#academicOptionTab').removeClass("active");
             $('#admissionTab').removeClass("active");
+            $('#eventTab').removeClass("active");
             $('#conatctTab').removeClass("active");
             $('#noticeTab').removeClass("active");
             $('#loginTab').removeClass("active");
@@ -43,6 +46,7 @@ $(document).ready(function () {
             $('#homeTab').removeClass("active");
             $('#kftOptionTab').removeClass("active");
             $('#admissionTab').removeClass("active");
+            $('#eventTab').removeClass("active");
             $('#conatctTab').removeClass("active");
             $('#noticeTab').removeClass("active");
             $('#loginTab').removeClass("active");
@@ -51,6 +55,19 @@ $(document).ready(function () {
         if(window.location.href == base_URL+"/views/Public/Admission.html")
         {
             $('#admissionTab').addClass("active");
+            $('#eventTab').removeClass("active");
+            $('#kftOptionTab').removeClass("active");
+            $('#academicOptionTab').removeClass("active");
+            $('#homeTab').removeClass("active");
+            $('#conatctTab').removeClass("active");
+            $('#noticeTab').removeClass("active");
+            $('#loginTab').removeClass("active");
+        }
+
+        if(window.location.href == base_URL+"/views/Public/Event.html")
+        {
+            $('#eventTab').addClass("active");
+            $('#admissionTab').removeClass("active");
             $('#kftOptionTab').removeClass("active");
             $('#academicOptionTab').removeClass("active");
             $('#homeTab').removeClass("active");
@@ -65,6 +82,7 @@ $(document).ready(function () {
             $('#kftOptionTab').removeClass("active");
             $('#academicOptionTab').removeClass("active");
             $('#admissionTab').removeClass("active");
+            $('#eventTab').removeClass("active");
             $('#conatctTab').removeClass("active");
             $('#noticeTab').removeClass("active");
             $('#homeTab').removeClass("active");
@@ -76,6 +94,7 @@ $(document).ready(function () {
             $('#kftOptionTab').removeClass("active");
             $('#academicOptionTab').removeClass("active");
             $('#admissionTab').removeClass("active");
+            $('#eventTab').removeClass("active");
             $('#homeTab').removeClass("active");
             $('#noticeTab').removeClass("active");
             $('#loginTab').removeClass("active");
@@ -87,6 +106,7 @@ $(document).ready(function () {
             $('#kftOptionTab').removeClass("active");
             $('#academicOptionTab').removeClass("active");
             $('#admissionTab').removeClass("active");
+            $('#eventTab').removeClass("active");
             $('#homeTab').removeClass("active");
             $('#homeTab').removeClass("active");
             $('#loginTab').removeClass("active");

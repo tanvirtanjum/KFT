@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event | KFT</title>
+
+    <meta property="og:image" content="https://kftcs.com/assets/image/logo/KFT_School_Logo_Web_Preview.png"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kftcs.com/views/Public/Event.html"/>
+    <meta property="og:title" content="KFT Collegiate School" />
+    <meta property="og:description" content="ঢাকিরগাঁও, মতলব দক্ষিণ, চাঁদপুর"/>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/image/logo/KFT_Trust_Logo.ico">
+    
+
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <link href="../../assets/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="../../assets/jQueryTyper/jquery.typer.js"></script>
+    <script src="../../assets/crypto-js/crypto.js"></script>
+
+
+    <!-- URL Controller -->
+    <script type="text/javascript" src="../../controllers/urlController.js"></script>
+
+    <!-- Controller -->
+    <script type="text/javascript" src="../../controllers/Public/EventController.js"></script>
+</head>
+
+<body class="bg-secondary bg-opacity-75">
+    <div class="container-fluid" id="topLayout"></div>
+    
+    <div class="container-fluid" style="background-image: url(../../assets/image/illustrations/notice_illustration.svg); 
+                                        min-height: 65vh;
+                                        background-repeat: no-repeat;
+                                        image-rendering: optimizeQuality;
+                                        background-size: contain;
+                                        background-position:right center;"
+                                        align="center">
+
+        <div class="container-fluide" id="event">
+
+
+            <div class="container-fluid bg-light opacity-75 mb-1 pb-1 pt-1">
+                <div class="row align-items-center">
+                    
+                    <div class="col-9 border-end border-dark">
+                        <span class="fw-bold fs-5">কেএফটি কলেজিয়েট স্কুলের কিছু স্মরণীয় ছবি</span><br>       
+                    </div>
+                    <div class="col-3">
+                        <button type='button' data-bs-toggle='modal' data-bs-target='#eventModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-dark'><i class='fas fa-eye'></i>&nbsp;View</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eventModalLabel"><i class='fas fa-eye'></i>&nbsp;Event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="id">  
+                        <h6 id="event_name">কেএফটি কলেজিয়েট স্কুলের কিছু স্মরণীয় ছবি</h6><hr>
+                       
+                        <div class="container_fluide">
+                            <div id="pics" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                  <div class="carousel-item active">
+                                    <img src="../../assets/image/event/1/1.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+                                  
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/2.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/3.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/4.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/5.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/6.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/7.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/8.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/9.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/10.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/11.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/12.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/13.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/14.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/15.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/16.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/17.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+
+                                  <div class="carousel-item">
+                                    <img src="../../assets/image/event/1/18.jpeg" class="img-fluide d-block w-100" alt="...">
+                                  </div>
+                                </div>
+
+                                <button class="carousel-control-prev" type="button" data-bs-target="#pics" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#pics" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+
+                            <hr>
+
+                            <p id="event_description" class="text-start">fdgdg</p> 
+                        </div>              
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid text-center" id="bottomLayout"></div>
+</body>
+
+</html>
