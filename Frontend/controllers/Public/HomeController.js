@@ -15,7 +15,7 @@ $(document).ready(function () {
                 '<i class="h6" style="color: #e1e3e1;">"একটি উন্নত সমাজের স্বপ্ন"</i>';
 
     var fourth = '<p class="h2" style="color: #f2f5f3;">কেএফটি কলেজিয়েট স্কুল</p>'+ 
-                 '<i class="h6" style="color: #e1e3e1;">"বিশ্বাস | আত্মবিশ্বাস | অখণ্ডতা | সৃজনশীলতা"</i>';
+                 '<i class="h6" style="color: #e1e3e1;">"বিশ্বাস | আত্মবিশ্বাস | সততা | সৃজনশীলতা"</i>';
 
 
     $('#writeSection').typer([first, second, third, fourth]);
